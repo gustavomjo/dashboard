@@ -48,7 +48,7 @@ export class DashFarmComponent  implements OnInit{
               private farmProdutoValidade : farmProdutoValidadeService
   ){}
   ngOnInit(): void {
-    this.getCurvaAbcCusto();
+    this.getCurvaAbcCusto(globalData.gbDataHoje,globalData.gbDataHoje);
     this.getProdutoValidade()
   }
 
@@ -67,9 +67,9 @@ export class DashFarmComponent  implements OnInit{
     const _dataate = new Date(event);
     const dataAte = _dataate.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
 
-    // if(event != null){
-    //   this.upDash(dataDe,dataAte);
-    // }
+    if(event != null){
+      this.getCurvaAbcCusto(dataDe,dataAte);
+    }
   }
 
 
@@ -85,8 +85,8 @@ export class DashFarmComponent  implements OnInit{
   }
 
 
-  async getCurvaAbcCusto(){
-    (await this.farmCurvaAbcCusto.getCurvaAbcCusto()).subscribe(curvaBody=>{
+  async getCurvaAbcCusto(dataDe: string,dataate : string){
+    (await this.farmCurvaAbcCusto.getCurvaAbcCusto(dataDe,dataate)).subscribe(curvaBody=>{
 
       let dados :any[]=[];
       let totCusto = 0;

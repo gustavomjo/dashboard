@@ -10,8 +10,8 @@ export class farmCurvaAbcCustoService{
 
   constructor(private Busca:Busca){}
 
-  async getCurvaAbcCusto(){
-    return await this.Busca.getHtml<farmCurvaAbcCusto[]>('/curvaabccusto');
+  async getCurvaAbcCusto(dataDe: string,dataate : string){
+    return await this.Busca.getHtml<farmCurvaAbcCusto[]>('/curvaabccusto?datade='+dataDe+'&dataate='+dataate);
   }
 }
 
