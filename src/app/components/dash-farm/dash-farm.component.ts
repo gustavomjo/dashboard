@@ -79,9 +79,6 @@ export class DashFarmComponent  implements OnInit{
       return this._curvaAbcCusto;
     }
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
-    // return this._curvaAbcCusto.filter((curva: { nome_com: string; }) =>
-    //   curva.nome_com.toLowerCase().includes(lowerCaseSearchTerm)
-    // );
   }
 
 
@@ -198,9 +195,6 @@ export class DashFarmComponent  implements OnInit{
 
       for(let i=0;i<this._ProdutoValidade.length;i++)
       {
-        //this._ProdutoValidade[i].validade = this._ProdutoValidade[i].validade == '1899-12-30T00:00:00.000Z'?'2099-11-30T00:00:00.000Z':this._ProdutoValidade[i].validade;
-
-        //console.log(this._ProdutoValidade[i].validade)
         let validadeDate = parseISO(this._ProdutoValidade[i].validade);
         this._ProdutoValidade[i].dias = differenceInDays(validadeDate, dataAtual);
         this._ProdutoValidade[i].validade = moment(this._ProdutoValidade[i].validade).format('DD-MM-YYYY');

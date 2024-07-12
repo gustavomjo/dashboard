@@ -32,9 +32,6 @@ Chart.register(...registerables);
     imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule]
 })
 export class DashComponent implements OnInit{
-  // @Input() id: string='';
-  // @Input() access : string='';
-
   mesanoDe = new Date();
   mesanoAte = new Date();
   carTime = 5000; // timmer do carrosel consultas/int/sadt
@@ -52,7 +49,6 @@ export class DashComponent implements OnInit{
               private rota : Router
 
             ){ };
-
 
   ngOnInit()
   {
@@ -326,7 +322,6 @@ export class DashComponent implements OnInit{
 
       let v = ( (card[0].total*100)/card[2].total ).toFixed(2);
       let lbPorcent = document.getElementById('lbporcent') as HTMLElement;
-      // lbPorcent.innerHTML = v.toString() + '%';
 
       let lbLeitosD = document.getElementById('lbLeitosD') as HTMLElement;
       lbLeitosD.innerHTML = card[0].total.toString();
@@ -334,7 +329,6 @@ export class DashComponent implements OnInit{
 
       let v1 = ( (card[1].total*100)/card[2].total ).toFixed(2);
       let lbPorcent1 = document.getElementById('lbporcentO') as HTMLElement;
-      // lbPorcent1.innerHTML = v1.toString() + '%';
 
       let lbLeitosO = document.getElementById('lbLeitosO') as HTMLElement;
       lbLeitosO.innerHTML = card[1].total.toString();
@@ -364,7 +358,6 @@ export class DashComponent implements OnInit{
       let cardfat_mes = document.getElementById('cardfat_mes') as HTMLElement;
       cardfat_mes.innerHTML =card[0].human;
       let cardfat_mesp = document.getElementById('cardfat_mesp') as HTMLElement;
-      // cardfat_mesp.innerHTML =card[1].human;
       let cardfat_ano = document.getElementById('cardfat_ano') as HTMLElement;
       cardfat_ano.innerHTML =card[2].human;
     })
@@ -425,25 +418,4 @@ export class DashComponent implements OnInit{
       }
     })
   }
-
-
-// getPrazoRecAnoAPI(){
-//   this.prazoRecAnoService.getPrazoRecAno().subscribe(prazoAno =>{
-//     prazoAno = prazoAno;
-//     let media :any[]=[];
-//     let mesano :any[]=[];
-//     if(prazoAno != null){
-//       for(let i=0;i< prazoAno.length;i++){
-//         mesano.push(prazoAno[i].mesano);
-//         media.push(prazoAno[i].media);
-
-//       }
-//       this._rcPrazoRecAno(mesano,media);
-
-//     }
-//   })
-
-// }
-
-
 }
