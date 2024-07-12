@@ -1,0 +1,258 @@
+<div class="content">
+
+  <ul class="nav nav-tabs">
+    <li><a class="nav-link active"  data-toggle="tab" href="#geral">Curva ABC Custo</a></li>
+    <li><a class="nav-link " data-toggle="tab" href="#produtosal2">Medicamento</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="geral" class="tab-pane active m-2">
+      <div class="content">
+        <div class="card content">
+          <div class="card-header">
+            <div class="row">
+              <div class="col col-6 col-sm-12 col-md-6 col-lg-6 m-1">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="searchMedicamento" placeholder="Buscar medicamento..."  [(ngModel)]="_searchDescricao">
+                  <label for="searchMedicamento">Medicamento</label>
+                </div>
+              </div>
+              <div class="col col-5 col-sm-12 col-md-5 col-lg-5 m-1">
+                <form class="frmFilter" action="#">
+                  <div class="form-input">
+                    <mat-form-field>
+                      <mat-label>Selecione o período</mat-label>
+                      <mat-date-range-input [rangePicker]="picker">
+                        <input (dateInput)="onDateIn($event.value)" id="dataIn" matStartDate placeholder="Data Inicial" >
+                        <input (dateInput)="onDateUntil($event.value)" matEndDate placeholder="Data Final">
+                      </mat-date-range-input>
+
+                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="col col-12">
+                <div class="row">
+                  <div class="col col-4"><i class='bx bxs-circle text-success'></i> Curva A</div>
+                <div class="col col-4"><i class='bx bxs-circle text-info'></i> Curva B</div>
+                <div class="col col-4"><i class='bx bxs-circle text-secondary'></i> Curva C</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body overflow-auto">
+            <table class="table">
+              <thead >
+                <tr>
+                  <th scope="col">Nome Comercial </th>
+                  <th scope="col">Custo Médio</th>
+                  <th scope="col">%</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let curva of _curvaAbcCusto | searchCurvaABC:_searchDescricao" >
+                  <td>
+                    <h6 class="font-14 my-1 fw-normal">
+                      <i class='bx bxs-circle' [ngClass]="{'text-success': curva.curva == 'A',
+                                            'text-info': curva.curva == 'B' ,'text-secondary': curva.curva == 'C' }"></i>
+                      {{curva.nome_com}}
+                    </h6>
+                    <span class="text-muted font-10">Qtd. {{curva.qtde}}</span>
+                  </td>
+                  <td>
+                    <h5 class="font-14 my-1 fw-normal">
+                      R${{curva.custo}}
+                    </h5>
+                    <span class="text-muted font-10">Total R${{curva.total_custo_medio}}</span>
+
+                  </td>
+                  <td>
+                    <h6 class="font-14 my-1 fw-normal">
+                      {{curva.porcent}}
+                    </h6>
+                    <span class="text-muted font-10">Acum {{curva.porcentac}}</span>
+                  </td>
+                  <td>
+                    <button class="btn btn-lg" (click)="onClickInfo(curva.codprod,curva.nome_com)" data-toggle="modal" data-target=".bd-example-modal-xl">
+                      <i class='bx bxs-grid'></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PRODUTOSAL2 -->
+    <div id="produtosal2" class="tab-pane fade m-2">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="searchMedicamento" placeholder="Buscar medicamento..."  [(ngModel)]="_searchMedicamento">
+        <label for="searchMedicamento">Medicamento</label>
+      </div>
+
+      <div class="row">
+        <div class="col col-12 ">
+          <div class="card content">
+            <div class="row">
+              <div class="d-flex justify-content-center">
+                <div class="col col-12">
+                  <div class="row">
+                    <div class="col col-3"><i class='bx bxs-circle text-danger'></i> Vencido</div>
+                    <div class="col col-3"><i class='bx bxs-circle text-warning'></i> Vencimento em  15 dias</div>
+                    <div class="col col-3"><i class='bx bxs-circle text-info'></i> Vencimento em  30 dias</div>
+                    <div class="col col-3"><i class='bx bxs-circle text-success'></i>Vencimento após 30 dias</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="card-body overflow-auto">
+              <table class="table">
+                <thead >
+                  <tr>
+                    <th scope="col"><i class='bx bx-clinic'></i> Medicamento </th>
+                    <th scope="col"><i class='bx bx-clinic'></i> Local </th>
+                    <th scope="col"><i class='bx bx-calendar'></i> Validade</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let prod of _ProdutoValidade | searchMedicamentos:_searchMedicamento" >
+                    <td>
+                      <h6 class="font-14 my-1 fw-normal">
+                        <i class='bx bxs-circle' [ngClass]="{'text-danger': prod.dias < 0,
+                                                             'text-warning': prod.dias < 15,
+                                                             'text-info':  prod.dias < 30 ,
+                                                             'text-success':  prod.dias > 30 }"></i>
+                        {{prod.nome_sal}}
+                      </h6>
+                      <span class="text-muted font-10"> Qtd. Lote {{prod.qtd}}</span>
+                    </td>
+                    <td>
+                      <h6>{{prod.ds_setor}}</h6>
+                    </td>
+                    <td>
+                      <h5 class="font-14 my-1 fw-normal">
+                        {{prod.validade}}
+                      </h5>
+                      <span class="text-muted font-10">Lote. {{prod.lote}}</span>
+                    </td>
+                    <!-- <td>
+                      <button class="btn btn-lg" (click)="onClickInfo(curva.codprod,curva.nome_com)" data-toggle="modal" data-target=".bd-example-modal-xl">
+                        <i class='bx bxs-grid'></i>
+                      </button>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> {{_NomeProdDetalhe}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class=" col-12 ">
+            <div class="card">
+              <div class="card-body ">
+                <div class="border-bottom border-translucent">
+                  <div class="d-flex align-items-start mb-1">
+                    <canvas id="_EntradaSaida" width="100" height="40"></canvas>
+                  </div>
+                </div>
+                <div class="row g-1 g-sm-3 mt-2 lh-1">
+                  <!-- TOTAL -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-12 ">
+            <div class="card content50">
+              <div class="row">
+                <div class="d-flex justify-content-center">
+                  <div class="col col-12">
+                    <div class="row">
+                      <div class="col col-3"><i class='bx bxs-circle text-danger'></i> Vencido</div>
+                    <div class="col col-3"><i class='bx bxs-circle text-warning'></i> Vencimento em  15 dias</div>
+                    <div class="col col-3"><i class='bx bxs-circle text-info'></i> Vencimento em  30 dias</div>
+                    <div class="col col-3"><i class='bx bxs-circle text-success'></i>Vencimento após 30 dias</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="card-body overflow-auto">
+                <table class="table">
+                  <thead >
+                    <tr>
+                      <th scope="col"><i class='bx bx-clinic'></i> Local </th>
+                      <th scope="col"><i class='bx bx-calendar'></i> Validade</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let prod of _detalheProdutoLocal" >
+                      <td>
+                        <h6 class="font-14 my-1 fw-normal">
+                          <i class='bx bxs-circle' [ngClass]="{'text-danger': prod.dias < 0,
+                                                             'text-warning': prod.dias < 15,
+                                                             'text-info':  prod.dias < 30 ,
+                                                             'text-success':  prod.dias > 30 }"></i>
+                          {{prod.ds_setor}}
+                        </h6>
+                        <span class="text-muted font-10">Qtd. {{prod.qtd}}</span>
+                      </td>
+                      <td>
+                        <h5 class="font-14 my-1 fw-normal">
+                          {{prod.validade}}
+                        </h5>
+                        <span class="text-muted font-10">Lote. {{prod.lote}}</span>
+                      </td>
+                      <!-- <td>
+                        <button class="btn btn-lg" (click)="onClickInfo(curva.codprod,curva.nome_com)" data-toggle="modal" data-target=".bd-example-modal-xl">
+                          <i class='bx bxs-grid'></i>
+                        </button>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

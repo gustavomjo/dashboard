@@ -1,0 +1,265 @@
+<div id="content" class="px-3 py-1">
+  <!-- <form class="frmFilter" action="#">
+    <div class="form-input">
+      <mat-form-field>
+        <mat-label>Selecione o período</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input  id="dataIn" matStartDate placeholder="Start date" >
+          <input  matEndDate placeholder="End date">
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+  </form> -->
+</div>
+<nav class="content">
+  <div class="row h-100 ">
+    <div class="col-md-7">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="text-uppercase text-center" [style.color]="color.colorGray">
+                  Contas a Pagar
+                  <i class='bx bx-down-arrow-alt text-danger'></i>
+                </h3>
+                <div class="row align-items-center ">
+                  <div class="col-6 text-center">
+                    <h6 class="text-uppercase text-body-secondary mb-2 ">
+                      Mês Passsado
+                    </h6>
+                    <span id="lbcontasPagPassado" class=" h1 mb-0 "[style.color]="color.colorYellow"></span>
+                  </div>
+                  <div class="col-6 text-center">
+                    <h6 class="text-uppercase text-body-secondary mb-2">
+                      Este Mês
+                    </h6>
+                    <div class="d-inline-flex position-relative">
+                      <span id="lbcontasPagAtual" class=" h1 mb-0 "[style.color]="color.colorYellow"> </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <span id="spancontasPagAtual"  class=" h4 mb-0 "[style.color]="_PorcentContasPag < 100 ? color.colorGreen : color.colorBlue"></span>
+                <i class=' h4 bx' [ngClass]="{'bx-chevron-up': _PorcentContasPag > 100, 'bx-chevron-down': _PorcentContasPag < 100}"
+                  [style.color]="_PorcentContasPag < 100 ? color.colorGreen : color.colorBlue"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="text-uppercase text-center" [style.color]="color.colorGray">
+                  Contas a Receber
+                  <i class='bx bx-up-arrow-alt text-success'></i>
+                </h3>
+                <div class="row align-items-center text-center">
+                  <div class="col-6">
+                    <h6 class="text-uppercase text-body-secondary mb-2">
+                      Mês passado
+                    </h6>
+                    <span id="lbContasRecebPassado" class=" h1 mb-0 " [style.color]="color.colorBlue"> </span>
+                  </div>
+                  <div class="col-6">
+                    <h6 class="text-uppercase text-body-secondary mb-2">
+                      Este Mês
+                    </h6>
+                    <div class="d-inline-flex position-relative">
+
+                      <span id="lbContasRecebAtual" class=" h1 mb-0" [style.color]="color.colorBlue"> </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <span id="spancontasRecAtual"  class=" h4 mb-0 " [style.color]="_PorcentContasRec < 100 ? color.colorBlue : color.colorGreen"></span>
+                <i class=" h4 bx" [ngClass]="{'bx-chevron-down ': _PorcentContasRec < 100, 'bx-chevron-up': _PorcentContasRec > 100}"
+                  [style.color]="_PorcentContasRec < 100 ? color.colorBlue : color.colorGreen"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-1 col-12">
+        <div class="card ">
+          <div class="card-body ">
+            <!-- <div class="row g-1 g-sm-3 mt-2 lh-1">
+              <select class="form-select" aria-label="Ano">
+                <option selected>Selecione o ano</option>
+                <option value="1">2024</option>
+                <option value="2">2023</option>
+                <option value="3">2022</option>
+              </select>
+            </div> -->
+            <div class=" border-translucent ">
+              <div class="d-flex align-items-start mb-1 ">
+                <canvas id="_rcBalancete" width="100" height="60"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="row ">
+        <div class="col-12  ">
+          <div class="card" id="dvDre">
+            <div class="card-body">
+              <h3 class="text-uppercase text-center  mb-2 " [style.color]="color.colorGray">
+                DRE
+                <span class="h3 mb-0 text-info"><i class='bx bxs-report'></i></span>
+              </h3>
+              <div class="card mb-1">
+                <div class="card-body">
+                  <h4 class="text-uppercase text-center " [style.color]="color.colorGray">
+                    Resultado do Exercício
+                    <span class="h2 mb-0 text-success">
+                      <i class="bx"
+                          [ngClass]="{'bx-trending-up text-success': _resultado >= 0, 'bx-trending-down text-danger': _resultado < 0}">
+                      </i>
+                    </span>
+                  </h4>
+                  <div class="row align-items-center text-center">
+                    <div class="col-12">
+                      <h3 class="text-uppercase"
+                          [ngClass]="{'text-success': _resultado >= 0, 'text-danger': _resultado < 0}">
+                        {{_resExercicio}}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-1 ">
+                <div class="d-flex card-header justify-content-between align-items-center">
+                  <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check btn-col" name="btnradio" id="btnradio1" (click)="onClick(1)" autocomplete="off" data-bs-target=".multi-collapse"  data-toggle="collapse" data-target="#collDREGrupo"  checked>
+                    <label class="btn btn-sm btn-outline-primary" for="btnradio1"><i class='bx bxs-bookmark'></i> Grupo</label>
+
+                    <input type="radio" class="btn-check btn-col" name="btnradio" id="btnradio2" (click)="onClick(2)" autocomplete="off" data-toggle="collapse" data-target="#collDRESubgrupo" >
+                    <label class="btn btn-sm btn-outline-success" for="btnradio2"><i class='bx bxs-bookmark'></i> Subgrupo</label>
+
+                    <input type="radio" class="btn-check btn-col" name="btnradio" id="btnradio3" (click)="onClick(3)" autocomplete="off" data-toggle="collapse" data-target="#collDRECCusto" >
+                    <label class="btn btn-sm btn-outline-info" for="btnradio3"><i class='bx bxs-bookmark'></i> Centro de Custo</label>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="table-responsive ">
+                    <div class="table table-centered table-nowrap table-hover mb-0">
+                      <div class="collapse multi-collapse show " id="collDREGrupo">
+                        <table class="w-100">
+                          <tbody>
+                            <tr *ngFor="let dre of _dreGrupo">
+                              <td>
+                                <h6 class="font-14 my-1 fw-normal">
+                                  <i class="bx"
+                                    [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receitas',
+                                                'bx-up-arrow-alt text-danger': dre.tipo == 'Despesas' || dre.tipo == 'Despesas - Financeiras' }">
+                                  </i>
+                                  {{dre.descricao}}
+                                </h6>
+                                <span class="text-muted font-10">{{dre.tipo}}</span>
+                              </td>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">{{dre.total}}</h5>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+
+                            <tr>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">
+                                  <i class="bx bx-down-arrow-alt text-success"></i>
+                                  Total Receitas
+                                </h5>
+                              </td>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">{{_resReceita}}</h5>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">
+                                  <i class="bx bx-up-arrow-alt text-danger"></i>
+                                  Total Despesas
+                                </h5>
+                              </td>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">{{_resDespesa}}</h5>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">
+                                  <i class="bx bx-up-arrow-alt text-danger"></i>
+                                  Total Despesas Financeiras
+                                </h5>
+                              </td>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">{{_resDespFin}}</h5>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                      <div class="collapse multi-collapse " id="collDRESubgrupo">
+                        <table class="w-100">
+                          <tbody>
+                            <tr *ngFor="let dre of _dreSubgrupo">
+                              <td>
+                                <h6 class="font-14 my-1 fw-normal">
+                                  <i class="bx"
+                                    [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receita',
+                                                'bx-up-arrow-alt text-danger': dre.tipo == 'Despesas' || dre.tipo == 'Despesas - Financeiras' }">
+                                  </i>
+                                  {{dre.descricao}}
+                                </h6>
+                                <span class="text-muted font-13">{{dre.tipo}}</span>
+                              </td>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">{{dre.total}}</h5>
+                                <!-- <span class="text-muted font-13">{{dre.total}}</span> -->
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="collapse multi-collapse " id="collDRECCusto">
+                        <table class="w-100">
+                          <tbody>
+                            <tr *ngFor="let dre of _dreCC">
+                              <td>
+                                <h6 class="font-14 my-1 fw-normal">
+                                  <i class="bx"
+                                    [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receita',
+                                                'bx-up-arrow-alt text-danger': dre.tipo == 'Despesas' || dre.tipo == 'Despesas - Financeiras' }">
+                                  </i>
+                                  {{dre.descricao}}
+                                </h6>
+                                <span class="text-muted font-13">{{dre.tipo}}</span>
+                              </td>
+                              <td>
+                                <h5 class="font-14 my-1 fw-normal">{{dre.total}}</h5>
+                                <!-- <span class="text-muted font-13">{{dre.total}}</span> -->
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+

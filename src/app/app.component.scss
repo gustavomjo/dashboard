@@ -1,0 +1,255 @@
+.wrapper {
+    display: flex;
+}
+*{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+.main {
+  min-height: 100vh;
+  width: calc(100% - 80px);
+  overflow: hidden;
+  transition: all 0.35s ease-in-out;
+  background-color: #fafafa;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar {
+  width: 70px;
+  min-width: 70px;
+  z-index: 1000;
+  transition: all .25s ease-in-out;
+  background-color: #313a46;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.expand {
+  width: 260px;
+  min-width: 260px;
+}
+
+.toggle-btn {
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  padding: 1rem 1.5rem;
+}
+
+.toggle-btn i {
+  font-size: 1.5rem;
+  color: #6b7888;
+}
+
+.sidebar-logo {
+  margin: auto 0;
+}
+
+.sidebar-logo a {
+  color: #FFF;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.sidebar:not(.expand) .sidebar-logo,
+.sidebar:not(.expand) a.sidebar-link span {
+  display: none;
+}
+
+.sidebar-nav {
+  padding: 2rem 0;
+  flex: 1 1 auto;
+}
+
+a.sidebar-link {
+  padding: .625rem 1.625rem;
+  color: #f4f5f5;
+  display: block;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  border-left: 3px solid transparent;
+
+}
+
+.sidebar-link i {
+  font-size: 1.1rem;
+  margin-right: .75rem;
+}
+
+a.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, .075);
+  border-left: 3px solid #3b7ddd;
+}
+
+.sidebar-item {
+  position: relative;
+}
+
+.sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+  position: absolute;
+  top: 0;
+  left: 70px;
+  background-color: #313a46;
+  padding: 0;
+  min-width: 15rem;
+  display: none;
+}
+
+.sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+  display: block;
+  max-height: 15em;
+  width: 100%;
+  opacity: 1;
+}
+
+.sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+  border: solid;
+  border-width: 0 .075rem .075rem 0;
+  content: "";
+  display: inline-block;
+  padding: 2px;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.4rem;
+  transform: rotate(-135deg);
+  transition: all .2s ease-out;
+}
+
+.sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+  transform: rotate(45deg);
+  transition: all .2s ease-out;
+}
+
+.hamburguer{
+position: absolute;
+right: 0;
+top: 5px;
+display: none;
+border:none;
+background: none;
+cursor: pointer;
+width: 50px;
+height: 50px;
+z-index: 1005;
+}
+
+
+.hamburguer::before,
+.hamburguer::after{
+content: " ";
+display: block;
+width: 30px;
+height: 3px;
+background: #6b7888;
+margin-top: 5px;
+}
+
+
+@media only screen and (max-width:750px){
+  .main {
+    width: 100%;
+  }
+
+  .hamburguer{
+    display: block;
+  }
+
+  .sidebar{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #313a46;
+
+    clip-path: circle(100px at 90%  -15%);
+    transition: 1s ease-out;
+
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
+    z-index: 1001;
+  }
+
+  ul{
+    width: 100%;
+  }
+  ul li a {
+    width: 100%;
+  }
+
+  ul li a i{
+    display: inline-block;
+  }
+
+  ul li a p{
+    display: inline;
+    vertical-align: top;
+  }
+
+  ul  p{
+    display: inline;
+    vertical-align: top;
+  }
+
+
+  .sidebar a {
+    opacity: 0;
+  }
+
+  .sidebar li:nth-child(1) a{
+    transition: 0.5s 0.2s;
+  }
+  .sidebar li:nth-child(2) a{
+    transition: 0.5s 0.4s;
+  }
+  .sidebar li:nth-child(3) a{
+    transition: 0.5s 0.6s;
+  }
+  .sidebar li:nth-child(4) a{
+    transition: 0.5s 0.7s;
+  }
+
+  .active{
+    clip-path: circle(1500px at 90% -15%);
+    pointer-events: all;
+  }
+
+  .active a{
+    opacity: 1;
+  }
+
+  .hamburguer.active{
+      border-top-color: transparent;
+    }
+
+  .hamburguer.active::before,
+  .hamburguer.active::after{
+    background: #fff;
+    top:0;
+  }
+
+  .hamburguer.active::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+    margin-top: 0;
+  }
+
+  .hamburguer.active::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    margin-top: -2px;
+  }
+
+
+
+}

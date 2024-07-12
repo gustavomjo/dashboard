@@ -1,0 +1,30 @@
+DRE
+| Receitas                                     | Valores (R$) |
+|----------------------------------------------|--------------|
+| Receita de Consultas Médicas                 | 100.000,00   |
+| Receita de Procedimentos Cirúrgicos          | 80.000,00    |
+| Receita de Exames Laboratoriais              | 50.000,00    |
+| Receita de Internações                       | 20.000,00    |
+| Outras Receitas Operacionais                 | 20.000,00    |
+| **Total de Receitas Operacionais**           | **250.000,00*|
+|                                              |              |
+| Custos Operacionais                          |              |
+| Salários e Encargos                          | 120.000,00   |
+| Insumos Médicos                              | 50.000,00    |
+| Aluguel e Manutenção                         | 30.000,00    |
+| Despesas Administrativas                     | 20.000,00    |
+| **Total de Custos Operacionais**             | **220.000,00*|
+|                                              |              |
+| **Lucro Operacional**                        | **30.000,00**|
+|                                              |              |
+| Despesas Financeiras                         | 5.000,00     |
+| Impostos e Taxas                             | 10.000,00    |
+| Outras Despesas Não Operacionais             | 2.000,00     |
+| **Total de Despesas Não Operacionais**       | **17.000,00**|
+|                                              |              |
+| **Lucro Líquido Antes do IR e CSLL**         | **13.000,00**|
+|                                              |              |
+| Provisão para Imposto de Renda e CSLL        | 3.000,00     |
+|                                              |              |
+| **Lucro Líquido do Exercício**               | **10.000,00**|
+

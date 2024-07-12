@@ -1,0 +1,12 @@
+
+
+--criar no banco tbl centro_custo
+-- ind_dash char(2)
+--este campo e para identificar os custos Operacionais
+--pensado neste campo pois em cada entidade temos um centro de custo diferentes
+  dos outros.
+
+
+- criar um backend para consumir os dados da API do delphi
+- utilizar um banco proprio para as buscas do dashboard ficarem mais rapidas
+

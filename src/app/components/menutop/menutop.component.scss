@@ -1,0 +1,62 @@
+.input-group-append {
+  cursor: pointer;
+}
+/* CONTENT */
+#content {
+	position: static;
+	width: 100%;
+	transition: .3s ease;
+}
+#sidebar.hide ~ #content {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+
+#content nav {
+	height: 70px;
+	background: #313a46;
+	padding: 0 24px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+	font-family: var(--lato);
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+#content nav a {
+	color: #ffffff;
+}
+//datepicker
+#content nav form {
+	max-width: 400px;
+  height: 60px;
+	width: 100%;
+	margin-right: auto;
+  margin-left: 45px;
+}
+
+#content nav .notification {
+	font-size: 20px;
+	position: relative;
+}
+#content nav .notification .num {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid var(--light);
+	background: var(--red);
+	color: var(--light);
+	font-weight: 700;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* NAVBAR */
