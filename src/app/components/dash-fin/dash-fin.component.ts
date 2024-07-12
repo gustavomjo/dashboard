@@ -22,9 +22,6 @@ Chart.register(...registerables);
   imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule ]
 })
 export class DashFinComponent implements OnInit {
-  // _data_atual : Date = new Date();
-  // _mes_atual : number = this._data_atual.getMonth() + 1;
-  // _ano : number = this._data_atual.getFullYear();
   _dreGrupo : any[] =[];
   _dreSubgrupo : any[] =[];
   _dreCC: any[] =[];
@@ -326,13 +323,6 @@ export class DashFinComponent implements OnInit {
       let lbContasRecebAtual = document.getElementById('lbContasRecebAtual') as HTMLElement;
       let spancontasPagAtual = document.getElementById('spancontasPagAtual') as HTMLElement;
       let spancontasRecAtual = document.getElementById('spancontasRecAtual') as HTMLElement;
-
-
-      // lbcontasPagPassado.innerHTML = '1';
-      // lbcontasPagAtual.innerHTML ='2';
-      // lbContasRecebPassado.innerHTML = '3';
-      // lbContasRecebAtual.innerHTML = '4';
-
       let conta :any[]=[];
 
       conta = conta.concat(contas.body)

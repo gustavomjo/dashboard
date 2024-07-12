@@ -27,16 +27,7 @@ export class userService{
     localStorage.clear();
   }
 
-  // !! transforma em bool
   _isLogged = () => !! localStorage.getItem('login');
-
-  // _isLogged(){
-
-
-  //    return this.HttpClient.get<user[]>(this.url+'/getLogged?uid=aaa');
-
-
-  // }
 
 
 
