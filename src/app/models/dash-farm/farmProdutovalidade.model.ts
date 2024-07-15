@@ -5,7 +5,9 @@ export interface ProdutoValidade{
   lote : string,
   validade : Date,
   qtd : number,
-  dias : number
+  dias : number,
+  ds_grupoprod : string,
+  ds_subgrupo : string
 
 }
 

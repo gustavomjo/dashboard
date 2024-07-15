@@ -37,6 +37,11 @@ export class DashFarmComponent  implements OnInit{
   _ProdutoValidade : any[]=[];
   _searchDescricao = "";
   _searchMedicamento = "";
+  _searchGrupo="";
+
+  _dsGrupo : any[]=[];
+  _dsSubGrupo : any[]=[];
+
 
   searchTerm: string = '';
 
@@ -188,17 +193,38 @@ export class DashFarmComponent  implements OnInit{
     this.getEntradaSaida(value);
   }
 
+  adicionarItem(item: any,lst:any[]): void {
+    // console.log(item.descricao)
+
+    const itemExistente = lst.find(subItem => subItem.descricao === item.descricao);
+    if (!itemExistente) {
+      lst.push(item);
+    }
+  }
+
   async getProdutoValidade(){
     (await this.farmProdutoValidade.getProdutoValidade()).subscribe(dados=>{
       this._ProdutoValidade = this._ProdutoValidade.concat(dados.body);
       const dataAtual = globalData.gbData_atual;
+
 
       for(let i=0;i<this._ProdutoValidade.length;i++)
       {
         let validadeDate = parseISO(this._ProdutoValidade[i].validade);
         this._ProdutoValidade[i].dias = differenceInDays(validadeDate, dataAtual);
         this._ProdutoValidade[i].validade = moment(this._ProdutoValidade[i].validade).format('DD-MM-YYYY');
+
+        let novoItem = {descricao: this._ProdutoValidade[i].ds_grupoprod };
+        this.adicionarItem(novoItem,this._dsGrupo);
+
+        novoItem = {descricao: this._ProdutoValidade[i].ds_subgrupo };
+        this.adicionarItem(novoItem,this._dsSubGrupo);
+        // console.log(this._ProdutoValidade[i].ds_grupoprod)
+
       }
+
+      console.log(this._dsGrupo)
+      console.log(this._dsSubGrupo)
 
 
     })
