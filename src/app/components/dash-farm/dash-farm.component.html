@@ -98,9 +98,23 @@
 
     <!-- PRODUTOSAL2 -->
     <div id="produtosal2" class="tab-pane fade m-2">
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="searchMedicamento" placeholder="Buscar medicamento..."  [(ngModel)]="_searchMedicamento">
-        <label for="searchMedicamento">Medicamento</label>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="searchMedicamento" placeholder="Buscar medicamento..."  [(ngModel)]="_searchMedicamento">
+            <label for="searchMedicamento">Medicamento</label>
+          </div>
+
+        </div>
+        <div class="col-6">
+          <div class="form-floating mb-3">
+            <input class="form-control" list="datalistOptions" id="searchGrupoMed" placeholder="Type to search..." [(ngModel)]="_searchGrupo">
+            <datalist id="datalistOptions" >
+              <option value="{{grupo.descricao}}" *ngFor="let grupo of _dsGrupo" >
+            </datalist>
+            <label for="searchGrupoMed">Grupo de Medicamento</label>
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -130,7 +144,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let prod of _ProdutoValidade | searchMedicamentos:_searchMedicamento" >
+                  <tr *ngFor="let prod of _ProdutoValidade | searchMedicamentos:_searchMedicamento | searchGrupo :_searchGrupo" >
                     <td>
                       <h6 class="font-14 my-1 fw-normal">
                         <i class='bx bxs-circle' [ngClass]="{'text-danger': prod.dias < 0,
@@ -143,12 +157,13 @@
                     </td>
                     <td>
                       <h6>{{prod.ds_setor}}</h6>
+                      <span class="text-muted font-10">Lote. {{prod.lote}}</span>
                     </td>
                     <td>
                       <h5 class="font-14 my-1 fw-normal">
                         {{prod.validade}}
                       </h5>
-                      <span class="text-muted font-10">Lote. {{prod.lote}}</span>
+                      <span class="text-muted font-10">Dias {{prod.dias}}</span>
                     </td>
                   </tr>
                 </tbody>

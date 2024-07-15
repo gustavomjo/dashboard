@@ -7,7 +7,7 @@ export class searchCurvaABC implements PipeTransform {
 
   transform(value: any[], args?: any): any[] {
 
-    if (!args || args.trim() === '') {
+    if (!args || args.length < 4 || args.trim() === '') {
       return value;
     }
 

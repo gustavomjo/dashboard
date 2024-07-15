@@ -10,7 +10,7 @@ import { globalData,globalVars } from './globals';
 
 @Component({
     selector: 'app-root',
-    standalone: true,
+    standalone: true, 
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     imports: [RouterOutlet, CommonModule, DashComponent,RouterModule]
