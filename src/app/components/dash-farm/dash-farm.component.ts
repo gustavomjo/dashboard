@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 
 import { differenceInDays, parseISO } from 'date-fns';
 
-import { searchModule } from './search.Module';
+import { searchModule } from '../search.Module';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 Chart.register(...registerables);
@@ -38,6 +38,7 @@ export class DashFarmComponent  implements OnInit{
   _searchDescricao = "";
   _searchMedicamento = "";
   _searchGrupo="";
+  _searchVencimento = "";
 
   _dsGrupo : any[]=[];
   _dsSubGrupo : any[]=[];
@@ -164,8 +165,6 @@ export class DashFarmComponent  implements OnInit{
           data: _totalS,
           backgroundColor:globalCores.gbCores[2],
         },
-
-
       ]
     };
 
@@ -194,8 +193,6 @@ export class DashFarmComponent  implements OnInit{
   }
 
   adicionarItem(item: any,lst:any[]): void {
-    // console.log(item.descricao)
-
     const itemExistente = lst.find(subItem => subItem.descricao === item.descricao);
     if (!itemExistente) {
       lst.push(item);
@@ -207,25 +204,25 @@ export class DashFarmComponent  implements OnInit{
       this._ProdutoValidade = this._ProdutoValidade.concat(dados.body);
       const dataAtual = globalData.gbData_atual;
 
-
       for(let i=0;i<this._ProdutoValidade.length;i++)
       {
         let validadeDate = parseISO(this._ProdutoValidade[i].validade);
         this._ProdutoValidade[i].dias = differenceInDays(validadeDate, dataAtual);
         this._ProdutoValidade[i].validade = moment(this._ProdutoValidade[i].validade).format('DD-MM-YYYY');
-
+        this._ProdutoValidade[i].dias_search = "31";
+        if(this._ProdutoValidade[i].dias < 0){
+          this._ProdutoValidade[i].dias_search = "-1";
+        } else if ((this._ProdutoValidade[i].dias > 0) && (this._ProdutoValidade[i].dias < 16)){
+          this._ProdutoValidade[i].dias_search = "15";
+        }else if ((this._ProdutoValidade[i].dias > 15) && (this._ProdutoValidade[i].dias < 30)){
+          this._ProdutoValidade[i].dias_search = "30";
+        }
         let novoItem = {descricao: this._ProdutoValidade[i].ds_grupoprod };
         this.adicionarItem(novoItem,this._dsGrupo);
 
         novoItem = {descricao: this._ProdutoValidade[i].ds_subgrupo };
         this.adicionarItem(novoItem,this._dsSubGrupo);
-        // console.log(this._ProdutoValidade[i].ds_grupoprod)
-
       }
-
-      console.log(this._dsGrupo)
-      console.log(this._dsSubGrupo)
-
 
     })
   }

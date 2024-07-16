@@ -5,7 +5,6 @@ import { Pipe,PipeTransform } from '@angular/core';
 })
 export class searchGrupo implements PipeTransform{
   transform(value: any[], args?: any): any[] {
-    console.log(args.length)
 
     if (!args || args.length < 4 || args.trim() === ''  ) {
       return value;

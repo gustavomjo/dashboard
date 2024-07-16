@@ -8,6 +8,6 @@ export interface ProdutoValidade{
   dias : number,
   ds_grupoprod : string,
   ds_subgrupo : string
-
+  dias_search : string
 }
 
