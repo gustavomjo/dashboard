@@ -1,60 +1,67 @@
-/***
- * Esta Global sera somente para conexoes e requests
-*/
-import { catchError, delay, map, retryWhen, take, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { environment } from '../environments/environment';
 import { Observable, throwError } from 'rxjs';
-
-
+import { catchError, delay, retryWhen, take, tap, switchMap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
+import { ConfigService } from './services/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Busca{
-  public url = environment.api;
-  public token: string | null =  localStorage.getItem('token');
+export class Busca {
+  private url!: string;
+  private token: string | null = localStorage.getItem('token');
   private header!: HttpHeaders;
 
-  constructor(private httpClient: HttpClient) {
-    this.headerJWT();
+  constructor(private httpClient: HttpClient, private configService: ConfigService) {
+    this.updateHeader();
+    this.loadConfig();
   }
 
-  getHtml<T>(request: string): Observable<HttpResponse<T>> {
-    return this.httpClient.get<T>(this.url+request, { headers: this.header, observe: 'response' }).pipe(
-      tap(response => {
-        this.token = localStorage.getItem('token');
-      }),
-      catchError(error => {
-        console.error('Erro ao subscrever:', error);
-        this.upToken();
-        return throwError(error);
-      }),
-      retryWhen(errors =>
-        errors.pipe(
-          tap(() => {
-            console.log('Tentando novamente com novo token:', this.token);
+  private loadConfig() {
+    this.configService.getConfig().subscribe(config => {
+      this.url = config.servidor;
+    }, error => {
+      console.error('Erro ao carregar a configuração', error);
+    });
+  }
+
+  getHtml<T>(request: string): Observable<HttpResponse<T>>{
+    //utilizado o this.configService.getConfig para garantir que a config seja carregada antes de fazer a requisicao
+    return this.configService.getConfig().pipe(
+      switchMap(config => {
+        this.url = config.servidor;
+        return this.httpClient.get<T>(this.url + request, { headers: this.header, observe: 'response' }).pipe(
+          tap(response => {
+            this.token = localStorage.getItem('token');
           }),
-          delay(5000),
-          take(10)
-        )
-      )
+          catchError(error => {
+            console.error('Erro ao subscrever:', error);
+            this.updateToken();
+            return throwError(error);
+          }),
+          retryWhen(errors =>
+            errors.pipe(
+              tap(() => {
+                console.log('Tentando novamente com novo token:', this.token);
+              }),
+              delay(5000),
+              take(10)
+            )
+          )
+        );
+      })
     );
   }
 
-  //neste falta realizar o update token, ainda nao consegui fazer com que o token seja alterado
-
-  private upToken() {
+  private updateToken() {
     this.token = localStorage.getItem('token');
-    this.headerJWT(this.token);
+    this.updateHeader(this.token);
   }
 
-  private headerJWT(token: string | null = this.token) {
+  private updateHeader(token: string | null = this.token) {
     this.header = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
   }
 }
-
-

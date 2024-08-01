@@ -35,7 +35,7 @@ export class DashComponent implements OnInit{
   mesanoDe = new Date();
   mesanoAte = new Date();
   carTime = 5000; // timmer do carrosel consultas/int/sadt
-  intervalVal = 1000;//10*(1000*60);
+  intervalVal = 10000;//10*(1000*60);
   // timeRefresh = document.getElementById('refreshTime') as HTMLSelectElement;
   intervalId : any;
 
