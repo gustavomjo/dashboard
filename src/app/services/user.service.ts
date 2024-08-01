@@ -2,14 +2,22 @@ import { user } from './../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn:'root'
 })
 
-export class userService{
-  private url = environment.api;
-  constructor(private HttpClient : HttpClient  ){}
+export class UserService{
+  private url = "";
+  constructor(private HttpClient : HttpClient,private configService: ConfigService  ){
+    this.configService.getConfig().subscribe(config => {
+      environment.api = config.servidor;
+      this.url = config.servidor;
+    }, error => {
+      console.error('Erro ao carregar a configuração', error);
+    });
+  }
 
   getUser(user:string,senha:string){
     return this.HttpClient.get<user>(this.url+'/getuser?usuario='+user+'&senha='+senha);
