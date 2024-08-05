@@ -41,6 +41,7 @@ export class DashFarmComponent  implements OnInit {
 
   _curvaAbcCusto : any =[];
   _detalheProdutoLocal : any[]=[];
+  _detalheProdutoFarmLocal : any[]=[];
   _NomeProdDetalhe : any;
   _ProdutoValidade : any[]=[];
   _ProdutoSal : any[]=[];
@@ -75,9 +76,6 @@ export class DashFarmComponent  implements OnInit {
     this.getCurvaAbcCusto(globalData.gbDataHoje,globalData.gbDataHoje);
     this.getProdutoValidade();
     this.getProdutoSal2();
-    console.log(this.filtrodataService.data);
-
-
   }
 
 
@@ -262,7 +260,9 @@ export class DashFarmComponent  implements OnInit {
     this._Produtos =[];
     this._saidas=[];
     this._NFEntradaProd=[];
+    this._Cotacao=[];
     this._perdas=[];
+    this._detalheProdutoFarmLocal=[];
     let chartExist = Chart.getChart("_rcNFEntrada");
     chartExist?.destroy;
 
@@ -276,6 +276,7 @@ export class DashFarmComponent  implements OnInit {
     this.getPedidosCompra(parts[0]);
     this.getSaidas(parts[0]);
     this.getPerda(parts[0]);
+    this.getProdutoFarmLocal(parts[0]);
 
   }
 
@@ -304,7 +305,16 @@ export class DashFarmComponent  implements OnInit {
         saida[i].total = total;
       }
       this._saidas = saida;
-
+      if(this._saidas.length ==0){
+        this._saidas.push({
+          codprod: null,
+          codsal: null,
+          nome_fabricante: null,
+          porcent: null,
+          total: null,
+          total_saida: null
+        });
+      }
       // Aguardar a atualização da visualização antes de configurar os círculos
       setTimeout(() => {
         this.configureCircles();
@@ -321,50 +331,82 @@ export class DashFarmComponent  implements OnInit {
     });
   }
 
-  async getNFEntrada(cod:any){
-    (await this.farmProdutoSal.getNFEntrada(cod)).subscribe(dados=>{
-
+  async getNFEntrada(cod: any) {
+    (await this.farmProdutoSal.getNFEntrada(cod)).subscribe(dados => {
       this._NFEntradaProd = this._NFEntradaProd.concat(dados.body);
+      let mesano: any[] = [];
+      let datasetMap: { [key: string]: any } = {};
+      let datasetMapV2 :{ [key: string]: any } = {};
+      let dataset: any[] = [];
 
-      let valor :any[]=[];
-      let mesano :any[]=[];
-      let qtd : any[]=[];
-      for(let i=0;i< this._NFEntradaProd.length;i++){
-        mesano.push(this._NFEntradaProd[i].mes_ano);
-        valor.push(this._NFEntradaProd[i].valor_unitario);
-        qtd.push(this._NFEntradaProd[i].qtd_entrada)
+      // Popula o array mesano e cria um mapa para os datasets
+      for (let i = 0; i < this._NFEntradaProd.length; i++) {
+        if (!mesano.includes(this._NFEntradaProd[i].mes_ano)) {
+          mesano.push(this._NFEntradaProd[i].mes_ano);
+        }
+
+        let fabricante = this._NFEntradaProd[i].nome_fabricante;
+
+        if (!datasetMap[fabricante]) {
+          datasetMap[fabricante] = {
+            label: fabricante,
+            data: Array(mesano.length).fill(0),
+            borderColor: globalCores.gbCores[Object.keys(datasetMap).length % globalCores.gbCores.length],
+            backgroundColor: globalCores.gbCoresTransp[Object.keys(datasetMap).length % globalCores.gbCoresTransp.length],
+            order: 1
+          };
+
+        }
+        if (!datasetMapV2[fabricante]) {
+          datasetMapV2[fabricante] = {
+            label: fabricante,
+            data: Array(mesano.length).fill(0),
+            borderColor: globalCores.gbCores[Object.keys(datasetMapV2).length % globalCores.gbCores.length],
+            backgroundColor: globalCores.gbCoresTransp[Object.keys(datasetMapV2).length % globalCores.gbCoresTransp.length],
+
+            order: 0
+          };
+
+        }
+
+        let index = mesano.indexOf(this._NFEntradaProd[i].mes_ano);
+        datasetMap[fabricante].data[index] = this._NFEntradaProd[i].qtd_entrada;
+        datasetMapV2[fabricante].data[index] = this._NFEntradaProd[i].valor_unitario;
       }
-      this._rcNfEntradaCusto(mesano,valor,qtd);
-    })
+
+      if(this._NFEntradaProd.length ==0){
+        this._NFEntradaProd.push({
+          codsal : null,
+          codprod : null,
+          nome_sal : null,
+          nome_com : null,
+          mes_ano : null,
+          valor_unitario : null,
+          qtd_entrada : null,
+          nome_fabricante : null
+        });
+      } else {
+        // Transforma o mapa em um array de datasets
+        dataset = [...Object.values(datasetMapV2)];
+        this._rcNFEntradaCusto(mesano, dataset);
+
+        dataset = [...Object.values(datasetMap)];
+        this._rcNfEntradaQtd(mesano, dataset);
+      }
+
+    });
   }
-  _rcNfEntradaCusto(_mesano:any,_valor:any,_qtd:any){
-    let chartExist = Chart.getChart("_rcNFEntrada"); // <canvas> id
+
+  _rcNFEntradaCusto(_mesano: any, dataset: any) {
+    let chartExist = Chart.getChart("_rcNFEntradaCusto"); // <canvas> id
     if (chartExist != undefined)
       chartExist.destroy();
 
-    const myChart = new Chart("_rcNFEntrada", {
+    const myChart = new Chart("_rcNFEntradaCusto", {
       type: 'bar',
-
       data: {
         labels: _mesano,
-
-        datasets: [
-          {
-            label: 'Valor Un.',
-            data:  _valor,
-            borderColor :globalCores.gbCores[20],
-            backgroundColor:globalCores.gbCoresTransp[20],
-            order: 1
-          },
-          {
-            label: 'Quantidade',
-            data:  _qtd,
-            borderColor :globalCores.gbCores[2],
-            backgroundColor:globalCores.gbCoresTransp[2],
-            type: 'line',
-            order : 0
-          }
-        ]
+        datasets: dataset
       },
       options: {
         responsive: true,
@@ -374,7 +416,33 @@ export class DashFarmComponent  implements OnInit {
           },
           title: {
             display: true,
-            text: 'Entradas'
+            text: 'Entradas - Custo'
+          }
+        }
+      }
+    });
+  }
+
+  _rcNfEntradaQtd(_mesano: any, dataset: any) {
+    let chartExist = Chart.getChart("_rcNfEntradaQtd"); // <canvas> id
+    if (chartExist != undefined)
+      chartExist.destroy();
+
+    const myChart = new Chart("_rcNfEntradaQtd", {
+      type: 'bar',
+      data: {
+        labels: _mesano,
+        datasets: dataset
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Entradas - Quantidade'
           }
         }
       }
@@ -394,9 +462,6 @@ export class DashFarmComponent  implements OnInit {
         month = ("0" + (date.getMonth() + 1)).slice(-2);
         year = date.getFullYear().toString();
         this._perdas[i].mes_ano_validade = `${month}-${year}`;
-
-
-        console.log(this._perdas[i].mes_ano_validade);
       }
 
     })
@@ -406,8 +471,14 @@ export class DashFarmComponent  implements OnInit {
   async getCotacoes(cod:any){
     (await this.farmProdutoSal.getCotacao(cod)).subscribe(dados=>{
       this._Cotacao = this._Cotacao.concat(dados.body);
-      // console.log(this._Cotacao)
 
+      for(let i=0;i<this._Cotacao.length;i++){
+        this._Cotacao[i].data_cotacao = moment(this._Cotacao[i].data_cotacao).format('DD-MM-YYYY');
+        this._Cotacao[i].data_fechamento = moment(this._Cotacao[i].data_fechamento).format('DD-MM-YYYY');
+        if(this._Cotacao[i].data_entrega != null){
+          this._Cotacao[i].data_entrega = moment(this._Cotacao[i].data_entrega).format('DD-MM-YYYY');
+        }
+      }
     })
   }
 
@@ -417,6 +488,25 @@ export class DashFarmComponent  implements OnInit {
       pedido = pedido.concat(dados.body);
       // console.log(this._PedidoCompras)
 
+    })
+  }
+
+  async getProdutoFarmLocal(codsal:string){
+    (await this.farmDetalheProduto.getProdutoFarmLocal(codsal)).subscribe(prod =>{
+      this._detalheProdutoFarmLocal = [];
+      this._detalheProdutoFarmLocal = this._detalheProdutoFarmLocal.concat(prod.body);
+      let total = 0;
+
+      for(let i=0;i<this._detalheProdutoFarmLocal.length;i++)
+      {
+        const validadeDate = parseISO(this._detalheProdutoFarmLocal[i].validade);
+        const dataAtual = globalData.gbData_atual;
+        this._detalheProdutoFarmLocal[i].dias = differenceInDays(validadeDate, dataAtual);
+        this._detalheProdutoFarmLocal[i].validade = moment(this._detalheProdutoFarmLocal[i].validade).format('DD-MM-YYYY');
+        total = total + this._detalheProdutoFarmLocal[i].qtd;
+        this._detalheProdutoFarmLocal[i].total = total;
+        
+      }
     })
   }
 

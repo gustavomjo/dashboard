@@ -3,7 +3,8 @@ export interface farmProdutoLocal{
   lote : string,
   validade : Date,
   qtd : number,
-  dias : number
+  dias : number,
+  total : number
 }
 
 

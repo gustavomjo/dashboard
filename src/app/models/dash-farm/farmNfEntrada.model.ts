@@ -6,5 +6,6 @@ export interface farmNfEntrada
   nome_com : string,
   mes_ano : string,
   valor_unitario : number,
-  qtd_entrada : number
+  qtd_entrada : number,
+  nome_fabricante : string
 }

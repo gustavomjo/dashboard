@@ -17,5 +17,9 @@ export class farmDetalheProdutoService{
   async getProdutoLocal(codprod:number){
     return await this.Busca.getHtml<farmProdutoLocal[]>('/farmprodutoslocal?codprod='+codprod)
   }
+
+  async getProdutoFarmLocal(codsal:string){
+    return await this.Busca.getHtml<farmProdutoLocal[]>('/farmprodutoslocal?codsal='+codsal)
+  }
 }
 
