@@ -11,6 +11,7 @@ import { globalData,globalCores, moneyReduct, globalCoresNome  } from '../../glo
 import { finDREGrupoService } from '../../services/dash-fin/finDRE.service';
 import { finDRE } from '../../models/dash-fin/finDRE.model';
 import { finContasRPService } from '../../services/dash-fin/finContasRP.service';
+import { CardContasComponent } from "./card-contas/card-contas.component";
 
 Chart.register(...registerables);
 
@@ -19,7 +20,7 @@ Chart.register(...registerables);
   standalone: true,
   templateUrl: './dash-fin.component.html',
   styleUrl: './dash-fin.component.scss',
-  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule ]
+  imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, CardContasComponent]
 })
 export class DashFinComponent implements OnInit {
   _dreGrupo : any[] =[];
@@ -33,12 +34,12 @@ export class DashFinComponent implements OnInit {
   _resDespFin = '';
   color = globalCoresNome;
 
-  _PorcentContasRec = 0;
-  _PorcentContasPag = 0;
+  // _PorcentContasRec = 0;
+  // _PorcentContasPag = 0;
 
   constructor(private finBalancete:finBalanceteService,
               public finDRE : finDREGrupoService,
-              private finContasRP : finContasRPService,
+              // private finContasRP : finContasRPService,
 
 
 
@@ -49,7 +50,7 @@ export class DashFinComponent implements OnInit {
     this.getDREGrupo('2024');
     this.getDRESubgrupo('2024');
     this.getDRECC('2024');
-    this.getContasRP();
+    // this.getContasRP();
   }
 
   async getDREGrupo(ano:string){
@@ -315,47 +316,47 @@ export class DashFinComponent implements OnInit {
 
   }
 
-  async getContasRP(){
-    (await this.finContasRP.getContasRP()).subscribe(contas=>{
-      let lbcontasPagPassado = document.getElementById('lbcontasPagPassado') as HTMLElement;
-      let lbcontasPagAtual = document.getElementById('lbcontasPagAtual') as HTMLElement;
-      let lbContasRecebPassado = document.getElementById('lbContasRecebPassado') as HTMLElement;
-      let lbContasRecebAtual = document.getElementById('lbContasRecebAtual') as HTMLElement;
-      let spancontasPagAtual = document.getElementById('spancontasPagAtual') as HTMLElement;
-      let spancontasRecAtual = document.getElementById('spancontasRecAtual') as HTMLElement;
-      let conta :any[]=[];
+  // async getContasRP(){
+  //   (await this.finContasRP.getContasRP()).subscribe(contas=>{
+  //     let lbcontasPagPassado = document.getElementById('lbcontasPagPassado') as HTMLElement;
+  //     let lbcontasPagAtual = document.getElementById('lbcontasPagAtual') as HTMLElement;
+  //     let lbContasRecebPassado = document.getElementById('lbContasRecebPassado') as HTMLElement;
+  //     let lbContasRecebAtual = document.getElementById('lbContasRecebAtual') as HTMLElement;
+  //     let spancontasPagAtual = document.getElementById('spancontasPagAtual') as HTMLElement;
+  //     let spancontasRecAtual = document.getElementById('spancontasRecAtual') as HTMLElement;
+  //     let conta :any[]=[];
 
-      conta = conta.concat(contas.body)
-      let CRAtual = 0;
-      let CRAnt = 0;
-      let CPAtual = 0;
-      let CPAnt = 0;
+  //     conta = conta.concat(contas.body)
+  //     let CRAtual = 0;
+  //     let CRAnt = 0;
+  //     let CPAtual = 0;
+  //     let CPAnt = 0;
 
-      for(let i=0;i<conta.length;i++){
-        switch (conta[i].tipo){
-          case 'R' :
-            conta[i].mes_ano.substring(5,7)==globalData.gbMes_atual?
-              CRAtual = conta[i].total :CRAnt = conta[i].total
-            break;
-          case 'P' :
-            conta[i].mes_ano.substring(5,7)==globalData.gbMes_atual?
-              CPAtual = conta[i].total : CPAnt = conta[i].total
-            break;
-        }
-      }
+  //     for(let i=0;i<conta.length;i++){
+  //       switch (conta[i].tipo){
+  //         case 'R' :
+  //           conta[i].mes_ano.substring(5,7)==globalData.gbMes_atual?
+  //             CRAtual = conta[i].total :CRAnt = conta[i].total
+  //           break;
+  //         case 'P' :
+  //           conta[i].mes_ano.substring(5,7)==globalData.gbMes_atual?
+  //             CPAtual = conta[i].total : CPAnt = conta[i].total
+  //           break;
+  //       }
+  //     }
 
-      lbContasRecebAtual.innerHTML = moneyReduct(CRAtual)
-      lbContasRecebPassado.innerHTML = moneyReduct(CRAnt)
-      this._PorcentContasRec = (CRAtual/CRAnt)*100;
-      spancontasRecAtual.innerHTML = this._PorcentContasRec.toFixed(2) + '%';
+  //     lbContasRecebAtual.innerHTML = moneyReduct(CRAtual)
+  //     lbContasRecebPassado.innerHTML = moneyReduct(CRAnt)
+  //     this._PorcentContasRec = (CRAtual/CRAnt)*100;
+  //     spancontasRecAtual.innerHTML = this._PorcentContasRec.toFixed(2) + '%';
 
-      lbcontasPagAtual.innerHTML = moneyReduct(CPAtual)
-      lbcontasPagPassado.innerHTML = moneyReduct(CPAnt)
-      this._PorcentContasPag = (CPAtual/CPAnt)*100
-      spancontasPagAtual.innerHTML = this._PorcentContasPag.toFixed(2) + '%';
+  //     lbcontasPagAtual.innerHTML = moneyReduct(CPAtual)
+  //     lbcontasPagPassado.innerHTML = moneyReduct(CPAnt)
+  //     this._PorcentContasPag = (CPAtual/CPAnt)*100
+  //     spancontasPagAtual.innerHTML = this._PorcentContasPag.toFixed(2) + '%';
 
 
-    })
-  }
+  //   })
+  // }
 
 }

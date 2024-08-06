@@ -1,0 +1,67 @@
+<div class="row">
+  <!-- Contas a Pagar -->
+  <div class="col-6 d-flex align-items-stretch">
+    <div class="card w-100">
+      <div class="card-body">
+        <h3 class="text-uppercase text-center" [style.color]="color.colorGray">
+          Contas a Pagar
+          <i class='bx bx-down-arrow-alt text-danger'></i>
+        </h3>
+        <div class="row align-items-center">
+          <div class="col-6 text-center">
+            <h6 class="text-uppercase text-body-secondary mb-2">
+              Mês Passado
+            </h6>
+            <span id="lbcontasPagPassado" class="h3 mb-0" [style.color]="color.colorYellow"></span>
+          </div>
+          <div class="col-6 text-center">
+            <h6 class="text-uppercase text-body-secondary mb-2">
+              Este Mês
+            </h6>
+            <div class="d-inline-flex position-relative">
+              <span id="lbcontasPagAtual" class="h3 mb-0" [style.color]="color.colorYellow"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-center">
+        <span id="spancontasPagAtual" class="h4 mb-0" [style.color]="_PorcentContasPag < 100 ? color.colorGreen : color.colorBlue"></span>
+        <i class='h4 bx' [ngClass]="{'bx-chevron-up': _PorcentContasPag > 100, 'bx-chevron-down': _PorcentContasPag < 100}"
+          [style.color]="_PorcentContasPag < 100 ? color.colorGreen : color.colorBlue"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contas a Receber -->
+  <div class="col-6 d-flex align-items-stretch">
+    <div class="card w-100">
+      <div class="card-body">
+        <h3 class="text-uppercase text-center" [style.color]="color.colorGray">
+          Contas a Receber
+          <i class='bx bx-up-arrow-alt text-success'></i>
+        </h3>
+        <div class="row align-items-center text-center">
+          <div class="col-6">
+            <h6 class="text-uppercase text-body-secondary mb-2">
+              Mês Passado
+            </h6>
+            <span id="lbContasRecebPassado" class="h3 mb-0" [style.color]="color.colorBlue"></span>
+          </div>
+          <div class="col-6">
+            <h6 class="text-uppercase text-body-secondary mb-2">
+              Este Mês
+            </h6>
+            <div class="d-inline-flex position-relative">
+              <span id="lbContasRecebAtual" class="h3 mb-0" [style.color]="color.colorBlue"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-center">
+        <span id="spancontasRecAtual" class="h4 mb-0" [style.color]="_PorcentContasRec < 100 ? color.colorBlue : color.colorGreen"></span>
+        <i class="h4 bx" [ngClass]="{'bx-chevron-down': _PorcentContasRec < 100, 'bx-chevron-up': _PorcentContasRec > 100}"
+          [style.color]="_PorcentContasRec < 100 ? color.colorBlue : color.colorGreen"></i>
+      </div>
+    </div>
+  </div>
+</div>
