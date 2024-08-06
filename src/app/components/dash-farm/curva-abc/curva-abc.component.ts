@@ -47,13 +47,10 @@ export class CurvaABCComponent implements OnInit {
       let totCusto = 0;
       let pAcum = 0.00;
       dados = dados.concat(curvaBody.body)
-      console.time('oi')
 
       for(let i=0;i<dados.length;i++){
         totCusto = totCusto+ Number(dados[i].total_custo_medio);
       }
-      console.timeEnd('oi')
-      console.time('1')
       for(let i=0;i<dados.length;i++){
         dados[i].custo = dados[i].custo.toFixed(2);
         dados[i].total_custo_medio = dados[i].total_custo_medio.toFixed(2);
@@ -64,9 +61,7 @@ export class CurvaABCComponent implements OnInit {
         dados[i].porcentac = pAcum.toFixed(5);
         dados[i].curva = (pAcum < 80 ? "A" : pAcum < 95 ? "B" : "C")
       }
-      console.timeEnd('1')
       this._curvaAbcCusto = dados;
-      console.log(this._curvaAbcCusto)
     })
   }
 

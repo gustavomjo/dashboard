@@ -1,0 +1,244 @@
+<div class="row">
+  <div class="col-6 sm-12 lg-6">
+    <div class="form-floating mb-3">
+      <input class="form-control" list="datalistProdutoSal" (change)="onProdutoSalChange()" id="searchProdutoSal" placeholder="Type to search..." [(ngModel)]="_searchProdutoSal">
+      <datalist id="datalistProdutoSal" >
+        <option value="{{produtosal.codsal + ' - '+produtosal.nome_sal}}" *ngFor="let produtosal of _ProdutoSal" >
+      </datalist>
+      <label for="searchProdutoSal">Medicamento(Farmacológico)</label>
+    </div>
+  </div>
+</div>
+<div *ngIf="_searchProdutoSal == '' ">
+  <h1 class="display-4">Detalhamento do medicamento</h1>
+  <p class="lead">Informe o código ou nome farmacolóco</p>
+</div>
+
+<div class="row p-1 ">
+  <div class="col-sm-12" [ngClass]="{'col-md-12 col-lg-12 col-xl-12': _perdas.length <= 0,
+                                   'col-md-12 col-lg-10 col-xl-9': _perdas.length == 1,
+                                   'col-md-12 col-lg-7 col-xl-8': _perdas.length == 2,
+                                   'col-md-12 col-lg-6 col-xl-6': _perdas.length > 2}">
+    <div class="card" *ngIf="_Produtos.length > 0 && _searchProdutoSal != ''">
+      <h5 class="card-header">Custo médio por produto</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3" *ngFor="let prod of _Produtos">
+            <div class="card h-100">
+              <div class="card-body">
+                <h6 class="text-uppercase text-center" style="color: #525253;">
+                  {{prod.nome_com}}
+                </h6>
+                <h6 class="text-uppercase text-center" style="color: #36a2eb;">
+                  {{prod.nome_fabricante}}
+                </h6>
+                <div class="row align-items-center text-center">
+                  <div class="col">
+                    <h6 class="text-uppercase text-body-secondary mb-2">
+                      Custo Médio
+                    </h6>
+                    <span class="h3 mb-0" style="color: #58595c;">
+                      R${{prod.custo_medio}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-sm-12" [ngClass]="{
+            'col-md-12 col-lg-6 col-xl-3': _perdas.length == 1,
+            'col-md-12 col-lg-6 col-xl-4': _perdas.length == 2,
+            'col-md-12 col-lg-6 col-xl-6': _perdas.length > 2
+  }">
+    <div class="card" *ngIf="_perdas.length > 0 && _searchProdutoSal != ''">
+      <h5 class="card-header">Perdas</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12" [ngClass]="{
+            'col-md-12 col-lg-12 col-xl-12': _perdas.length == 1,
+            'col-md-6 col-lg-6 col-xl-6': _perdas.length >= 2,
+          }" *ngFor="let perda of _perdas">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="text-uppercase text-center" style="color: #f88a4a;">
+                  {{perda.ds_setor}}
+                  <h6 class="text-uppercase text-center" style="color: #58595c;">
+                    Mês : {{perda.mes_ano}}
+                  </h6>
+                  <h6 class="text-uppercase text-center" style="color: #58595c;">
+                    Validade : {{perda.mes_ano_validade}}
+                  </h6>
+                </h5>
+                <h6 class="text-uppercase text-center" style="color: #58595c;">
+                  Motivo : {{perda.motivo}}
+                </h6>
+
+                <div class="row align-items-center text-center">
+                  <div class="col">
+                    <h6 class="text-uppercase text-body-secondary mb-2">
+                      Custo Médio
+                    </h6>
+                    <div class="col-4"></div>
+                    <span class="h3 mb-0" style="color: #58595c;">
+                      R${{perda.vl_custo_medio}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row p-1 ">
+  <div class="col-9  col-sm-12 col-md-8 col-lg-9">
+    <div class="card" *ngIf="_searchProdutoSal != ''">
+      <h5 class="card-header">Saídas ultimos 6 mêses</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="d-flex justify-content-center" *ngIf="_saidas.length == 0 && _searchProdutoSal != '' ">
+            <div class="spinner-grow text-info" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-5 col-lg-4 col-xl-3"   *ngFor="let saida of _saidas">
+            <div *ngIf="saida.codsal === null">
+              <h4><i class='bx bx-error-circle text-warning'></i> Não houve saídas</h4>
+            </div>
+            <div class="card" *ngIf="saida.codsal != null">
+              <div class="card-body">
+                <h5 class="text-uppercase text-center"  style="color: #36a2eb;"> {{saida.nome_fabricante}}</h5>
+                <div class="progress-circle" #progressCircle [attr.data-percentage]="saida.porcent">
+                  <svg viewBox="0 0 36 36">
+                    <path
+                      class="circle-bg"
+                      d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      class="circle"
+                      d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                  </svg>
+                  <div class="percentage">{{ saida.porcent }}%</div>
+                </div>
+                <h6 class="text-uppercase text-center">
+                   Qtd.: {{saida.total_saida}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        Total de Saídas : <b>{{ _saidas.length > 0 ? _saidas[0].total : 'Calculando...' }}</b>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 col-sm-12 col-md-4 col-lg-3">
+    <div class="card-hover-shadow-2x mb-3 card" *ngIf=" _searchProdutoSal != '' ">
+      <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+        <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Estoque
+        </div>
+      </div>
+      <div class="scroll-area-lg">
+        <div class="scrollbar-container ps ps--active-y">
+
+          <ul class="todo-list-wrapper list-group list-group-flush" *ngFor="let prod of _detalheProdutoFarmLocal">
+            <li class="list-group-item">
+              <div class="todo-indicator bg-warning"></div>
+              <div class="widget-content p-0">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">
+                      <i class='bx bx-home' style="color: #36a2eb;"></i>
+                      <b> {{prod.ds_setor}}</b>
+                      <!-- <div class="badge badge-danger ml-2">Rejected</div> -->
+                    </div>
+                    <div class="widget-subheading"><i>Lote : {{prod.lote}} Qtd.: {{prod.qtd}}</i></div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <small class="text-muted">
+          Total: {{ _detalheProdutoFarmLocal?.[_detalheProdutoFarmLocal.length-1]?.total  }}
+        </small>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="row p-1 ">
+  <div class="col-9 col-sm-12 col-md-8 col-lg-9" >
+    <div class="card" *ngIf="_searchProdutoSal != ''">
+      <h5 class="card-header">Entradas ultimos 6 mêses</h5>
+      <div class="card-body">
+        <div *ngIf="_NFEntradaProd.length>0 && _NFEntradaProd[0].codsal === null">
+          <h4><i class='bx bx-error-circle text-warning'></i> Não houve Entradas</h4>
+        </div>
+        <div class="row">
+          <div class="col col-sm-12 col-md-12 col-lg-6 col-xl-6" *ngIf="_searchProdutoSal != '' ">
+            <canvas id="_rcNfEntradaQtd" width="100" height="40"></canvas>
+          </div>
+          <div class="col col-sm-12 col-md-12 col-lg-6 col-xl-6" *ngIf="_searchProdutoSal != '' ">
+            <canvas id="_rcNFEntradaCusto" width="100" height="40"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 col-sm-12 col-md-4 col-lg-3">
+    <div class="row">
+      <div class="col-12"  *ngFor="let cotacao of _Cotacao">
+        <div class="card" *ngIf="_searchProdutoSal != ''">
+          <h5 class="card-header">Cotação : {{cotacao.nr_cotacao}} </h5>
+          <div class="card-body">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left">
+                <div class="widget-heading">
+                  Data Cotação : {{cotacao.data_cotacao}}
+                </div>
+                <div class="widget-subheading">
+                  <i>Quantidade : {{cotacao.qtde}} {{cotacao.unidade}}</i>
+                </div>
+              </div>
+              <div class="widget-content-right widget-content-actions">
+                <div class="widget-subheading">
+                  <i>Bionexo :
+                    <i class='bx'[ngClass]="{' bx-check text-success': cotacao.cod_bionexo_gr > 0,
+                    ' bx-x text-danger': cotacao.cod_bionexo_gr < 0,}"></i>
+                    <b>{{cotacao.cod_bionexo_gr}}</b></i>
+                </div>
+              </div>
+              <div class="widget-content-right widget-content-actions">
+                <div class="widget-subheading">
+                  <i>Data Entrega :<b>{{cotacao.data_entrega}}</b></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
