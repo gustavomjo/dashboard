@@ -23,26 +23,24 @@ import { farmProdutosal2Service } from '../../services/dash-farm/farmProdutosal2
 import { FiltrodataService } from './../filtrodata/filtrodata.service';
 import { FiltrodataComponent } from "../filtrodata/filtrodata.component";
 import { CurvaABCComponent } from "./curva-abc/curva-abc.component";
+import { MedValidadeComponent } from "./med-validade/med-validade.component";
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-dash-farm',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, CarouselModule, MatDatepickerModule, FormsModule, searchModule, FiltrodataComponent, CurvaABCComponent],
+  imports: [CommonModule, MatFormFieldModule, CarouselModule, MatDatepickerModule, FormsModule, searchModule, FiltrodataComponent, CurvaABCComponent, MedValidadeComponent],
   providers: [provideNativeDateAdapter()],
   templateUrl: './dash-farm.component.html',
   styleUrl: './dash-farm.component.scss'
 })
-
-
 
 export class DashFarmComponent  implements OnInit {
   @ViewChildren('progressCircle') progressCircles!: QueryList<ElementRef>;
 
   _detalheProdutoFarmLocal : any[]=[];
   _NomeProdDetalhe : any;
-  _ProdutoValidade : any[]=[];
   _ProdutoSal : any[]=[];
   _Produtos : any[]=[];
   _saidas : any[]=[];
@@ -50,22 +48,16 @@ export class DashFarmComponent  implements OnInit {
   _Cotacao : any[]=[];
   _perdas : any[]=[];
 
-  _searchMedicamento = "";
   _searchGrupo="";
   _searchVencimento = "";
   _searchProdutoSal = "";
 
-  _dsGrupo : any[]=[];
-  _dsSubGrupo : any[]=[];
-
   constructor(private farmDetalheProduto : farmDetalheProdutoService,
-              private farmProdutoValidade : farmProdutoValidadeService,
               private farmProdutoSal : farmProdutosal2Service,
               public filtrodataService: FiltrodataService
   ){}
 
   ngOnInit(): void {
-    this.getProdutoValidade();
     this.getProdutoSal2();
   }
 
@@ -74,34 +66,6 @@ export class DashFarmComponent  implements OnInit {
     if (!itemExistente) {
       lst.push(item);
     }
-  }
-
-  async getProdutoValidade(){
-    (await this.farmProdutoValidade.getProdutoValidade()).subscribe(dados=>{
-      this._ProdutoValidade = this._ProdutoValidade.concat(dados.body);
-      const dataAtual = globalData.gbData_atual;
-
-      for(let i=0;i<this._ProdutoValidade.length;i++)
-      {
-        let validadeDate = parseISO(this._ProdutoValidade[i].validade);
-        this._ProdutoValidade[i].dias = differenceInDays(validadeDate, dataAtual);
-        this._ProdutoValidade[i].validade = moment(this._ProdutoValidade[i].validade).format('DD-MM-YYYY');
-        this._ProdutoValidade[i].dias_search = "31";
-        if(this._ProdutoValidade[i].dias < 0){
-          this._ProdutoValidade[i].dias_search = "-1";
-        } else if ((this._ProdutoValidade[i].dias > 0) && (this._ProdutoValidade[i].dias < 16)){
-          this._ProdutoValidade[i].dias_search = "15";
-        }else if ((this._ProdutoValidade[i].dias > 15) && (this._ProdutoValidade[i].dias < 30)){
-          this._ProdutoValidade[i].dias_search = "30";
-        }
-        let novoItem = {descricao: this._ProdutoValidade[i].ds_grupoprod };
-        this.adicionarItem(novoItem,this._dsGrupo);
-
-        novoItem = {descricao: this._ProdutoValidade[i].ds_subgrupo };
-        this.adicionarItem(novoItem,this._dsSubGrupo);
-      }
-
-    })
   }
 
   async getProdutoSal2(){
