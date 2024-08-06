@@ -8,3 +8,6 @@ export interface farmProdutoLocal{
 }
 
 
+export interface AgrupadosPorSetor {
+  [key: string]: farmProdutoLocal[];
+}

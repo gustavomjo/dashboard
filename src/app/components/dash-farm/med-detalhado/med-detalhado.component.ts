@@ -11,6 +11,7 @@ import { Chart, registerables } from 'chart.js';
 import { globalCores, globalData } from '../../../globals';
 import moment from 'moment';
 import { differenceInDays, parseISO } from 'date-fns';
+import { AgrupadosPorSetor, farmProdutoLocal } from '../../../models/dash-farm/farmProdutoLocal.model';
 
 Chart.register(...registerables);
 
@@ -28,7 +29,8 @@ export class MedDetalhadoComponent implements OnInit {
   _perdas : any[]=[];
   _Produtos : any[]=[];
   _saidas : any[]=[];
-  _detalheProdutoFarmLocal : any[]=[];
+  _detalheProdutoFarmLocal: any[] = [];
+  _detalheProdutoFarmLocal_agrupado: AgrupadosPorSetor = {};
   _NFEntradaProd : any[]=[];
   _Cotacao : any[]=[];
 
@@ -40,6 +42,7 @@ export class MedDetalhadoComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    // throw new Error('Method not implemented.');
     this.getProdutoSal2();
   }
 
@@ -286,10 +289,12 @@ export class MedDetalhadoComponent implements OnInit {
   }
 
   async getProdutoFarmLocal(codsal:string){
-    (await this.farmDetalheProduto.getProdutoFarmLocal(codsal)).subscribe(prod =>{
+    (await this.farmDetalheProduto.getProdutoFarmLocal(codsal)).subscribe(dados =>{
       this._detalheProdutoFarmLocal = [];
-      this._detalheProdutoFarmLocal = this._detalheProdutoFarmLocal.concat(prod.body);
+      this._detalheProdutoFarmLocal = this._detalheProdutoFarmLocal.concat(dados.body);
       let total = 0;
+
+      this._detalheProdutoFarmLocal_agrupado={};
 
       for(let i=0;i<this._detalheProdutoFarmLocal.length;i++)
       {
@@ -300,7 +305,13 @@ export class MedDetalhadoComponent implements OnInit {
         total = total + this._detalheProdutoFarmLocal[i].qtd;
         this._detalheProdutoFarmLocal[i].total = total;
 
+        const setor = this._detalheProdutoFarmLocal[i].ds_setor;
+        if(!this._detalheProdutoFarmLocal_agrupado[setor]){
+          this._detalheProdutoFarmLocal_agrupado[setor]=[]
+        }
+        this._detalheProdutoFarmLocal_agrupado[setor].push(this._detalheProdutoFarmLocal[i])
       }
+      //console.log(this._detalheProdutoFarmLocal_agrupado)
     })
   }
 

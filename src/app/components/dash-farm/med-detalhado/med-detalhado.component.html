@@ -147,45 +147,45 @@
       </div>
     </div>
   </div>
+
   <div class="col-3 col-sm-12 col-md-4 col-lg-3">
-    <div class="card-hover-shadow-2x mb-3 card" *ngIf=" _searchProdutoSal != '' ">
+    <div class="card-hover-shadow-2x mb-3 card" *ngIf="_searchProdutoSal != ''">
       <div class="card-header-tab card-header">
         <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-        <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Estoque
+          <i class="header-icon lnr-database icon-gradient bg-malibu-beach"> </i>Estoque
         </div>
       </div>
       <div class="scroll-area-lg">
         <div class="scrollbar-container ps ps--active-y">
+          <div *ngFor="let setor of _detalheProdutoFarmLocal_agrupado | keyvalue">
+            <div class="widget-heading">
+              <i class='bx bx-home' style="color: #36a2eb;"></i>
+              <b> {{setor.key}}</b>
+            </div>
+            <ul class="todo-list-wrapper list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let prod of setor.value">
+                <div class="todo-indicator bg-warning"></div>
+                <div class="widget-content p-0">
+                  <div class="widget-content-wrapper">
+                    <div class="widget-content-left">
 
-          <ul class="todo-list-wrapper list-group list-group-flush" *ngFor="let prod of _detalheProdutoFarmLocal">
-            <li class="list-group-item">
-              <div class="todo-indicator bg-warning"></div>
-              <div class="widget-content p-0">
-                <div class="widget-content-wrapper">
-                  <div class="widget-content-left">
-                    <div class="widget-heading">
-                      <i class='bx bx-home' style="color: #36a2eb;"></i>
-                      <b> {{prod.ds_setor}}</b>
-                      <!-- <div class="badge badge-danger ml-2">Rejected</div> -->
+                      <div class="widget-subheading"><i>Lote: {{prod.lote}} Qtd.: {{prod.qtd}}</i></div>
                     </div>
-                    <div class="widget-subheading"><i>Lote : {{prod.lote}} Qtd.: {{prod.qtd}}</i></div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
       <div class="card-footer">
         <small class="text-muted">
-          Total: {{ _detalheProdutoFarmLocal?.[_detalheProdutoFarmLocal.length-1]?.total  }}
+          Total: {{ _detalheProdutoFarmLocal?.[_detalheProdutoFarmLocal.length - 1]?.total }}
         </small>
       </div>
-
-
     </div>
   </div>
+
 </div>
 
 <div class="row p-1 ">
