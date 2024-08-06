@@ -13,6 +13,7 @@ import { finDRE } from '../../models/dash-fin/finDRE.model';
 import { finContasRPService } from '../../services/dash-fin/finContasRP.service';
 import { CardContasComponent } from "./card-contas/card-contas.component";
 import { CardBalanceteComponent } from "./card-balancete/card-balancete.component";
+import { CardDreComponent } from "./card-dre/card-dre.component";
 
 Chart.register(...registerables);
 
@@ -21,25 +22,25 @@ Chart.register(...registerables);
   standalone: true,
   templateUrl: './dash-fin.component.html',
   styleUrl: './dash-fin.component.scss',
-  imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, CardContasComponent, CardBalanceteComponent]
+  imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, CardContasComponent, CardBalanceteComponent, CardDreComponent]
 })
 export class DashFinComponent implements OnInit {
-  _dreGrupo : any[] =[];
-  _dreSubgrupo : any[] =[];
-  _dreCC: any[] =[];
-  _resExercicio = '';
-  _resultado = 0;
+  // _dreGrupo : any[] =[];
+  // _dreSubgrupo : any[] =[];
+  // _dreCC: any[] =[];
+  // _resExercicio = '';
+  // _resultado = 0;
 
-  _resReceita = '';
-  _resDespesa = '';
-  _resDespFin = '';
-  color = globalCoresNome;
+  // _resReceita = '';
+  // _resDespesa = '';
+  // _resDespFin = '';
+  // color = globalCoresNome;
 
   // _PorcentContasRec = 0;
   // _PorcentContasPag = 0;
 
   constructor(//private finBalancete:finBalanceteService,
-              public finDRE : finDREGrupoService,
+              // public finDRE : finDREGrupoService,
               // private finContasRP : finContasRPService,
 
 
@@ -48,98 +49,98 @@ export class DashFinComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getFinBalancete('2024');
-    this.getDREGrupo('2024');
-    this.getDRESubgrupo('2024');
-    this.getDRECC('2024');
+    // this.getDREGrupo('2024');
+    // this.getDRESubgrupo('2024');
+    // this.getDRECC('2024');
     // this.getContasRP();
   }
 
-  async getDREGrupo(ano:string){
-    (await this.finDRE.getDREGrupo(ano)).subscribe(dreBody=>{
-      let dre :any[]=[];
-      dre = dre.concat(dreBody.body)
+  // async getDREGrupo(ano:string){
+  //   (await this.finDRE.getDREGrupo(ano)).subscribe(dreBody=>{
+  //     let dre :any[]=[];
+  //     dre = dre.concat(dreBody.body)
 
-      let resReceita =0;
-      let resDespesa = 0;
-      let resDespFin = 0;
+  //     let resReceita =0;
+  //     let resDespesa = 0;
+  //     let resDespFin = 0;
 
-      for(let i=0;i<dre.length;i++){
-        switch(dre[i].tipo)
-        {
-          case 'Despesas':
-            resDespesa += Number(dre[i].total);
-            this._resultado = this._resultado - Number(dre[i].total);
-            break;
-          case 'Despesas - Financeiras' :
-            resDespFin += Number(dre[i].total);
-            this._resultado = this._resultado - Number(dre[i].total);
-            break;
-          case 'Receitas':
-            resReceita += Number(dre[i].total);
-            this._resultado = this._resultado + Number(dre[i].total);
-            break;
-        }
-        this._resReceita = moneyReduct(resReceita)
-        this._resDespesa = moneyReduct(resDespesa)
-        this._resDespFin = moneyReduct(resDespFin)
-        let item:finDRE={tipo:dre[i].tipo,
-                         descricao:dre[i].descricao,
-                         total:moneyReduct(Number(dre[i].total))}
-        this._dreGrupo.push(item);
-      }
-      this._resExercicio = moneyReduct(this._resultado);
-    })
-  }
-  async getDRESubgrupo(ano:string){
-    (await this.finDRE.getDRESubgrupo(ano)).subscribe(dreBody=>{
+  //     for(let i=0;i<dre.length;i++){
+  //       switch(dre[i].tipo)
+  //       {
+  //         case 'Despesas':
+  //           resDespesa += Number(dre[i].total);
+  //           this._resultado = this._resultado - Number(dre[i].total);
+  //           break;
+  //         case 'Despesas - Financeiras' :
+  //           resDespFin += Number(dre[i].total);
+  //           this._resultado = this._resultado - Number(dre[i].total);
+  //           break;
+  //         case 'Receitas':
+  //           resReceita += Number(dre[i].total);
+  //           this._resultado = this._resultado + Number(dre[i].total);
+  //           break;
+  //       }
+  //       this._resReceita = moneyReduct(resReceita)
+  //       this._resDespesa = moneyReduct(resDespesa)
+  //       this._resDespFin = moneyReduct(resDespFin)
+  //       let item:finDRE={tipo:dre[i].tipo,
+  //                        descricao:dre[i].descricao,
+  //                        total:moneyReduct(Number(dre[i].total))}
+  //       this._dreGrupo.push(item);
+  //     }
+  //     this._resExercicio = moneyReduct(this._resultado);
+  //   })
+  // }
+  // async getDRESubgrupo(ano:string){
+  //   (await this.finDRE.getDRESubgrupo(ano)).subscribe(dreBody=>{
 
-      let dre :any[]=[];
-      dre = dre.concat(dreBody.body)
+  //     let dre :any[]=[];
+  //     dre = dre.concat(dreBody.body)
 
-      for(let i=0;i<dre.length;i++){
-        let item:finDRE={tipo:dre[i].tipo,
-                         descricao:dre[i].descricao,
-                         total:moneyReduct(Number(dre[i].total))}
-        this._dreSubgrupo.push(item);
-      }
-    })
-  }
-  async getDRECC(ano:string){
-    (await this.finDRE.getDRECC(ano)).subscribe(dreBody=>{
+  //     for(let i=0;i<dre.length;i++){
+  //       let item:finDRE={tipo:dre[i].tipo,
+  //                        descricao:dre[i].descricao,
+  //                        total:moneyReduct(Number(dre[i].total))}
+  //       this._dreSubgrupo.push(item);
+  //     }
+  //   })
+  // }
+  // async getDRECC(ano:string){
+  //   (await this.finDRE.getDRECC(ano)).subscribe(dreBody=>{
 
-      let dre :any[]=[];
-      dre = dre.concat(dreBody.body)
+  //     let dre :any[]=[];
+  //     dre = dre.concat(dreBody.body)
 
-      for(let i=0;i<dre.length;i++){
-        let item:finDRE={tipo:dre[i].tipo,
-                         descricao:dre[i].descricao,
-                         total:moneyReduct(Number(dre[i].total))}
-        this._dreCC.push(item);
-      }
-    })
-  }
+  //     for(let i=0;i<dre.length;i++){
+  //       let item:finDRE={tipo:dre[i].tipo,
+  //                        descricao:dre[i].descricao,
+  //                        total:moneyReduct(Number(dre[i].total))}
+  //       this._dreCC.push(item);
+  //     }
+  //   })
+  // }
 
-  onClick(idx : number) {
-    const collDREGrupo = document.querySelector("#collDREGrupo") as HTMLDivElement;
-    const collDRESubgrupo = document.querySelector("#collDRESubgrupo") as HTMLDivElement;
-    const collDRECCusto = document.querySelector("#collDRECCusto") as HTMLDivElement;
+  // onClick(idx : number) {
+  //   const collDREGrupo = document.querySelector("#collDREGrupo") as HTMLDivElement;
+  //   const collDRESubgrupo = document.querySelector("#collDRESubgrupo") as HTMLDivElement;
+  //   const collDRECCusto = document.querySelector("#collDRECCusto") as HTMLDivElement;
 
-    switch(idx)
-    {
-      case 1 :
-        collDRESubgrupo?.classList.remove('show');
-        collDRECCusto?.classList.remove('show');
-        break;
-      case 2 :
-        collDREGrupo?.classList.remove('show');
-        collDRECCusto?.classList.remove('show');
-        break;
-      case 3 :
-        collDREGrupo?.classList.remove('show');
-        collDRESubgrupo?.classList.remove('show');
-        break;
-    }
-  }
+  //   switch(idx)
+  //   {
+  //     case 1 :
+  //       collDRESubgrupo?.classList.remove('show');
+  //       collDRECCusto?.classList.remove('show');
+  //       break;
+  //     case 2 :
+  //       collDREGrupo?.classList.remove('show');
+  //       collDRECCusto?.classList.remove('show');
+  //       break;
+  //     case 3 :
+  //       collDREGrupo?.classList.remove('show');
+  //       collDRESubgrupo?.classList.remove('show');
+  //       break;
+  //   }
+  // }
 
   // async getFinBalancete(ano:string){
   //   (await this.finBalancete.getfinBalancete(ano)).subscribe(dados=>{
