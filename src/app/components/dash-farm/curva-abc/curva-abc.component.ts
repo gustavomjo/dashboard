@@ -11,6 +11,7 @@ import { farmDetalheProdutoService } from '../../../services/dash-farm/farmDetal
 import { differenceInDays, parseISO } from 'date-fns';
 import moment from 'moment';
 import { Chart, registerables } from 'chart.js';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 Chart.register(...registerables);
 
@@ -18,6 +19,7 @@ Chart.register(...registerables);
   selector: 'app-curva-abc',
   standalone: true,
   imports: [MatFormFieldModule, MatDatepickerModule,  MatDatepickerModule, FormsModule, searchModule, CommonModule],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './curva-abc.component.html',
   styleUrl: './curva-abc.component.scss'
 })
