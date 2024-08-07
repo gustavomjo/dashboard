@@ -18,6 +18,7 @@ import { CardAtendService } from '../../services/dash/cardatend.service';
 import { Router, NavigationEnd  } from '@angular/router';
 import { filter } from 'rxjs';
 import { moneyReduct,globalData,globalCores } from '../../globals';
+import { CardLeitosComponent } from './card-leitos/card-leitos.component';
 
 
 Chart.register(...registerables);
@@ -29,7 +30,9 @@ Chart.register(...registerables);
     templateUrl: './dash.component.html',
     styleUrl: './dash.component.scss',
     providers: [provideNativeDateAdapter()],
-    imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule]
+    imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule,
+              CardLeitosComponent
+    ]
 })
 export class DashComponent implements OnInit{
   mesanoDe = new Date();
@@ -85,7 +88,7 @@ export class DashComponent implements OnInit{
     this.getReceitasAPI(dtDe,dtAte);
     this.getDespesaAPI(dtDe,dtAte);
     this.getPrazoRecDAPI(dtDe,dtAte);
-    this.getCardLeitos();
+    // this.getCardLeitos();
     this.getPrazoRecAnoAPI();
     this.getCardFaturamento();
     this.getCardAtend()
@@ -314,29 +317,29 @@ export class DashComponent implements OnInit{
   //-------------------------------------------------------------------
 
   //------------------------------Leitos----------------------------------
-  async getCardLeitos(){
-    (await this.cardLeitos.getCardLeitos()).subscribe(dados=>{
+  // async getCardLeitos(){
+  //   (await this.cardLeitos.getCardLeitos()).subscribe(dados=>{
 
-      let card :any[]=[];
-      card = card.concat(dados.body)
+  //     let card :any[]=[];
+  //     card = card.concat(dados.body)
 
-      let v = ( (card[0].total*100)/card[2].total ).toFixed(2);
-      let lbPorcent = document.getElementById('lbporcent') as HTMLElement;
+  //     let v = ( (card[0].total*100)/card[2].total ).toFixed(2);
+  //     let lbPorcent = document.getElementById('lbporcent') as HTMLElement;
 
-      let lbLeitosD = document.getElementById('lbLeitosD') as HTMLElement;
-      lbLeitosD.innerHTML = card[0].total.toString();
+  //     let lbLeitosD = document.getElementById('lbLeitosD') as HTMLElement;
+  //     lbLeitosD.innerHTML = card[0].total.toString();
 
 
-      let v1 = ( (card[1].total*100)/card[2].total ).toFixed(2);
-      let lbPorcent1 = document.getElementById('lbporcentO') as HTMLElement;
+  //     let v1 = ( (card[1].total*100)/card[2].total ).toFixed(2);
+  //     let lbPorcent1 = document.getElementById('lbporcentO') as HTMLElement;
 
-      let lbLeitosO = document.getElementById('lbLeitosO') as HTMLElement;
-      lbLeitosO.innerHTML = card[1].total.toString();
+  //     let lbLeitosO = document.getElementById('lbLeitosO') as HTMLElement;
+  //     lbLeitosO.innerHTML = card[1].total.toString();
 
-      let lbLeitosT = document.getElementById('lbLeitosT') as HTMLElement;
-      lbLeitosT.innerHTML = card[2].total.toString();
-    })
-  }
+  //     let lbLeitosT = document.getElementById('lbLeitosT') as HTMLElement;
+  //     lbLeitosT.innerHTML = card[2].total.toString();
+  //   })
+  // }
 
 
   //---------------------------faturamento-----------------------------
