@@ -23,6 +23,8 @@ import { CardFaturamentoComponent } from './card-faturamento/card-faturamento.co
 import { CardAtendimentosComponent } from './card-atendimentos/card-atendimentos.component';
 import { CardReceitaNaturezaComponent } from './card-receita-natureza/card-receita-natureza.component';
 import { CardCompDespesasComponent } from './card-comp-despesas/card-comp-despesas.component';
+import { CardPrazoMedRecebMesComponent } from './card-prazo-med-receb-mes/card-prazo-med-receb-mes.component';
+import { CardPrazoMedRecebAnoComponent } from './card-prazo-med-receb-ano/card-prazo-med-receb-ano.component';
 
 
 Chart.register(...registerables);
@@ -36,7 +38,8 @@ Chart.register(...registerables);
     providers: [provideNativeDateAdapter()],
     imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule,
               CardLeitosComponent,CardFaturamentoComponent,CardAtendimentosComponent,
-              CardReceitaNaturezaComponent,CardCompDespesasComponent
+              CardReceitaNaturezaComponent,CardCompDespesasComponent,
+              CardPrazoMedRecebMesComponent,CardPrazoMedRecebAnoComponent
     ]
 })
 export class DashComponent implements OnInit{
@@ -92,9 +95,9 @@ export class DashComponent implements OnInit{
   public upDash(dtDe: string,dtAte: string){
     // this.getReceitasAPI(dtDe,dtAte);
     // this.getDespesaAPI(dtDe,dtAte);
-    this.getPrazoRecDAPI(dtDe,dtAte);
+    // this.getPrazoRecDAPI(dtDe,dtAte);
     // this.getCardLeitos();
-    this.getPrazoRecAnoAPI();
+    // this.getPrazoRecAnoAPI();
     // this.getCardFaturamento();
     // this.getCardAtend()
   }
@@ -225,98 +228,98 @@ export class DashComponent implements OnInit{
 //-------------------------------------------------------------------
 //--------------------------PRAZO RECEB. DIAS------------------------
 //--------------------------_rcPrazoRecD-----------------------------
-  async getPrazoRecDAPI(dataDe : string,dataAte : string){
-    (await this.prazoRecDService.getPrazoRecD(dataDe,dataAte)).subscribe(dados =>{
+  // async getPrazoRecDAPI(dataDe : string,dataAte : string){
+  //   (await this.prazoRecDService.getPrazoRecD(dataDe,dataAte)).subscribe(dados =>{
 
-      let prazo :any[]=[];
-      prazo = prazo.concat(dados.body)
+  //     let prazo :any[]=[];
+  //     prazo = prazo.concat(dados.body)
 
-      let media :any[]=[];
-      let mesano :any[]=[];
-      if(prazo != null){
-        for(let i=0;i< prazo.length;i++){
+  //     let media :any[]=[];
+  //     let mesano :any[]=[];
+  //     if(prazo != null){
+  //       for(let i=0;i< prazo.length;i++){
 
-          mesano.push(prazo[i].mesano.substring(5,7)+'/'+prazo[i].mesano.substring(0,4));
-          media.push(prazo[i].media);
-        }
-        this._rcPrazoRecD(mesano,media);
+  //         mesano.push(prazo[i].mesano.substring(5,7)+'/'+prazo[i].mesano.substring(0,4));
+  //         media.push(prazo[i].media);
+  //       }
+  //       this._rcPrazoRecD(mesano,media);
 
-      }
-    })
+  //     }
+  //   })
 
-  }
-  _rcPrazoRecD(_lbmesano:any,_media:any){
-    let chartExist = Chart.getChart("_rcPrazoRecD"); // <canvas> id
-    if (chartExist != undefined)
-      chartExist.destroy();
+  // }
+  // _rcPrazoRecD(_lbmesano:any,_media:any){
+  //   let chartExist = Chart.getChart("_rcPrazoRecD"); // <canvas> id
+  //   if (chartExist != undefined)
+  //     chartExist.destroy();
 
-    const myChart = new Chart("_rcPrazoRecD", {
-      type: 'line',
-      data: {
-        labels: _lbmesano,
-        datasets: [{
-          label: 'Prazo Médio',
-          data:  _media,
-          borderColor :globalCores.gbCores[2],
-          backgroundColor:globalCores.gbCoresTransp[2],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+  //   const myChart = new Chart("_rcPrazoRecD", {
+  //     type: 'line',
+  //     data: {
+  //       labels: _lbmesano,
+  //       datasets: [{
+  //         label: 'Prazo Médio',
+  //         data:  _media,
+  //         borderColor :globalCores.gbCores[2],
+  //         backgroundColor:globalCores.gbCoresTransp[2],
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true
+  //         }
+  //       }
+  //     }
+  //   });
 
-  }
+  // }
 //-------------------------------------------------------------------
 //--------------------------PRAZO RECEB. ANO------------------------
 //--------------------------_rcPrazoRecAno-----------------------------
-  async getPrazoRecAnoAPI(){
-    (await this.prazoRecAnoService.getPrazoRecAno()).subscribe(dados =>{
-      let prazoAno :any[]=[];
-      prazoAno = prazoAno.concat(dados.body)
+  // async getPrazoRecAnoAPI(){
+  //   (await this.prazoRecAnoService.getPrazoRecAno()).subscribe(dados =>{
+  //     let prazoAno :any[]=[];
+  //     prazoAno = prazoAno.concat(dados.body)
 
-      let media :any[]=[];
-      let mesano :any[]=[];
-      if(prazoAno != null){
-        for(let i=0;i< prazoAno.length;i++){
-          mesano.push(prazoAno[i].mesano);
-          media.push(prazoAno[i].media);
-        }
-        this._rcPrazoRecAno(mesano,media);
-      }
-    })
-  }
-  _rcPrazoRecAno(_mesano:any,_media:any){
-    let chartExist = Chart.getChart("_rcPrazoRecAno"); // <canvas> id
-    if (chartExist != undefined)
-      chartExist.destroy();
+  //     let media :any[]=[];
+  //     let mesano :any[]=[];
+  //     if(prazoAno != null){
+  //       for(let i=0;i< prazoAno.length;i++){
+  //         mesano.push(prazoAno[i].mesano);
+  //         media.push(prazoAno[i].media);
+  //       }
+  //       this._rcPrazoRecAno(mesano,media);
+  //     }
+  //   })
+  // }
+  // _rcPrazoRecAno(_mesano:any,_media:any){
+  //   let chartExist = Chart.getChart("_rcPrazoRecAno"); // <canvas> id
+  //   if (chartExist != undefined)
+  //     chartExist.destroy();
 
-    const myChart = new Chart("_rcPrazoRecAno", {
-      type: 'bar',
-      data: {
-        labels: _mesano,
-        datasets: [{
-          label: 'Média do período',
-          data:  _media,
-          backgroundColor:[globalCores.gbCores[2],globalCores.gbCores[0]],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  }
+  //   const myChart = new Chart("_rcPrazoRecAno", {
+  //     type: 'bar',
+  //     data: {
+  //       labels: _mesano,
+  //       datasets: [{
+  //         label: 'Média do período',
+  //         data:  _media,
+  //         backgroundColor:[globalCores.gbCores[2],globalCores.gbCores[0]],
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
   //-------------------------------------------------------------------
   //------------------------------Cards TOP----------------------------
   //-------------------------------------------------------------------
