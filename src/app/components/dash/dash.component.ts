@@ -19,6 +19,7 @@ import { Router, NavigationEnd  } from '@angular/router';
 import { filter } from 'rxjs';
 import { moneyReduct,globalData,globalCores } from '../../globals';
 import { CardLeitosComponent } from './card-leitos/card-leitos.component';
+import { CardFaturamentoComponent } from './card-faturamento/card-faturamento.component';
 
 
 Chart.register(...registerables);
@@ -31,7 +32,7 @@ Chart.register(...registerables);
     styleUrl: './dash.component.scss',
     providers: [provideNativeDateAdapter()],
     imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule,
-              CardLeitosComponent
+              CardLeitosComponent,CardFaturamentoComponent
     ]
 })
 export class DashComponent implements OnInit{
@@ -90,7 +91,7 @@ export class DashComponent implements OnInit{
     this.getPrazoRecDAPI(dtDe,dtAte);
     // this.getCardLeitos();
     this.getPrazoRecAnoAPI();
-    this.getCardFaturamento();
+    // this.getCardFaturamento();
     this.getCardAtend()
   }
 
@@ -343,28 +344,28 @@ export class DashComponent implements OnInit{
 
 
   //---------------------------faturamento-----------------------------
-  async getCardFaturamento(){
-    (await this.cardFaturamento.getCardFaturamento()).subscribe(dados =>{
-      let card :any[]=[];
-      card = card.concat(dados.body)
+  // async getCardFaturamento(){
+  //   (await this.cardFaturamento.getCardFaturamento()).subscribe(dados =>{
+  //     let card :any[]=[];
+  //     card = card.concat(dados.body)
 
-      let arr : any[]=['', 'K', 'M', 'B', 'T', 'q', 'Q'];
-      let total = 0.00;
-      let cont =0;
+  //     let arr : any[]=['', 'K', 'M', 'B', 'T', 'q', 'Q'];
+  //     let total = 0.00;
+  //     let cont =0;
 
-      for(let i=0;i<card.length;i++){
-        cont =0;
-        total =card[i].total;
-        card[i].human = moneyReduct(total);
-      }
+  //     for(let i=0;i<card.length;i++){
+  //       cont =0;
+  //       total =card[i].total;
+  //       card[i].human = moneyReduct(total);
+  //     }
 
-      let cardfat_mes = document.getElementById('cardfat_mes') as HTMLElement;
-      cardfat_mes.innerHTML =card[0].human;
-      let cardfat_mesp = document.getElementById('cardfat_mesp') as HTMLElement;
-      let cardfat_ano = document.getElementById('cardfat_ano') as HTMLElement;
-      cardfat_ano.innerHTML =card[2].human;
-    })
-  }
+  //     let cardfat_mes = document.getElementById('cardfat_mes') as HTMLElement;
+  //     cardfat_mes.innerHTML =card[0].human;
+  //     let cardfat_mesp = document.getElementById('cardfat_mesp') as HTMLElement;
+  //     let cardfat_ano = document.getElementById('cardfat_ano') as HTMLElement;
+  //     cardfat_ano.innerHTML =card[2].human;
+  //   })
+  // }
   //---------------------------Card Atendimento-----------------------------
   async getCardAtend(){
     (await this.cardAtend.getCardAtend()).subscribe(dados =>{
