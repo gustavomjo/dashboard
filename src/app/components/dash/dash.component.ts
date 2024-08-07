@@ -20,6 +20,7 @@ import { filter } from 'rxjs';
 import { moneyReduct,globalData,globalCores } from '../../globals';
 import { CardLeitosComponent } from './card-leitos/card-leitos.component';
 import { CardFaturamentoComponent } from './card-faturamento/card-faturamento.component';
+import { CardAtendimentosComponent } from './card-atendimentos/card-atendimentos.component';
 
 
 Chart.register(...registerables);
@@ -32,7 +33,7 @@ Chart.register(...registerables);
     styleUrl: './dash.component.scss',
     providers: [provideNativeDateAdapter()],
     imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule,
-              CardLeitosComponent,CardFaturamentoComponent
+              CardLeitosComponent,CardFaturamentoComponent,CardAtendimentosComponent
     ]
 })
 export class DashComponent implements OnInit{
@@ -92,7 +93,7 @@ export class DashComponent implements OnInit{
     // this.getCardLeitos();
     this.getPrazoRecAnoAPI();
     // this.getCardFaturamento();
-    this.getCardAtend()
+    // this.getCardAtend()
   }
 
   public onDateIn(event: any): void {
@@ -367,59 +368,59 @@ export class DashComponent implements OnInit{
   //   })
   // }
   //---------------------------Card Atendimento-----------------------------
-  async getCardAtend(){
-    (await this.cardAtend.getCardAtend()).subscribe(dados =>{
-      let card :any[]=[];
-      card = card.concat(dados.body)
+  // async getCardAtend(){
+  //   (await this.cardAtend.getCardAtend()).subscribe(dados =>{
+  //     let card :any[]=[];
+  //     card = card.concat(dados.body)
 
-      let cardConsM = document.getElementById('cardConsultaM') as HTMLElement;
-      let cardConsA = document.getElementById('cardConsultaA') as HTMLElement;
-      let cardIntM = document.getElementById('cardIntM') as HTMLElement;
-      let cardIntA = document.getElementById('cardIntA') as HTMLElement;
-      let cardSADTM = document.getElementById('cardSADTM') as HTMLElement;
-      let cardSADTA = document.getElementById('cardSADTA') as HTMLElement;
+  //     let cardConsM = document.getElementById('cardConsultaM') as HTMLElement;
+  //     let cardConsA = document.getElementById('cardConsultaA') as HTMLElement;
+  //     let cardIntM = document.getElementById('cardIntM') as HTMLElement;
+  //     let cardIntA = document.getElementById('cardIntA') as HTMLElement;
+  //     let cardSADTM = document.getElementById('cardSADTM') as HTMLElement;
+  //     let cardSADTA = document.getElementById('cardSADTA') as HTMLElement;
 
-      cardConsM.innerHTML = '0';
-      cardConsA.innerHTML = '0';
-      cardIntM.innerHTML = '0';
-      cardIntA.innerHTML = '0';
-      cardSADTM.innerHTML = '0';
-      cardSADTA.innerHTML = '0';
+  //     cardConsM.innerHTML = '0';
+  //     cardConsA.innerHTML = '0';
+  //     cardIntM.innerHTML = '0';
+  //     cardIntA.innerHTML = '0';
+  //     cardSADTM.innerHTML = '0';
+  //     cardSADTA.innerHTML = '0';
 
-      for(let i=0;i<card.length;i++){
-        switch (card[i].tipo) {
-          case 'P':
-            switch (card[i].periodo) {
-              case 'Este Mes':
-                cardConsM.innerHTML = card[i].total.toString();
-                break;
-              case 'Este Ano':
-                cardConsA.innerHTML = card[i].total.toString();
-                break;
-            }
-            break;
-          case 'I':
-            switch (card[i].periodo) {
-              case 'Este Mes':
-                cardIntM.innerHTML = card[i].total.toString();
-                break;
-              case 'Este Ano':
-                cardIntA.innerHTML = card[i].total.toString();
-                break;
-            }
-            break;
-          case 'S':
-            switch (card[i].periodo) {
-              case 'Este Mes':
-                cardSADTM.innerHTML = card[i].total.toString();
-                break;
-              case 'Este Ano':
-                cardSADTA.innerHTML = card[i].total.toString();
-                break;
-            }
-            break;
-        }
-      }
-    })
-  }
+  //     for(let i=0;i<card.length;i++){
+  //       switch (card[i].tipo) {
+  //         case 'P':
+  //           switch (card[i].periodo) {
+  //             case 'Este Mes':
+  //               cardConsM.innerHTML = card[i].total.toString();
+  //               break;
+  //             case 'Este Ano':
+  //               cardConsA.innerHTML = card[i].total.toString();
+  //               break;
+  //           }
+  //           break;
+  //         case 'I':
+  //           switch (card[i].periodo) {
+  //             case 'Este Mes':
+  //               cardIntM.innerHTML = card[i].total.toString();
+  //               break;
+  //             case 'Este Ano':
+  //               cardIntA.innerHTML = card[i].total.toString();
+  //               break;
+  //           }
+  //           break;
+  //         case 'S':
+  //           switch (card[i].periodo) {
+  //             case 'Este Mes':
+  //               cardSADTM.innerHTML = card[i].total.toString();
+  //               break;
+  //             case 'Este Ano':
+  //               cardSADTA.innerHTML = card[i].total.toString();
+  //               break;
+  //           }
+  //           break;
+  //       }
+  //     }
+  //   })
+  // }
 }
