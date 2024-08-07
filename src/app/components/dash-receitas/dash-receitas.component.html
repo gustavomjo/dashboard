@@ -1,78 +1,59 @@
-
-<nav id="contentDash" >
+<nav id="contentDash">
   <nav class="px-3">
-  <!-- ===============================================FINAL CARDS========================================================= -->
+    <div class="row">
+      <!-- First Column -->
 
-    <div class="row ">
-      <div class=" mt-1 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6  ">
-        <div class="card h-100">
-          <div class="card-body h-100">
-            <div class="row">
-              <div class="mt-1 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                <app-card-cirurgias-realizadas></app-card-cirurgias-realizadas>
-              </div>
-              <div class="mt-1 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="row d-flex justify-content-center align-items-center">
-                  <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
-                     <app-cirurgias-relizadas-conv-top></app-cirurgias-relizadas-conv-top>
-                  </div>
-                </div>
-              </div>
+      <div class="mt-1 col-12 col-xl-6 d-flex flex-column">
+        <div class="card flex-grow-1">
+          <div class="card-body d-flex flex-column">
+            <div class="border-translucent flex-grow-1">
+              <app-card-cirurgias-realizadas></app-card-cirurgias-realizadas>
+              <div class="d-flex align-items-start mb-1"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class=" mt-1 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6  ">
-        <div class="card h-100">
-          <div class="card-body h-100">
-            <div class=" border-translucent">
+      <!-- Second Column -->
+      <div class="mt-1 col-12 col-xl-6 d-flex flex-column">
+        <div class="card flex-grow-1">
+          <div class="card-body d-flex flex-column">
+            <div class="border-translucent flex-grow-1">
               <app-receitas></app-receitas>
-              <div class="d-flex align-items-start mb-1">
-              </div>
+              <div class="d-flex align-items-start mb-1"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class=" mt-1 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12  ">
-        <div class="card h-100">
-          <div class="card-body h-100">
-
-            <div class="row">
-              <div class="mt-1 col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-
-                <div class="row d-flex justify-content-center align-items-center">
-                  <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <!-- <canvas id="_rcIntConv"></canvas> -->
-                     <app-int-top-conv></app-int-top-conv>
-                  </div>
+      <div class="mt-1 col-12 d-flex flex-column">
+        <div class="card flex-grow-1">
+          <div class="card-body d-flex flex-column">
+            <div class="row flex-grow-1">
+              <div class="mt-1 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 d-flex align-items-center justify-content-center">
+                <div class="w-100">
+                  <app-int-top-conv></app-int-top-conv>
                 </div>
               </div>
-              <div class="mt-1 col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                <div class="row d-flex justify-content-center align-items-center">
-                  <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <!-- <canvas id="_rcConsConv"></canvas> -->
-                     <app-cons-top-conv></app-cons-top-conv>
-                  </div>
+              <div class="mt-1 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 d-flex align-items-center justify-content-center">
+                <div class="w-100">
+                  <app-cons-top-conv></app-cons-top-conv>
                 </div>
               </div>
-              <div class="mt-1 col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-
-                <div class="row d-flex justify-content-center align-items-center">
-                  <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <!-- <canvas id="_rcSADTConv"></canvas> -->
-                     <app-sadt-top-conv></app-sadt-top-conv>
-                  </div>
+              <div class="mt-1 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 d-flex align-items-center justify-content-center">
+                <div class="w-100">
+                  <app-sadt-top-conv></app-sadt-top-conv>
+                </div>
+              </div>
+              <div class="mt-1 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 d-flex align-items-center justify-content-center">
+                <div class="w-100">
+                  <app-cirurgias-relizadas-conv-top></app-cirurgias-relizadas-conv-top>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </nav>
 </nav>
-
-
