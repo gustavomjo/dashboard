@@ -22,6 +22,7 @@ import { CardLeitosComponent } from './card-leitos/card-leitos.component';
 import { CardFaturamentoComponent } from './card-faturamento/card-faturamento.component';
 import { CardAtendimentosComponent } from './card-atendimentos/card-atendimentos.component';
 import { CardReceitaNaturezaComponent } from './card-receita-natureza/card-receita-natureza.component';
+import { CardCompDespesasComponent } from './card-comp-despesas/card-comp-despesas.component';
 
 
 Chart.register(...registerables);
@@ -35,7 +36,7 @@ Chart.register(...registerables);
     providers: [provideNativeDateAdapter()],
     imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,CarouselModule,
               CardLeitosComponent,CardFaturamentoComponent,CardAtendimentosComponent,
-              CardReceitaNaturezaComponent
+              CardReceitaNaturezaComponent,CardCompDespesasComponent
     ]
 })
 export class DashComponent implements OnInit{
@@ -90,7 +91,7 @@ export class DashComponent implements OnInit{
 
   public upDash(dtDe: string,dtAte: string){
     // this.getReceitasAPI(dtDe,dtAte);
-    this.getDespesaAPI(dtDe,dtAte);
+    // this.getDespesaAPI(dtDe,dtAte);
     this.getPrazoRecDAPI(dtDe,dtAte);
     // this.getCardLeitos();
     this.getPrazoRecAnoAPI();
@@ -178,48 +179,48 @@ export class DashComponent implements OnInit{
 //-------------------------------------------------------------------
 //--------------------------DESPESA----------------------------------
 //--------------------------_rcDespesa-------------------------------
-  async getDespesaAPI(dataDe : string,dataAte : string){
-    (await this.despesaService.getDespesa(dataDe,dataAte)).subscribe(dados =>{
-      let despesa :any[]=[];
-      despesa = despesa.concat(dados.body)
-      let dsDespesa :any[]=[];
-      let vrDespesa :any[]=[];
-      if(despesa != null){
-        for(let i=0;i< despesa.length;i++){
-          dsDespesa.push(despesa[i].ds_subgrupo);
-          vrDespesa.push(despesa[i].valor);
-        }
-        this._rcDespesa(dsDespesa,vrDespesa);
-      }
-    })
-  }
+  // async getDespesaAPI(dataDe : string,dataAte : string){
+  //   (await this.despesaService.getDespesa(dataDe,dataAte)).subscribe(dados =>{
+  //     let despesa :any[]=[];
+  //     despesa = despesa.concat(dados.body)
+  //     let dsDespesa :any[]=[];
+  //     let vrDespesa :any[]=[];
+  //     if(despesa != null){
+  //       for(let i=0;i< despesa.length;i++){
+  //         dsDespesa.push(despesa[i].ds_subgrupo);
+  //         vrDespesa.push(despesa[i].valor);
+  //       }
+  //       this._rcDespesa(dsDespesa,vrDespesa);
+  //     }
+  //   })
+  // }
 
-  _rcDespesa(_lbDespesa:any,_vrDespesa:any){
-    let chartExist = Chart.getChart("_rcDespesa"); // <canvas> id
-    if (chartExist != undefined)
-      chartExist.destroy();
+  // _rcDespesa(_lbDespesa:any,_vrDespesa:any){
+  //   let chartExist = Chart.getChart("_rcDespesa"); // <canvas> id
+  //   if (chartExist != undefined)
+  //     chartExist.destroy();
 
-    const myChart = new Chart("_rcDespesa", {
-      type: 'bar',
-      data: {
-        labels: _lbDespesa,
-        datasets: [{
-          label: 'Composição de despesas',
-          data:  _vrDespesa,
-          backgroundColor:[globalCores.gbCores[0],globalCores.gbCores[1],globalCores.gbCores[2],globalCores.gbCores[3],globalCores.gbCores[4],globalCores.gbCores[5]],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+  //   const myChart = new Chart("_rcDespesa", {
+  //     type: 'bar',
+  //     data: {
+  //       labels: _lbDespesa,
+  //       datasets: [{
+  //         label: 'Composição de despesas',
+  //         data:  _vrDespesa,
+  //         backgroundColor:[globalCores.gbCores[0],globalCores.gbCores[1],globalCores.gbCores[2],globalCores.gbCores[3],globalCores.gbCores[4],globalCores.gbCores[5]],
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true
+  //         }
+  //       }
+  //     }
+  //   });
 
-  }
+  // }
 
 //-------------------------------------------------------------------
 //--------------------------PRAZO RECEB. DIAS------------------------
