@@ -14,6 +14,7 @@ import { recIntConvService } from '../../services/dash-receitas/recIntConv.servi
 import { globalData,globalCores,moneyReduct,globalVars  } from '../../globals';
 import { CardCirurgiasRealizadasComponent } from './card-cirurgias-realizadas/card-cirurgias-realizadas.component';
 import { CirurgiasRelizadasConvTopComponent } from './cirurgias-relizadas-conv-top/cirurgias-relizadas-conv-top.component';
+import { ReceitasComponent } from './receitas/receitas.component';
 
 
 Chart.register(...registerables);
@@ -24,7 +25,7 @@ Chart.register(...registerables);
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './dash-receitas.component.html',
   styleUrl: './dash-receitas.component.scss',
-  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, CardCirurgiasRealizadasComponent, CirurgiasRelizadasConvTopComponent ]
+  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, CardCirurgiasRealizadasComponent, CirurgiasRelizadasConvTopComponent, ReceitasComponent ]
 })
 export class DashReceitasComponent implements OnInit{
   //variaveis de controle de data inserida no datepiker
@@ -35,7 +36,7 @@ export class DashReceitasComponent implements OnInit{
 
   constructor(//private recCirurgiasRealiService : recCirurgiasRealiService,
               //private recCirurgiasConvService : recCirurgiasConvService,
-              private recInt : recIntService,
+              // private recInt : recIntService,
               private recIntConv : recIntConvService,
               private BreakpointObserver: BreakpointObserver
   ){
@@ -46,7 +47,7 @@ export class DashReceitasComponent implements OnInit{
   ngOnInit(): void {
     //this.getRecCirurgiasReali(globalData.gbDataHoje,globalData.gbDataHoje);
     //this.getReceitasConv(globalData.gbDataHoje,globalData.gbDataHoje);
-    this.getRecInt(globalData.gbDataHoje,globalData.gbDataHoje);
+    // this.getRecInt(globalData.gbDataHoje,globalData.gbDataHoje);
     this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'I');
     this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'P');
     this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'S');
@@ -193,82 +194,82 @@ export class DashReceitasComponent implements OnInit{
   //   })
   // }
 
-  async getRecInt(dataDe : string,dataAte : string){
-    (await this.recInt.getRecInt(dataDe,dataAte)).subscribe(dados =>{
-      let rec : any[]=[];
-      rec = rec.concat(dados.body)
+  // async getRecInt(dataDe : string,dataAte : string){
+  //   (await this.recInt.getRecInt(dataDe,dataAte)).subscribe(dados =>{
+  //     let rec : any[]=[];
+  //     rec = rec.concat(dados.body)
 
-      let mesano :any[]=[];
-      let tipo :any[]=[];
-      let totalI : any[]=[];
-      let totalP : any[]=[];
-      let totalS : any[]=[];
+  //     let mesano :any[]=[];
+  //     let tipo :any[]=[];
+  //     let totalI : any[]=[];
+  //     let totalP : any[]=[];
+  //     let totalS : any[]=[];
 
-      for(let i=0;i<rec.length;i++){
-        if( (i==0) || (rec[i-1].mes_ano != rec[i].mes_ano) ){
-          mesano.push(globalData.gbMeses[parseInt(rec[i].mes_ano.substring(8,10))-1]+'/'+rec[i].mes_ano.substring(0,4));
-        }
-        tipo.push(rec[i].tipo);
-        switch(rec[i].tipo) {
-          case 'I':
-            totalI.push(rec[i].total);
-            break;
-          case 'P':
-            totalP.push(rec[i].total);
-            break;
-          case 'S':
-            totalS.push(rec[i].total);
-            break;
-        }
-      }
-      this._rcRecInt(mesano,totalI,totalP,totalS);
-    })
-  }
+  //     for(let i=0;i<rec.length;i++){
+  //       if( (i==0) || (rec[i-1].mes_ano != rec[i].mes_ano) ){
+  //         mesano.push(globalData.gbMeses[parseInt(rec[i].mes_ano.substring(8,10))-1]+'/'+rec[i].mes_ano.substring(0,4));
+  //       }
+  //       tipo.push(rec[i].tipo);
+  //       switch(rec[i].tipo) {
+  //         case 'I':
+  //           totalI.push(rec[i].total);
+  //           break;
+  //         case 'P':
+  //           totalP.push(rec[i].total);
+  //           break;
+  //         case 'S':
+  //           totalS.push(rec[i].total);
+  //           break;
+  //       }
+  //     }
+  //     this._rcRecInt(mesano,totalI,totalP,totalS);
+  //   })
+  // }
 
-  _rcRecInt(_mesano:any,_totalI:any,_totalP:any,_totalS:any){
-    let chartExist = Chart.getChart("_rcRecInt"); // <canvas> id
-    if (chartExist != undefined)
-      chartExist.destroy();
+  // _rcRecInt(_mesano:any,_totalI:any,_totalP:any,_totalS:any){
+  //   let chartExist = Chart.getChart("_rcRecInt"); // <canvas> id
+  //   if (chartExist != undefined)
+  //     chartExist.destroy();
 
-    const data = {
-      labels: _mesano,
-      datasets: [
-        {
-          label: 'Internação',
-          data: _totalI,
-          backgroundColor:globalCores.gbCores[1],
-        },
-        {
-          label: 'Consultas',
-          data: _totalP,
-          backgroundColor:globalCores.gbCores[2],
-        },
-        {
-          label: 'SADT',
-          data: _totalS,
-          backgroundColor:globalCores.gbCores[3],
-        }
+  //   const data = {
+  //     labels: _mesano,
+  //     datasets: [
+  //       {
+  //         label: 'Internação',
+  //         data: _totalI,
+  //         backgroundColor:globalCores.gbCores[1],
+  //       },
+  //       {
+  //         label: 'Consultas',
+  //         data: _totalP,
+  //         backgroundColor:globalCores.gbCores[2],
+  //       },
+  //       {
+  //         label: 'SADT',
+  //         data: _totalS,
+  //         backgroundColor:globalCores.gbCores[3],
+  //       }
 
-      ]
-    };
+  //     ]
+  //   };
 
-    let myChart = new Chart("_rcRecInt", {
-      type: 'bar',
-      data: data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Internações/Consultas/SADT'
-          }
-        }
-      },
-    });
-  }
+  //   let myChart = new Chart("_rcRecInt", {
+  //     type: 'bar',
+  //     data: data,
+  //     options: {
+  //       responsive: true,
+  //       plugins: {
+  //         legend: {
+  //           position: 'top',
+  //         },
+  //         title: {
+  //           display: true,
+  //           text: 'Internações/Consultas/SADT'
+  //         }
+  //       }
+  //     },
+  //   });
+  // }
 
   async getIntConv(dataDe : string,dataAte : string,tipo : string){
     (await this.recIntConv.getRecIntConv(dataDe,dataAte,tipo)).subscribe(dados =>{
