@@ -13,6 +13,7 @@ import { recIntService } from '../../services/dash-receitas/recInt.service';
 import { recIntConvService } from '../../services/dash-receitas/recIntConv.service';
 import { globalData,globalCores,moneyReduct,globalVars  } from '../../globals';
 import { CardCirurgiasRealizadasComponent } from './card-cirurgias-realizadas/card-cirurgias-realizadas.component';
+import { CirurgiasRelizadasConvTopComponent } from './cirurgias-relizadas-conv-top/cirurgias-relizadas-conv-top.component';
 
 
 Chart.register(...registerables);
@@ -23,7 +24,7 @@ Chart.register(...registerables);
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './dash-receitas.component.html',
   styleUrl: './dash-receitas.component.scss',
-  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule,CardCirurgiasRealizadasComponent ]
+  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, CardCirurgiasRealizadasComponent, CirurgiasRelizadasConvTopComponent ]
 })
 export class DashReceitasComponent implements OnInit{
   //variaveis de controle de data inserida no datepiker
@@ -32,8 +33,8 @@ export class DashReceitasComponent implements OnInit{
 
   isMobile = globalVars.gbMobile;
 
-  constructor(private recCirurgiasRealiService : recCirurgiasRealiService,
-              private recCirurgiasConvService : recCirurgiasConvService,
+  constructor(//private recCirurgiasRealiService : recCirurgiasRealiService,
+              //private recCirurgiasConvService : recCirurgiasConvService,
               private recInt : recIntService,
               private recIntConv : recIntConvService,
               private BreakpointObserver: BreakpointObserver
@@ -44,7 +45,7 @@ export class DashReceitasComponent implements OnInit{
 
   ngOnInit(): void {
     //this.getRecCirurgiasReali(globalData.gbDataHoje,globalData.gbDataHoje);
-    this.getReceitasConv(globalData.gbDataHoje,globalData.gbDataHoje);
+    //this.getReceitasConv(globalData.gbDataHoje,globalData.gbDataHoje);
     this.getRecInt(globalData.gbDataHoje,globalData.gbDataHoje);
     this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'I');
     this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'P');
@@ -142,55 +143,55 @@ export class DashReceitasComponent implements OnInit{
   //   });
   // }
 
-  async getReceitasConv(dataDe : string,dataAte : string){
-    (await this.recCirurgiasConvService.getrecCirurgiasConv(dataDe,dataAte)).subscribe(dados =>{
-      let rec : any[]=[];
-      rec = rec.concat(dados.body)
+  // async getReceitasConv(dataDe : string,dataAte : string){
+  //   (await this.recCirurgiasConvService.getrecCirurgiasConv(dataDe,dataAte)).subscribe(dados =>{
+  //     let rec : any[]=[];
+  //     rec = rec.concat(dados.body)
 
-      let conv:any[]=[];
-      let total:any[]=[];
-      for(let i=0;i<rec.length;i++){
-        conv.push(rec[i].nomconv);
-        total.push(rec[i].total);
-      }
-      this._rcRecCirurgiasConv(conv,total);
-    })
-  }
+  //     let conv:any[]=[];
+  //     let total:any[]=[];
+  //     for(let i=0;i<rec.length;i++){
+  //       conv.push(rec[i].nomconv);
+  //       total.push(rec[i].total);
+  //     }
+  //     this._rcRecCirurgiasConv(conv,total);
+  //   })
+  // }
 
-  _rcRecCirurgiasConv(conv:any,total:any){
-    let chartExist = Chart.getChart("_rcRecCirurgiasConv"); // <canvas> id
-    if (chartExist != undefined)
-      chartExist.destroy();
+  // _rcRecCirurgiasConv(conv:any,total:any){
+  //   let chartExist = Chart.getChart("_rcRecCirurgiasConv"); // <canvas> id
+  //   if (chartExist != undefined)
+  //     chartExist.destroy();
 
-    const data = {
-      labels: conv,
-      datasets: [
-        {
-          //label: conv,
-          data: total,
-          backgroundColor:globalCores.gbCores
-        }
-      ]
-    };
+  //   const data = {
+  //     labels: conv,
+  //     datasets: [
+  //       {
+  //         //label: conv,
+  //         data: total,
+  //         backgroundColor:globalCores.gbCores
+  //       }
+  //     ]
+  //   };
 
-    let myChart = new Chart("_rcRecCirurgiasConv", {
-      type: 'doughnut',
-      data: data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display:false,
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Cururgias Realizadas - Top 15 Convênios'
-          }
-        }
-      },
-    })
-  }
+  //   let myChart = new Chart("_rcRecCirurgiasConv", {
+  //     type: 'doughnut',
+  //     data: data,
+  //     options: {
+  //       responsive: true,
+  //       plugins: {
+  //         legend: {
+  //           display:false,
+  //           position: 'top',
+  //         },
+  //         title: {
+  //           display: true,
+  //           text: 'Cururgias Realizadas - Top 15 Convênios'
+  //         }
+  //       }
+  //     },
+  //   })
+  // }
 
   async getRecInt(dataDe : string,dataAte : string){
     (await this.recInt.getRecInt(dataDe,dataAte)).subscribe(dados =>{
