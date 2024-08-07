@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
 import { recIntConvService } from '../../../services/dash-receitas/recIntConv.service';
 import { globalCores, globalData } from '../../../globals';
+import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 @Component({
-  selector: 'app-int-top-conv',
+  selector: 'app-cons-top-conv',
   standalone: true,
   imports: [],
-  templateUrl: './int-top-conv.component.html',
-  styleUrl: './int-top-conv.component.scss'
+  templateUrl: './cons-top-conv.component.html',
+  styleUrl: './cons-top-conv.component.scss'
 })
-export class IntTopConvComponent implements OnInit {
+export class ConsTopConvComponent implements OnInit {
+
   constructor( private recIntConv : recIntConvService){}
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
-    this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'I');
+    this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'P');
   }
 
   async getIntConv(dataDe : string,dataAte : string,tipo : string){
     (await this.recIntConv.getRecIntConv(dataDe,dataAte,tipo)).subscribe(dados =>{
       let rec : any[]=[];
       rec = rec.concat(dados.body)
+      console.log(rec)
 
       let conv:any[]=[];
       let total:any[]=[];
@@ -38,9 +40,11 @@ export class IntTopConvComponent implements OnInit {
     let chartExist : any;
     let chartName = '';
     let txt = '';
-    chartExist = Chart.getChart("_rcIntConv"); // <canvas> id
-    chartName = '_rcIntConv'
-    txt = 'Internações - Top 15 Convênios'
+
+    chartExist = Chart.getChart("_rcConsConv"); // <canvas> id
+    chartName = '_rcConsConv'
+    txt = 'Consultas - Top 15 Convênios'
+
     if (chartExist != undefined)
       chartExist.destroy();
 

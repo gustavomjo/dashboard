@@ -16,6 +16,7 @@ import { CardCirurgiasRealizadasComponent } from './card-cirurgias-realizadas/ca
 import { CirurgiasRelizadasConvTopComponent } from './cirurgias-relizadas-conv-top/cirurgias-relizadas-conv-top.component';
 import { ReceitasComponent } from './receitas/receitas.component';
 import { IntTopConvComponent } from './int-top-conv/int-top-conv.component';
+import { ConsTopConvComponent } from './cons-top-conv/cons-top-conv.component';
 
 
 Chart.register(...registerables);
@@ -26,7 +27,9 @@ Chart.register(...registerables);
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './dash-receitas.component.html',
   styleUrl: './dash-receitas.component.scss',
-  imports: [CommonModule,MatFormFieldModule, MatDatepickerModule,MatNativeDateModule, CardCirurgiasRealizadasComponent, CirurgiasRelizadasConvTopComponent, ReceitasComponent, IntTopConvComponent,IntTopConvComponent ]
+  imports: [ CardCirurgiasRealizadasComponent, CirurgiasRelizadasConvTopComponent,
+             ReceitasComponent, IntTopConvComponent,IntTopConvComponent,
+             ConsTopConvComponent  ]
 })
 export class DashReceitasComponent implements OnInit{
   //variaveis de controle de data inserida no datepiker
