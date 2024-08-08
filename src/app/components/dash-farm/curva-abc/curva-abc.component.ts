@@ -8,17 +8,20 @@ import { globalCores, globalData } from '../../../globals';
 import { searchModule } from '../../search.Module';
 import { CommonModule } from '@angular/common';
 import { farmDetalheProdutoService } from '../../../services/dash-farm/farmDetalheProduto.service';
-import { differenceInDays, parseISO } from 'date-fns';
+import { differenceInDays, isValid, parseISO } from 'date-fns';
 import moment from 'moment';
 import { Chart, registerables } from 'chart.js';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { FiltrodataComponent } from "../../filtrodata/filtrodata.component";
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ActivatedRoute } from '@angular/router';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-curva-abc',
   standalone: true,
-  imports: [MatFormFieldModule, MatDatepickerModule,  MatDatepickerModule, FormsModule, searchModule, CommonModule],
+  imports: [MatFormFieldModule, MatDatepickerModule, MatDatepickerModule, FormsModule, searchModule, CommonModule, FiltrodataComponent],
   providers: [provideNativeDateAdapter()],
   templateUrl: './curva-abc.component.html',
   styleUrl: './curva-abc.component.scss'
@@ -35,11 +38,31 @@ export class CurvaABCComponent implements OnInit {
   _detalheProdutoLocal : any[]=[];
 
   constructor(private farmCurvaAbcCusto : farmCurvaAbcCustoService,
-              private farmDetalheProduto : farmDetalheProdutoService
+              private farmDetalheProduto : farmDetalheProdutoService,
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute
   ){}
 
   ngOnInit(): void {
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getCurvaAbcCusto(globalData.gbDataHoje,globalData.gbDataHoje);
+  }
+
+  private atualiza(): void {
+    let rota = this.route.snapshot.routeConfig?.path ==='dash-farm';
+    if(!rota)
+      return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if(valid)
+      this.getCurvaAbcCusto(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
+
   }
 
   async getCurvaAbcCusto(dataDe: string,dataate : string){
@@ -73,25 +96,25 @@ export class CurvaABCComponent implements OnInit {
     this.getEntradaSaida(value);
   }
 
-  public onDateIn(event: any): void {
-    this.mesanoDe = event;
-    this.mesanoDe=new Date(event);
-  }
+  // public onDateIn(event: any): void {
+  //   this.mesanoDe = event;
+  //   this.mesanoDe=new Date(event);
+  // }
 
-  public onDateUntil(event: any): void {
-    this.mesanoAte = event;
-    this.mesanoAte = new Date(event);
+  // public onDateUntil(event: any): void {
+  //   this.mesanoAte = event;
+  //   this.mesanoAte = new Date(event);
 
-    const _datade = new Date(this.mesanoDe);
-    const dataDe = _datade.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
+  //   const _datade = new Date(this.mesanoDe);
+  //   const dataDe = _datade.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
 
-    const _dataate = new Date(event);
-    const dataAte = _dataate.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
+  //   const _dataate = new Date(event);
+  //   const dataAte = _dataate.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
 
-    if(event != null){
-      this.getCurvaAbcCusto(dataDe,dataAte);
-    }
-  }
+  //   if(event != null){
+  //     this.getCurvaAbcCusto(dataDe,dataAte);
+  //   }
+  // }
   filteredCurvaAbcCusto() {
 
     if (!this.searchTerm) {

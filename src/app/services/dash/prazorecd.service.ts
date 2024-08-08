@@ -13,7 +13,7 @@ export class PrazoRecDService{
   private url = environment.api;
   constructor( private Busca : Busca){}
 
-  async getPrazoRecD(dataDe: string,dataate : string){
-    return await this.Busca.getHtml<prazorecd[]>('/prazoreceb?datade='+dataDe+'&dataate='+dataate)
+  async getPrazoRecD(){
+    return await this.Busca.getHtml<prazorecd[]>('/prazoreceb')
   }
 }

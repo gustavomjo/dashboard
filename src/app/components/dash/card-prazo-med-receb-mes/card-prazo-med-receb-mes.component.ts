@@ -14,11 +14,11 @@ Chart.register(...registerables);
 export class CardPrazoMedRecebMesComponent implements OnInit {
   constructor( private prazoRecDService : PrazoRecDService){}
   ngOnInit(): void {
-    this.getPrazoRecDAPI(globalData.gbDataHoje,globalData.gbDataHoje)
+    this.getPrazoRecDAPI()
   }
 
-  async getPrazoRecDAPI(dataDe : string,dataAte : string){
-    (await this.prazoRecDService.getPrazoRecD(dataDe,dataAte)).subscribe(dados =>{
+  async getPrazoRecDAPI(){
+    (await this.prazoRecDService.getPrazoRecD()).subscribe(dados =>{
 
       let prazo :any[]=[];
       prazo = prazo.concat(dados.body)

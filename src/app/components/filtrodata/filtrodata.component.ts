@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment from 'moment';
-import { parse } from 'date-fns';
 
 @Component({
   selector: 'app-filtrodata',
@@ -16,7 +15,7 @@ import { parse } from 'date-fns';
 export class FiltrodataComponent {
 
   constructor(public filtrodataService: FiltrodataService) {
-    this.filtrodataService.setOnUpdateCallback(() => this.atualiza());
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
   }
 
   public onDateIn(event: any): void {
@@ -28,6 +27,5 @@ export class FiltrodataComponent {
     this.filtrodataService.notifyUpdate();
   }
 
-  private atualiza(): void { }
-  
+  public atualiza(): void {  }
 }

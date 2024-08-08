@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DespesaService } from '../../../services/dash/despesa.service';
 import { Chart, registerables } from 'chart.js';
-import { globalCores, globalData } from '../../../globals';
+import { cleanStringUnicode, globalCores, globalData } from '../../../globals';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
-import { isValid, parse } from 'date-fns';
+import { isValid } from 'date-fns';
+import { ActivatedRoute } from '@angular/router';
 
 Chart.register(...registerables);
 @Component({
@@ -17,30 +18,29 @@ Chart.register(...registerables);
 export class CardCompDespesasComponent implements OnInit{
 
   constructor(private despesaService : DespesaService,
-              public filtrodataService: FiltrodataService
-  ){
-    filtrodataService.data_de
-  }
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute
+  ){  }
   ngOnInit(): void {
-    this.filtrodataService.setOnUpdateCallback(() => this.atualiza());
-    this.getDespesa(this.filtrodataService.data_de,this.filtrodataService.data_ate);
-  }
-
-  convertToDate(dateString: string): Date {
-    return parse(dateString, 'dd-MM-yyyy', new Date());
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
+    this.getDespesa(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
 
   private atualiza(): void {
-    let dataDe: Date = this.convertToDate(this.filtrodataService.data_de);
-    let dataAte: Date = this.convertToDate(this.filtrodataService.data_ate);
+    let rota = this.route.snapshot.routeConfig?.path ==='dash';
+    if(!rota)
+      return;
 
-    if(dataDe < globalData.gbData_atual){
-      if (isValid(dataDe) && isValid(dataAte)) {
-        if (dataAte > dataDe) {
-          this.getDespesa(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
-        }
-      }
-    }
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if(valid)
+      this.getDespesa(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
+
   }
 
   public async getDespesa(dataDe : string,dataAte : string){
@@ -51,9 +51,10 @@ export class CardCompDespesasComponent implements OnInit{
       let vrDespesa :any[]=[];
       if(despesa != null){
         for(let i=0;i< despesa.length;i++){
-          dsDespesa.push(despesa[i].ds_subgrupo);
+          dsDespesa.push(cleanStringUnicode(despesa[i].ds_subgrupo));
           vrDespesa.push(despesa[i].valor);
         }
+        console.log(dsDespesa)
         this._rcDespesa(dsDespesa,vrDespesa);
       }
     })

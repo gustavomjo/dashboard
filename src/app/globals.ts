@@ -1,3 +1,4 @@
+import { parse } from 'date-fns';
 import moment from 'moment';
 
 // src/globals.ts
@@ -15,7 +16,10 @@ export const globalData = {
   gbDataHoje : moment(new Date()).format('DD-MM-YYYY'),
   gbMes_atual : mes_dia_atual(new Date(),'M'),
   gbDia_atual : mes_dia_atual(new Date(),'D'),
-  gbAno : new Date().getFullYear()
+  gbAno : new Date().getFullYear(),
+  convertToDate(dateString: string): Date {
+    return parse(dateString, 'dd-MM-yyyy', new Date());
+  }
 
 };
 
@@ -66,6 +70,10 @@ export function moneyReduct(val:number){
   return val.toFixed(2)+arr[cont];
 }
 
+export function cleanStringUnicode(input: string): string {
+  // Remove caracteres de controle e caracteres Unicode indesejados
+  return input.replace(/[\u0000-\u001F\u007F-\u009F\u0100-\u017F\u0180-\u1FFF\u2000-\u206F\u2C00-\u2FEF\u3000-\u303F\u3400-\u4DBF\u4E00-\uAFFF\uB000-\uBFFF\uC000-\uD7FF\uE000-\uF8FF\uF900-\uFAFF\uFB00-\uFBFF\uFC00-\uFFFF\u2000-\u206F]/g, '');
+}
 export function lpad(str: string, length: number, padChar: string = ' '): string {
   // Calcula quantos caracteres de preenchimento são necessários
   let padding = '';

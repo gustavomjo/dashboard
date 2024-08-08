@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ReceitaService } from '../../../services/dash/receita.service';
 import { globalCores } from '../../../globals';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ActivatedRoute } from '@angular/router';
+import { isValid } from 'date-fns';
 
 Chart.register(...registerables);
 @Component({
@@ -14,10 +17,29 @@ Chart.register(...registerables);
 })
 export class CardReceitaNaturezaComponent implements OnInit {
 
-  constructor(private receitaService : ReceitaService){}
+  constructor(private receitaService : ReceitaService,
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute
+  ){}
+
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
-    this.getReceitasAPI(globalData.gbDataHoje,globalData.gbDataHoje);
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
+    this.getReceitasAPI(globalData.gbDataHoje, globalData.gbDataHoje);
+  }
+  public atualiza():void{
+    let rota = this.route.snapshot.routeConfig?.path==='dash';
+    if(!rota)
+      return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if(valid)
+      this.getReceitasAPI(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
   }
 
   async getReceitasAPI(dataDe : string,dataAte : string){

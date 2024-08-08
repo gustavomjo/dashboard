@@ -1,27 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { globalData } from '../../globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FiltrodataService {
-  public data_de:string="";
-  public data_ate:string="";
+  public data_de: string = "";
+  public data_ate: string = "";
   private updateSubject = new Subject<void>();
+  private updateCallbacks: (() => void)[] = [];
 
   constructor() {
     this.updateSubject.subscribe(() => {
-      if (this.onUpdateCallback) {
-        this.onUpdateCallback();
-      }
+      this.updateCallbacks.forEach(callback => callback());
     });
   }
 
-  private onUpdateCallback: (() => void) | null = null;
-
-  setOnUpdateCallback(callback: () => void): void {
-    this.onUpdateCallback = callback;
+  addOnUpdateCallback(callback: () => void): void {
+    this.updateCallbacks.push(callback);
   }
 
   notifyUpdate(): void {
