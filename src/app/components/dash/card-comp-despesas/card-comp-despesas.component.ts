@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DespesaService } from '../../../services/dash/despesa.service';
 import { Chart, registerables } from 'chart.js';
 import { globalCores, globalData } from '../../../globals';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { isValid, parse } from 'date-fns';
 
 Chart.register(...registerables);
 @Component({
@@ -11,19 +13,40 @@ Chart.register(...registerables);
   templateUrl: './card-comp-despesas.component.html',
   styleUrl: './card-comp-despesas.component.scss'
 })
+
 export class CardCompDespesasComponent implements OnInit{
 
-  constructor(private despesaService : DespesaService){
+  constructor(private despesaService : DespesaService,
+              public filtrodataService: FiltrodataService
+  ){
+    filtrodataService.data_de
   }
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
-    this.getDespesa(globalData.gbDataHoje,globalData.gbDataHoje);
+    this.filtrodataService.setOnUpdateCallback(() => this.atualiza());
+    this.getDespesa(this.filtrodataService.data_de,this.filtrodataService.data_ate);
   }
 
-  async getDespesa(dataDe : string,dataAte : string){
+  convertToDate(dateString: string): Date {
+    return parse(dateString, 'dd-MM-yyyy', new Date());
+  }
+
+  private atualiza(): void {
+    let dataDe: Date = this.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = this.convertToDate(this.filtrodataService.data_ate);
+
+    if(dataDe < globalData.gbData_atual){
+      if (isValid(dataDe) && isValid(dataAte)) {
+        if (dataAte > dataDe) {
+          this.getDespesa(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
+        }
+      }
+    }
+  }
+
+  public async getDespesa(dataDe : string,dataAte : string){
     (await this.despesaService.getDespesa(dataDe,dataAte)).subscribe(dados =>{
       let despesa :any[]=[];
-      despesa = despesa.concat(dados.body)
+      despesa = despesa.concat(dados.body);
       let dsDespesa :any[]=[];
       let vrDespesa :any[]=[];
       if(despesa != null){

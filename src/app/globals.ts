@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 // src/globals.ts
 export const globalVars = {
   gbTimerRefresh : 100,
@@ -10,7 +12,7 @@ export const globalData = {
     'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
   ],
   gbData_atual : new Date(),
-  gbDataHoje : new Date().toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' }),
+  gbDataHoje : moment(new Date()).format('DD-MM-YYYY'),
   gbMes_atual : mes_dia_atual(new Date(),'M'),
   gbDia_atual : mes_dia_atual(new Date(),'D'),
   gbAno : new Date().getFullYear()

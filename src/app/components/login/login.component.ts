@@ -25,7 +25,7 @@ export class LoginComponent {
     const usuario = document.getElementById('usuario') as HTMLInputElement;
     const senha = document.getElementById('senha') as HTMLInputElement;
     this.UserService.getUser(usuario.value.toUpperCase(),senha.value).subscribe(user=>{
-      user = user;
+      // user = user;
       if(user.token != ''){
         this.UserService.deslogar();
         this.UserService.autorizar(user.token,usuario.value);

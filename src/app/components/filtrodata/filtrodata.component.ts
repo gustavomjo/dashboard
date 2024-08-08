@@ -1,19 +1,33 @@
 import { Component } from '@angular/core';
 import { FiltrodataService } from './filtrodata.service';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import moment from 'moment';
+import { parse } from 'date-fns';
 
 @Component({
   selector: 'app-filtrodata',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, MatFormFieldModule, MatDatepickerModule],
   templateUrl: './filtrodata.component.html',
-  styleUrl: './filtrodata.component.scss'
+  styleUrls: ['./filtrodata.component.scss']
 })
 export class FiltrodataComponent {
 
   constructor(public filtrodataService: FiltrodataService) {
-    filtrodataService.data = 'oi'
+    this.filtrodataService.setOnUpdateCallback(() => this.atualiza());
   }
 
+  public onDateIn(event: any): void {
+    this.filtrodataService.data_de = moment(new Date(event)).format('DD-MM-YYYY');
+  }
 
+  public onDateUntil(event: any): void {
+    this.filtrodataService.data_ate = moment(new Date(event)).format('DD-MM-YYYY');
+    this.filtrodataService.notifyUpdate();
+  }
 
+  private atualiza(): void { }
+  
 }

@@ -1,1 +1,14 @@
-<p>filtrodata works!</p>
+<form class="frmFilter" action="#">
+  <div class="form-input">
+    <mat-form-field>
+      <mat-label>Selecione o período</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input (dateInput)="onDateIn($event.value)" id="dataIn" matStartDate placeholder="Data Inicial" >
+        <input (dateInput)="onDateUntil($event.value)" matEndDate placeholder="Data Final">
+      </mat-date-range-input>
+
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+</form>
