@@ -49,9 +49,8 @@ export class CurvaABCComponent implements OnInit {
   }
 
   private atualiza(): void {
-    let rota = this.route.snapshot.routeConfig?.path ==='dash-farm';
-    if(!rota)
-      return;
+    let rota = ['dash-farm', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
     this._curvaAbcCusto = [];
 
     let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);

@@ -20,6 +20,7 @@ export class FiltrodataComponent {
 
   public onDateIn(event: any): void {
     this.filtrodataService.data_de = moment(new Date(event)).format('DD-MM-YYYY');
+
   }
 
   public onDateUntil(event: any): void {

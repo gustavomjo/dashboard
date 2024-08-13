@@ -27,9 +27,8 @@ export class CardReceitaNaturezaComponent implements OnInit {
     this.getReceitasAPI(globalData.gbDataHoje, globalData.gbDataHoje);
   }
   public atualiza():void{
-    let rota = this.route.snapshot.routeConfig?.path==='dash';
-    if(!rota)
-      return;
+    let rota = ['dash', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
 
     let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
     let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);

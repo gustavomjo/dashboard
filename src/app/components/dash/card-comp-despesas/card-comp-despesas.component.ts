@@ -24,12 +24,16 @@ export class CardCompDespesasComponent implements OnInit{
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getDespesa(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+
+  }
+  ngAfterViewInit(): void {
+
   }
 
-  private atualiza(): void {
-    let rota = this.route.snapshot.routeConfig?.path ==='dash';
-    if(!rota)
-      return;
+
+  public atualiza(): void {
+    let rota = ['dash', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
 
     let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
     let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
@@ -38,9 +42,8 @@ export class CardCompDespesasComponent implements OnInit{
                 (isValid(dataDe) && isValid(dataAte)) &&
                 dataAte >= dataDe;
 
-    if(valid)
-      this.getDespesa(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
-
+    if (valid)
+      this.getDespesa(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   public async getDespesa(dataDe : string,dataAte : string){

@@ -20,6 +20,7 @@ import { SadtTopConvComponent } from '../dash-receitas/sadt-top-conv/sadt-top-co
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { dashUserService } from '../../services/dash-user/dashUser.service';
+import { FiltrodataService } from '../filtrodata/filtrodata.service';
 
 
 
@@ -46,7 +47,6 @@ import { dashUserService } from '../../services/dash-user/dashUser.service';
     CirurgiasRelizadasConvTopComponent,
     ReceitasComponent,
     IntTopConvComponent,
-    IntTopConvComponent,
     ConsTopConvComponent,
     SadtTopConvComponent
 
@@ -54,6 +54,7 @@ import { dashUserService } from '../../services/dash-user/dashUser.service';
 })
 export class DashUserComponent implements OnInit {
   @ViewChild('contentDash', { read: ViewContainerRef, static: true }) contentDash!: ViewContainerRef;
+
 
   user_comp: any[] = [
     {value:'app-filtrodata', desc: 'Filtro Data'},
@@ -99,12 +100,17 @@ export class DashUserComponent implements OnInit {
 
   constructor(private injector: Injector,
               private renderer: Renderer2,
-              private dashuser : dashUserService
+              private dashuser : dashUserService,
+              public filtrodataService: FiltrodataService,
             ) {}
 
   ngOnInit(): void {
     this.constructorDash();
   }
+  ngAfterViewChecked(): void {
+
+  }
+
 
   async constructorDash(){
     (await this.dashuser.getDash(0)).subscribe(dados =>{
