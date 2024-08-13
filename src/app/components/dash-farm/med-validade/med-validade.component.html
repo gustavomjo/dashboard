@@ -18,19 +18,19 @@
 </div>
 
 <div class="toggle">
-  <input type="radio" name="sizeBy" value="-1" id="sizeWeight" [(ngModel)]="_searchVencimento"/>
+  <input type="radio" name="sizeBy" value="-1" id="sizeWeight" class="vencimento" [(ngModel)]="_searchVencimento"/>
   <label for="sizeWeight">Vencido</label>
 
-  <input type="radio" name="sizeBy" value="15" id="em15dias" [(ngModel)]="_searchVencimento"/>
+  <input type="radio" name="sizeBy" value="15" id="em15dias" class="vencimento"  [(ngModel)]="_searchVencimento"/>
   <label for="em15dias">Vencimento em  15 dias</label>
 
-  <input type="radio" name="sizeBy" value="30" id="em30dias" [(ngModel)]="_searchVencimento"/>
+  <input type="radio" name="sizeBy" value="30" id="em30dias"  class="vencimento" [(ngModel)]="_searchVencimento"/>
   <label for="em30dias">Vencimento em  30 dias</label>
 
-  <input type="radio" name="sizeBy" value="31" id="mais30" [(ngModel)]="_searchVencimento"/>
+  <input type="radio" name="sizeBy" value="31" id="mais30" class="vencimento"  [(ngModel)]="_searchVencimento"/>
   <label for="mais30">Vencimento após 30 dias</label>
 
-  <input type="radio" name="sizeBy" value="-2" id="todos" checked="checked" [(ngModel)]="_searchVencimento"/>
+  <input type="radio" name="sizeBy" value="-2" id="todos" class="vencimento"   [(ngModel)]="_searchVencimento" :checked/>
   <label for="todos">Todos</label>
 </div>
 

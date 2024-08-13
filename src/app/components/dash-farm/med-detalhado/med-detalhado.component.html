@@ -105,11 +105,7 @@
       <h5 class="card-header">Saídas ultimos 6 mêses</h5>
       <div class="card-body">
         <div class="row">
-          <div class="d-flex justify-content-center" *ngIf="_saidas.length == 0 && _searchProdutoSal != '' ">
-            <div class="spinner-grow text-info" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
+          <app-spinner *ngIf="_saidas.length == 0 && _searchProdutoSal != ''" ></app-spinner>
 
           <div class="col-sm-12 col-md-5 col-lg-4 col-xl-3"   *ngFor="let saida of _saidas">
             <div *ngIf="saida.codsal === null">

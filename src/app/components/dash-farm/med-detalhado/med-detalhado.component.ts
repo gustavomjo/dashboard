@@ -12,13 +12,14 @@ import { globalCores, globalData } from '../../../globals';
 import moment from 'moment';
 import { differenceInDays, parseISO } from 'date-fns';
 import { AgrupadosPorSetor, farmProdutoLocal } from '../../../models/dash-farm/farmProdutoLocal.model';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-med-detalhado',
   standalone: true,
-  imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, searchModule, CommonModule],
+  imports: [MatFormFieldModule, MatDatepickerModule, FormsModule, searchModule, CommonModule, SpinnerComponent],
   templateUrl: './med-detalhado.component.html',
   styleUrl: './med-detalhado.component.scss'
 })
