@@ -6,17 +6,18 @@ import { globalCores } from '../../../globals';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { ActivatedRoute } from '@angular/router';
 import { isValid } from 'date-fns';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-receita-natureza',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent],
   templateUrl: './card-receita-natureza.component.html',
   styleUrl: './card-receita-natureza.component.scss'
 })
 export class CardReceitaNaturezaComponent implements OnInit {
-
+  realReceita : any =[];
   constructor(private receitaService : ReceitaService,
               public filtrodataService: FiltrodataService,
               private route: ActivatedRoute
@@ -43,7 +44,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
 
   async getReceitasAPI(dataDe : string,dataAte : string){
     let labelReceita : any[]=[];
-    let realReceita :any[]=[];
+    // let realReceita :any[]=[];
 
     (await this.receitaService.getReceita(dataDe,dataAte)).subscribe(dados =>{
       let receitas :any[]=[];
@@ -63,8 +64,8 @@ export class CardReceitaNaturezaComponent implements OnInit {
             case 'valor_total': labelReceita.push('Valor Total'); break;
           }
         }
-        realReceita=Object.values(receitas[0]);
-        this._rcNatureza(labelReceita,realReceita);
+        this.realReceita=Object.values(receitas[0]);
+        this._rcNatureza(labelReceita,this.realReceita);
       }
     });
   }
