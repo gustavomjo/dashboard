@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { recCirurgiasRealiService } from './../../../services/dash-receitas/recCirurgiasReali.service';
 import { globalCores, globalData } from '../../../globals';
 import { Chart, registerables } from 'chart.js';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ActivatedRoute } from '@angular/router';
+import { isValid } from 'date-fns';
 
 Chart.register(...registerables);
 @Component({
@@ -13,9 +16,28 @@ Chart.register(...registerables);
 })
 export class CardCirurgiasRealizadasComponent implements OnInit{
 
-  constructor(private recCirurgiasRealiService : recCirurgiasRealiService){}
+  constructor(private recCirurgiasRealiService : recCirurgiasRealiService,
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute
+  ){}
   ngOnInit(): void {
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getRecCirurgiasReali(globalData.gbDataHoje,globalData.gbDataHoje);
+  }
+
+  public atualiza(): void {
+    let rota = ['dash-receitas', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid)
+      this.getRecCirurgiasReali(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   async getRecCirurgiasReali(dataDe : string,dataAte : string){

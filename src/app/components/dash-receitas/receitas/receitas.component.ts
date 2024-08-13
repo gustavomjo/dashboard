@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { recIntService } from '../../../services/dash-receitas/recInt.service';
 import { globalCores, globalData } from '../../../globals';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ActivatedRoute } from '@angular/router';
+import { isValid } from 'date-fns';
 
 Chart.register(...registerables);
 @Component({
@@ -13,10 +16,26 @@ Chart.register(...registerables);
 })
 export class ReceitasComponent implements OnInit {
 
-  constructor(private recInt : recIntService){}
+  constructor(private recInt : recIntService,
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute){}
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getRecInt(globalData.gbDataHoje,globalData.gbDataHoje);
+  }
+  public atualiza(): void {
+    let rota = ['dash-receitas', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid)
+      this.getRecInt(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   async getRecInt(dataDe : string,dataAte : string){

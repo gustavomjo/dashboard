@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { recCirurgiasConvService } from './../../../services/dash-receitas/recCirurgiasConv.service';
 import { globalCores, globalData } from '../../../globals';
 import { Chart, registerables } from 'chart.js';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ActivatedRoute } from '@angular/router';
+import { isValid } from 'date-fns';
 
 Chart.register(...registerables);
 @Component({
@@ -13,10 +16,27 @@ Chart.register(...registerables);
 })
 export class CirurgiasRelizadasConvTopComponent implements OnInit {
 
-  constructor(private recCirurgiasConvService : recCirurgiasConvService){}
+  constructor(private recCirurgiasConvService : recCirurgiasConvService,
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute
+  ){}
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getReceitasConv(globalData.gbDataHoje,globalData.gbDataHoje);
+  }
+  public atualiza(): void {
+    let rota = ['dash-receitas', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid)
+      this.getReceitasConv(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   async getReceitasConv(dataDe : string,dataAte : string){

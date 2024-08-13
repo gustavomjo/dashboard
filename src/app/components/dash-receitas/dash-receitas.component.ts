@@ -8,6 +8,8 @@ import { ReceitasComponent } from './receitas/receitas.component';
 import { IntTopConvComponent } from './int-top-conv/int-top-conv.component';
 import { ConsTopConvComponent } from './cons-top-conv/cons-top-conv.component';
 import { SadtTopConvComponent } from './sadt-top-conv/sadt-top-conv.component';
+import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 
 Chart.register(...registerables);
@@ -16,11 +18,17 @@ Chart.register(...registerables);
   selector: 'app-dash-receitas',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './dash-receitas.component.html',
   styleUrl: './dash-receitas.component.scss',
-  imports: [ CardCirurgiasRealizadasComponent, CirurgiasRelizadasConvTopComponent,
-             ReceitasComponent, IntTopConvComponent,IntTopConvComponent,
-             ConsTopConvComponent, SadtTopConvComponent ]
+  imports: [ CardCirurgiasRealizadasComponent,
+             CirurgiasRelizadasConvTopComponent,
+             ReceitasComponent,
+             IntTopConvComponent,
+             IntTopConvComponent,
+             ConsTopConvComponent,
+             SadtTopConvComponent,
+             FiltrodataComponent ]
 })
 export class DashReceitasComponent {
 
