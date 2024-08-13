@@ -8,6 +8,8 @@ import { DashFarmComponent } from './components/dash-farm/dash-farm.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { authGuard } from './_guard/auth.guard';
 import { DashReceitasComponent } from './components/dash-receitas/dash-receitas.component';
+import { DashUserComponent } from './components/dash-user/dash-user.component';
+import { DashUserEditComponent } from './components/dash-user-edit/dash-user-edit.component';
 
 export const routes: Routes = [
   {path:'',component :  LoginComponent},
@@ -17,6 +19,8 @@ export const routes: Routes = [
   {path:'dash-fat',component:DashFatComponent,canActivate:[authGuard]},
   {path:'dash-farm',component:DashFarmComponent,canActivate:[authGuard]},
   {path:'dash-receitas',component:DashReceitasComponent,canActivate:[authGuard]},
+  {path:'dash-user',component:DashUserComponent,canActivate:[authGuard]},
+  {path:'dash-user-edit',component:DashUserEditComponent,canActivate:[authGuard]},
   { path: '**', component:LoginComponent}
 ];
 

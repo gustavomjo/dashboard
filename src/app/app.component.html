@@ -28,6 +28,12 @@
         </a>
       </li>
 
+      <li class="sidebar-item">
+        <a [routerLink]="['/dash-user']"  class="sidebar-link" (click)="ActiveMenu()" >
+          <i class='bx bxs-user'> <p *ngIf="isMobile" > Dash User</p></i>
+        </a>
+      </li>
+
     </ul>
     <div class="sidebar-footer">
         <a [routerLink]="['/']" routerLinkActive="router-link-active" k="/" class="sidebar-link" (click)="onLogout(); $event.preventDefault()">

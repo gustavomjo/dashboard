@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col col-sm-12 col-md-4">
+      <div class="form-floating" >
+        <select class="form-select" id="sComp"   [(ngModel)]="component">
+          <option selected> </option>
+          <option value="{{comp.value}}" *ngFor="let comp of user_comp">{{comp.desc}}</option>
+        </select>
+        <label for="sComp">Componente</label>
+      </div>
+
+    </div>
+
+    <div class="col col-sm-12 col-md-4 d-flex align-items-center">
+      <button class="btn btn-primary ms-3" (click)="onShow()" type="button">Adicionar</button>
+    </div>
+  </div>
+</div>
+<!-- <button  (click)="onSave()" class="bottom-right-button">salvar</button> -->
+<a href="dash-user"  class="bottom-right-button"><i class='bx bx-arrow-back'></i></a>
+
+
+<nav id="contentDash" class="m-3">
+  <nav class="px-3">
+    <div class="row" id='add' #contentDash>
+
+
+    </div>
+  </nav>
+</nav>
+
+<app-notification></app-notification>

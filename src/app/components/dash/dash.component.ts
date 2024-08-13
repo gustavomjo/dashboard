@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FiltrodataService } from '../filtrodata/filtrodata.service';
-import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CardLeitosComponent } from './card-leitos/card-leitos.component';
 import { CardFaturamentoComponent } from './card-faturamento/card-faturamento.component';
@@ -23,10 +19,7 @@ import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
   styleUrls: ['./dash.component.scss'],
   providers: [provideNativeDateAdapter()],
   imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    CarouselModule,
+
     CardLeitosComponent,
     CardFaturamentoComponent,
     CardAtendimentosComponent,
@@ -35,7 +28,6 @@ import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
     CardPrazoMedRecebMesComponent,
     CardPrazoMedRecebAnoComponent,
     FiltrodataComponent
-
   ]
 })
 export class DashComponent {

@@ -23,7 +23,6 @@ export class ConsTopConvComponent implements OnInit {
     (await this.recIntConv.getRecIntConv(dataDe,dataAte,tipo)).subscribe(dados =>{
       let rec : any[]=[];
       rec = rec.concat(dados.body)
-      console.log(rec)
 
       let conv:any[]=[];
       let total:any[]=[];

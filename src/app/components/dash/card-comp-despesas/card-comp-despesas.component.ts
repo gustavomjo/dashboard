@@ -54,7 +54,6 @@ export class CardCompDespesasComponent implements OnInit{
           dsDespesa.push(cleanStringUnicode(despesa[i].ds_subgrupo));
           vrDespesa.push(despesa[i].valor);
         }
-        console.log(dsDespesa)
         this._rcDespesa(dsDespesa,vrDespesa);
       }
     })

@@ -1,0 +1,40 @@
+/* Estilo básico para o botão */
+.bottom-right-button {
+  position: fixed; /* Fixa o botão na tela */
+  bottom: 10px; /* Distância do fundo da página */
+  right: 10px; /* Distância da borda direita da página */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: white; /* Cor do texto */
+  border: none; /* Remove bordas padrão */
+  border-radius: 15px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor em forma de mãozinha */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra do botão */
+  z-index: 1001;
+}
+
+.bottom-right-button:hover {
+  background-color: #0056b3; /* Cor de fundo quando o mouse passa por cima */
+}
+
+.btnExcluir{
+  background-color: #36a2eb; /* Cor de fundo vermelha */
+  border: none;              /* Sem borda */
+  color: white;              /* Texto em branco */
+  padding: 3px 8px;         /* Espaçamento interno */
+  font-size: 14px;           /* Tamanho da fonte */
+  font-weight: bold;
+  // border-radius: 50%;        /* Botão circular */
+  cursor: pointer;           /* Cursor de mão ao passar o mouse */
+  position: absolute;        /* Para permitir o posicionamento */
+  top: 0px;                    /* Alinhar no topo */
+  right: 12px;                  /* Alinhar à direita */
+  // transform: translate(50%, -50%); /* Ligeiro deslocamento para fora */
+  z-index: 100;              /* Para garantir que esteja sobreposto */
+
+}
+
+.btnExcluir:hover{
+    background-color: #107ef4; /* Cor de fundo mais escura ao passar o mouse */
+
+}

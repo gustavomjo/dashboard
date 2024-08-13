@@ -54,6 +54,64 @@ export class Busca {
     );
   }
 
+  deleteRequest(request: string): void {
+    // Utiliza this.configService.getConfig para garantir que a configuração seja carregada antes de fazer a requisição
+    this.configService.getConfig().pipe(
+      switchMap(config => {
+        this.url = config.servidor;
+        return this.httpClient.delete(this.url + request, { headers: this.header }).pipe(
+          tap(() => {
+            this.token = localStorage.getItem('token');
+          }),
+          catchError(error => {
+            console.error('Erro ao subscrever:', error);
+            this.updateToken();
+            return throwError(error);
+          }),
+          retryWhen(errors =>
+            errors.pipe(
+              tap(() => {
+                console.log('Tentando novamente com novo token:', this.token);
+              }),
+              delay(5000),
+              take(10)
+            )
+          )
+        );
+      })
+    ).subscribe();
+  }
+
+  postComponent(request: string, params : string): void {
+    // Utiliza this.configService.getConfig para garantir que a configuração seja carregada antes de fazer a requisição
+    this.configService.getConfig().pipe(
+      switchMap(config => {
+        this.url = config.servidor;
+        console.log(this.header.getAll('Authorization'))
+
+        return this.httpClient.post(this.url+request, params,  { headers: this.header }).pipe(
+          tap(() => {
+            this.token = localStorage.getItem('token');
+          }),
+          catchError(error => {
+            console.error('Erro ao subscrever:', error);
+            this.updateToken();
+            return throwError(error);
+          }),
+          retryWhen(errors =>
+            errors.pipe(
+              tap(() => {
+                console.log('Tentando novamente com novo token:', this.token);
+              }),
+              delay(5000),
+              take(10)
+            )
+          )
+        );
+      })
+    ).subscribe();
+  }
+
   private updateToken() {
     this.token = localStorage.getItem('token');
     this.updateHeader(this.token);
@@ -61,7 +119,9 @@ export class Busca {
 
   private updateHeader(token: string | null = this.token) {
     this.header = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+
     });
   }
 }

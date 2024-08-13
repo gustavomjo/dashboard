@@ -1,0 +1,17 @@
+/* Estilo básico para o botão */
+.bottom-right-button {
+  position: fixed; /* Fixa o botão na tela */
+  bottom: 10px; /* Distância do fundo da página */
+  right: 10px; /* Distância da borda direita da página */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: white; /* Cor do texto */
+  border: none; /* Remove bordas padrão */
+  border-radius: 15px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor em forma de mãozinha */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra do botão */
+}
+
+.bottom-right-button:hover {
+  background-color: #0056b3; /* Cor de fundo quando o mouse passa por cima */
+}
