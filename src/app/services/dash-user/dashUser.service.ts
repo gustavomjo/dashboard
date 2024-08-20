@@ -11,7 +11,7 @@ export class dashUserService{
   constructor( private Busca : Busca){}
 
   async getDash(cod_user : number){
-    return await this.Busca.getHtml<dashuser[]>('/dashuser?usuario=1')
+    return await this.Busca.getHtml<dashuser[]>('/dashuser?usuario='+cod_user)
   }
 
   deleteComponent(usuario:number,dash : string):void{

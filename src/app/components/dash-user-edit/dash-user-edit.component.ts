@@ -25,6 +25,7 @@ import { dashUserService } from '../../services/dash-user/dashUser.service';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationComponent } from '../notification/notification.component';
 import { NotificationModule } from '../notification/notification.module';
+import { JwtDecodeService } from '../../services/jwt-decode.service';
 
 
 // Importar Toast diretamente do Bootstrap
@@ -111,7 +112,8 @@ export class DashUserEditComponent implements OnInit{
   constructor(private injector: Injector,
               private renderer: Renderer2,
               private dashuser : dashUserService,
-              private notificationService: NotificationService
+              private notificationService: NotificationService,
+              private jwtDecoder : JwtDecodeService
   ) {}
 
   ngOnInit(): void {
@@ -120,7 +122,7 @@ export class DashUserEditComponent implements OnInit{
   }
 
   async getdashBD(){
-    (await this.dashuser.getDash(0)).subscribe(dados =>{
+    (await this.dashuser.getDash(this.jwtDecoder.decodePayloadJWT().cod_user)).subscribe(dados =>{
       let dash :any[]=[];
       dash = dash.concat(dados.body)
       // console.log(dash)
@@ -146,7 +148,7 @@ export class DashUserEditComponent implements OnInit{
 
       if(!b){
         this.selectedComp.push(this.component);
-        this.dashuser.postComponent(1,this.component);
+        this.dashuser.postComponent(this.jwtDecoder.decodePayloadJWT().cod_user,this.component);
       }else{
         this.notificationService.showNotification('Card já existe!');
         return;
@@ -176,7 +178,7 @@ export class DashUserEditComponent implements OnInit{
         // Adicionar um evento de clique ao botão
         this.renderer.listen(deleteButton, 'click', () => {
           //delete no banco
-          this.dashuser.deleteComponent(1,componentElement.nodeName);
+          this.dashuser.deleteComponent(this.jwtDecoder.decodePayloadJWT().cod_user,componentElement.nodeName);
           this.selectedComp.splice(index,1);
           // console.log(this.selectedComp);
 
