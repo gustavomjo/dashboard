@@ -29,6 +29,12 @@
       </li>
 
       <li class="sidebar-item">
+        <a [routerLink]="['/dash-fat']"  class="sidebar-link" (click)="ActiveMenu()" >
+          <i class='bx bx-calculator'> <p *ngIf="isMobile" > Faturamento</p></i>
+        </a>
+      </li>
+
+      <li class="sidebar-item">
         <a [routerLink]="['/dash-user']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bxs-user'> <p *ngIf="isMobile" > Dash User</p></i>
         </a>

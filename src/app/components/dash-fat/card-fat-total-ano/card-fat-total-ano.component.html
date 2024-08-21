@@ -1,0 +1,33 @@
+<div class="card h-100 d-flex flex-column">
+  <div class="card-body d-flex flex-column">
+    <h3 class="text-uppercase text-center mb-4" [style.color]="color.colorBlueDark">
+      Faturamento ( {{ _ano }} )
+    </h3>
+    <div class="row text-center flex-grow-1 align-items-center justify-content-center">
+      <div class="col-sm-12 col-md-4 mb-3 mb-md-0">
+        <h5 class="text-uppercase text-body-secondary mb-2">
+          Inter.
+          <i class='h5 bx bxs-ambulance'></i>
+        </h5>
+        <span class="mb-0 text-body-secondary" [ngClass]="headingClass()" [style.color]="color.colorOrange">{{ _lbInt }}</span>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3 mb-md-0">
+        <h5 class="text-uppercase text-body-secondary mb-2">
+          Cons. <i class='h5 bx bx-first-aid'></i>
+        </h5>
+        <span class="mb-0 text-body-secondary" [ngClass]="headingClass()" [style.color]="color.colorGreen">{{ _lbCons }}</span>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <h5 class="text-uppercase text-body-secondary mb-2">
+          SADT <i class='h5 bx bx-test-tube'></i>
+        </h5>
+        <span class="mb-0 text-body-secondary" [ngClass]="headingClass()" [style.color]="color.colorYellow">{{ _lbSadt }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer d-flex justify-content-center">
+    <h4 class="text-uppercase mb-0 text-body-secondary">
+      Total: <span class="h2 mb-0" [style.color]="color.colorGreenDark">{{ _total }}</span>
+    </h4>
+  </div>
+</div>

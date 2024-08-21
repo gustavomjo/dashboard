@@ -1,0 +1,47 @@
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.col-md-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .dynamic-heading {
+    font-size: 1.75rem; /* h2 */
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .dynamic-heading {
+    font-size: 1.25rem; /* h5 */
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+  .dynamic-heading {
+    font-size: 1.5rem; /* h4 */
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1400px) {
+  .dynamic-heading {
+    font-size: 1.75rem; /* h3 */
+  }
+}
+
+@media (min-width: 1400px) {
+  .dynamic-heading {
+    font-size: 1.75rem; /* h2 */
+  }
+}

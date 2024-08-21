@@ -22,8 +22,8 @@ export class AppComponent implements OnInit{
 
   constructor(
     public router: Router,
-    private userService: UserService, // Corrija para userService com "u" minúsculo
-    private breakpointObserver: BreakpointObserver, // Corrija para breakpointObserver com "b" minúsculo
+    private userService: UserService,
+    private breakpointObserver: BreakpointObserver, 
     private configService: ConfigService
   ) {}
 
