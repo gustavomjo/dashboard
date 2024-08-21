@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { dashUserService } from '../../services/dash-user/dashUser.service';
 import { FiltrodataService } from '../filtrodata/filtrodata.service';
+import { JwtDecodeService } from '../../services/jwt-decode.service';
 
 
 
@@ -102,6 +103,7 @@ export class DashUserComponent implements OnInit {
               private renderer: Renderer2,
               private dashuser : dashUserService,
               public filtrodataService: FiltrodataService,
+              private jwtDecoder : JwtDecodeService
             ) {}
 
   ngOnInit(): void {
@@ -113,7 +115,7 @@ export class DashUserComponent implements OnInit {
 
 
   async constructorDash(){
-    (await this.dashuser.getDash(0)).subscribe(dados =>{
+    (await this.dashuser.getDash(this.jwtDecoder.decodePayloadJWT().cod_user)).subscribe(dados =>{
       let dash :any[]=[];
       dash = dash.concat(dados.body)
       // console.log(dash)

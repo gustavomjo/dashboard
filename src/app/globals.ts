@@ -24,10 +24,10 @@ export const globalData = {
 };
 
 export const globalCores = {
-  gbCores : ['#00ce77','#ff6384','#36a2eb','#cc65fe','#ffce56',
-             '#f0ee07','#ee5700','#54f410','#107ef4','#8972fa',
-             '#fa72d1','#a43537','#ebf68c','#4dc9f6','#8549ba',
-             '#f67019','#f53794','#537bc4','#acc236','#166a8f',
+  gbCores : ['#00ce77','#ff6384','#36a2eb','#cc65fe','#ffce56', //4
+             '#f0ee07','#ee5700','#54f410','#107ef4','#8972fa', //9
+             '#fa72d1','#a43537','#ebf68c','#4dc9f6','#8549ba', //14
+             '#f67019','#f53794','#537bc4','#acc236','#166a8f', //19
              '#00a950','#58595c'
 
           ],
@@ -44,10 +44,13 @@ export const globalCores = {
 
 export const globalCoresNome = {
   colorBlue : globalCores.gbCores[2],
+  colorBlueDark : globalCores.gbCores[8],
   colorGray : globalCores.gbCores[21],
   colorRed : globalCores.gbCores[1],
   colorGreen : globalCores.gbCores[0],
   colorYellow : globalCores.gbCores[4],
+  colorOrange : globalCores.gbCores[6],
+  colorGreenDark : globalCores.gbCores[20]
 }
 
 export function moneyReduct(val:number){

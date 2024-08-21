@@ -15,13 +15,14 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { FiltrodataComponent } from "../../filtrodata/filtrodata.component";
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { ActivatedRoute } from '@angular/router';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-curva-abc',
   standalone: true,
-  imports: [MatFormFieldModule, MatDatepickerModule, MatDatepickerModule, FormsModule, searchModule, CommonModule, FiltrodataComponent],
+  imports: [MatFormFieldModule, MatDatepickerModule, MatDatepickerModule, FormsModule, searchModule, CommonModule, FiltrodataComponent, SpinnerComponent],
   providers: [provideNativeDateAdapter()],
   templateUrl: './curva-abc.component.html',
   styleUrl: './curva-abc.component.scss'
