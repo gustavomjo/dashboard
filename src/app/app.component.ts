@@ -5,7 +5,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from '../environments/environment';
 import { UserService } from './services/user.service';
 import { DashComponent } from "./components/dash/dash.component";
-import { globalVars } from './globals';
+import { globalVars } from './global/globals';
 import { ConfigService } from './services/config.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
   constructor(
     public router: Router,
     private userService: UserService,
-    private breakpointObserver: BreakpointObserver, 
+    private breakpointObserver: BreakpointObserver,
     private configService: ConfigService
   ) {}
 

@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { finContasRPService } from '../../../services/dash-fin/finContasRP.service';
-import { globalCoresNome, globalData, moneyReduct } from '../../../globals';
+import { globalCoresNome } from '../../../global/global-cores';
+import { globalData } from '../../../global/global-data';
+import { moneyReduct } from '../../../global/global-money';
 
 @Component({
   selector: 'app-card-contas',

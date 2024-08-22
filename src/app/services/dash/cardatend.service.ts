@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { cardatend } from '../../models/dash/cardatend.model';
-import {Busca} from '../../globals.services';
+import {Busca} from '../../global/globals.services';
 
 
 @Injectable({

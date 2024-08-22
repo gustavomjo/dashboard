@@ -4,16 +4,32 @@
 }
 
 .row {
-  flex-grow: 1;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-items: stretch; /* Garantir que todas as colunas tenham a mesma altura */
 }
 
 .col-md-4 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Centraliza o conteúdo verticalmente */
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.ml-2 {
+  margin-left: 0.5rem; /* Ajuste conforme necessário para o espaçamento entre o texto e o ícone */
+}
+
+.dynamic-heading {
+  font-weight: bold;
+  line-height: 1; /* Ajusta o alinhamento vertical com base na altura da linha */
 }
 
 @media (max-width: 992px) {

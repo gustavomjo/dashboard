@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { cardleitos } from '../../models/dash/cardleitos.model';
-import {Busca} from '../../globals.services';
+import {Busca} from '../../global/globals.services';
 
 @Injectable({
   providedIn : 'root'

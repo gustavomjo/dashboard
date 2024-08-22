@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { finBalanceteService } from '../../../services/dash-fin/finBalancete.service';
-import { globalCores, globalData } from '../../../globals';
-
+import { globalData } from '../../../global/global-data';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 @Component({

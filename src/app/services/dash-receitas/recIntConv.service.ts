@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { recIntConv } from '../../models/dash-receitas/recIntConv.model';
-import {Busca} from '../../globals.services';
+import {Busca} from '../../global/globals.services';
 
 @Injectable({
   providedIn:'root'

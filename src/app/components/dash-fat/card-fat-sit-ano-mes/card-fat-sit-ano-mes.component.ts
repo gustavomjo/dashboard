@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../../services/config.service';
 import moment from 'moment';
 import { Chart, registerables } from 'chart.js';
-import { globalData } from '../../../globals';
+import { globalData } from '../../../global/global-data';
 
 Chart.register(...registerables);
 @Component({

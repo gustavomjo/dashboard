@@ -1,7 +1,7 @@
 import { Chart,registerables } from 'chart.js';
 import { CUSTOM_ELEMENTS_SCHEMA, Component} from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { globalVars  } from '../../globals';
+import { globalVars  } from '../../global/globals';
 import { CardCirurgiasRealizadasComponent } from './card-cirurgias-realizadas/card-cirurgias-realizadas.component';
 import { CirurgiasRelizadasConvTopComponent } from './cirurgias-relizadas-conv-top/cirurgias-relizadas-conv-top.component';
 import { ReceitasComponent } from './receitas/receitas.component';

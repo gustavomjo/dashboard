@@ -1,6 +1,6 @@
 import { farmProdutoLocal } from './../../models/dash-farm/farmProdutoLocal.model';
 import { ProdutoEntradaSaida12 } from './../../models/dash-farm/farmProdutoEntradaSaida12.model';
-import { Busca } from './../../globals.services';
+import { Busca } from '../../global/globals.services';
 import { Injectable } from '@angular/core';
 
 @Injectable({

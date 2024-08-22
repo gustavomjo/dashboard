@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Busca} from '../../globals.services';
+import {Busca} from '../../global/globals.services';
 import { fatTotalAno } from '../../models/dash-fat/fatTotalAno.model';
 import { FatSitAnoMes } from '../../models/dash-fat/fatSitAnoMes.model';
 import { fatTotalSituacao } from '../../models/dash-fat/fatTotalSituacao.model';

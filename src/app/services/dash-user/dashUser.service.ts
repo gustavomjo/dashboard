@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Busca} from '../../globals.services';
+import {Busca} from '../../global/globals.services';
 import { dashuser } from '../../models/dash-user/dash-user.model';
 
 @Injectable({

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { recIntConvService } from '../../../services/dash-receitas/recIntConv.service';
-import { globalCores, globalData } from '../../../globals';
 import { Chart, registerables } from 'chart.js';
 import { isValid } from 'date-fns';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { ActivatedRoute } from '@angular/router';
+import { globalData } from '../../../global/global-data';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 @Component({

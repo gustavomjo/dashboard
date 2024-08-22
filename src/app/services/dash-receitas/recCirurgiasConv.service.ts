@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Busca} from '../../globals.services';
+import {Busca} from '../../global/globals.services';
 import { recCirurgiasConv } from '../../models/dash-receitas/recCirurgiasConv.model';
 
 

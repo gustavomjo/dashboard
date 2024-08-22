@@ -1,7 +1,7 @@
 import * as core from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { PrazoRecAnoService } from '../../../services/dash/prazorecano.service';
-import { globalCores, globalData } from '../../../globals';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 @core.Component({

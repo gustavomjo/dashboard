@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { finDREGrupoService } from '../../../services/dash-fin/finDRE.service';
-import { globalCoresNome, moneyReduct } from '../../../globals';
 import { finDRE } from '../../../models/dash-fin/finDRE.model';
+import { globalCoresNome } from '../../../global/global-cores';
+import { moneyReduct } from '../../../global/global-money';
 
 @Component({
   selector: 'app-card-dre',

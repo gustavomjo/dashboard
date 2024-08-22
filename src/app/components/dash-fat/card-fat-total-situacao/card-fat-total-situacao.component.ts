@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { dashFatService } from '../../../services/dash-fat/dashfat.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../../services/config.service';
-import { globalCoresNome, moneyReduct } from '../../../globals';
 import { CommonModule } from '@angular/common';
+import { globalCoresNome } from '../../../global/global-cores';
+import { moneyReduct } from '../../../global/global-money';
 
 @Component({
   selector: 'app-card-fat-total-situacao',

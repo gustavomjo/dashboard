@@ -6,7 +6,7 @@ import { farmPerda } from '../../models/dash-farm/farmPerda.model';
 import { farmProduto } from '../../models/dash-farm/farmProduto.model';
 import { farmProdutoSal2 } from '../../models/dash-farm/farmprodutosal2.model';
 import { farmSaida } from '../../models/dash-farm/farmSaidas.model';
-import { Busca } from './../../globals.services';
+import { Busca } from '../../global/globals.services';
 import { Injectable } from '@angular/core';
 
 @Injectable({

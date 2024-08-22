@@ -1,4 +1,4 @@
-import { Busca } from '../../globals.services';
+import { Busca } from '../../global/globals.services';
 import { Injectable } from '@angular/core';
 import { ProdutoValidade } from '../../models/dash-farm/farmProdutovalidade.model'
 

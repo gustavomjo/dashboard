@@ -1,5 +1,5 @@
 import { farmCurvaAbcCusto } from '../../models/dash-farm/farmCurvaAbcCusto.model'
-import { Busca } from './../../globals.services';
+import { Busca } from '../../global/globals.services';
 import { Injectable } from '@angular/core';
 
 @Injectable({

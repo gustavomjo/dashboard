@@ -8,11 +8,12 @@ import { farmDetalheProdutoService } from '../../../services/dash-farm/farmDetal
 import { farmProdutosal2Service } from '../../../services/dash-farm/farmProdutosal2.service';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { Chart, registerables } from 'chart.js';
-import { globalCores, globalData } from '../../../globals';
 import moment from 'moment';
 import { differenceInDays, parseISO } from 'date-fns';
 import { AgrupadosPorSetor, farmProdutoLocal } from '../../../models/dash-farm/farmProdutoLocal.model';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { globalData } from '../../../global/global-data';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 

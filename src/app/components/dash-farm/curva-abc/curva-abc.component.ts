@@ -3,8 +3,6 @@ import { farmCurvaAbcCustoService } from '../../../services/dash-farm/farmCurvaA
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
-import { globalCores, globalData } from '../../../globals';
-
 import { searchModule } from '../../search.Module';
 import { CommonModule } from '@angular/common';
 import { farmDetalheProdutoService } from '../../../services/dash-farm/farmDetalheProduto.service';
@@ -16,6 +14,8 @@ import { FiltrodataComponent } from "../../filtrodata/filtrodata.component";
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { globalData } from '../../../global/global-data';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DespesaService } from '../../../services/dash/despesa.service';
 import { Chart, registerables } from 'chart.js';
-import { cleanStringUnicode, globalCores, globalData } from '../../../globals';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { isValid } from 'date-fns';
 import { ActivatedRoute } from '@angular/router';
+import { globalData } from '../../../global/global-data';
+import { cleanStringUnicode } from '../../../global/global-string';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 @Component({

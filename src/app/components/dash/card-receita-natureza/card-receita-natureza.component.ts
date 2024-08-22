@@ -1,12 +1,12 @@
-import { globalData } from './../../../globals';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ReceitaService } from '../../../services/dash/receita.service';
-import { globalCores } from '../../../globals';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { ActivatedRoute } from '@angular/router';
 import { isValid } from 'date-fns';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { globalData } from '../../../global/global-data';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardFaturamentoService } from '../../../services/dash/cardfaturamento.service';
-import { moneyReduct } from '../../../globals';
+import { moneyReduct } from '../../../global/global-money';
 
 @Component({
   selector: 'app-card-faturamento',
@@ -20,7 +20,6 @@ export class CardFaturamentoComponent implements OnInit{
       let card :any[]=[];
       card = card.concat(dados.body)
 
-      let arr : any[]=['', 'K', 'M', 'B', 'T', 'q', 'Q'];
       let total = 0.00;
       let cont =0;
 

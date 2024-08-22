@@ -5,9 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { searchModule } from '../../search.Module';
 import { CommonModule } from '@angular/common';
 import { farmProdutoValidadeService } from '../../../services/dash-farm/farmProdutoValidade.service';
-import { globalData } from '../../../globals';
 import { differenceInDays, parseISO } from 'date-fns';
 import moment from 'moment';
+import { globalData } from '../../../global/global-data';
 
 @Component({
   selector: 'app-med-validade',
