@@ -3,6 +3,7 @@ import {Busca} from '../../global/globals.services';
 import { fatTotalAno } from '../../models/dash-fat/fatTotalAno.model';
 import { FatSitAnoMes } from '../../models/dash-fat/fatSitAnoMes.model';
 import { fatTotalSituacao } from '../../models/dash-fat/fatTotalSituacao.model';
+import { fatListPendente } from '../../models/dash-fat/fatListPendente.model';
 
 @Injectable({
   providedIn:'root'
@@ -22,6 +23,10 @@ export class dashFatService{
 
   async getFatTotalSituacao(data_corte : any){
     return await this.Busca.getHtml<fatTotalSituacao[]>('/fattotalsituacao?data_corte='+data_corte)
+  }
+
+  async getFatListPendente(data_corte : any){
+    return await this.Busca.getHtml<fatListPendente[]>('/fatlistpendente?data_corte='+data_corte)
   }
 
 

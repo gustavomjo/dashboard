@@ -1,0 +1,26 @@
+.card
+{
+  height: 100vh;
+
+}
+.card-body
+{
+  overflow: auto;
+}
+
+/* Estilo básico do lst-group-item */
+.lst-group-item {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: -1px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+
+.lst-group-item:hover,
+.lst-group-item:focus {
+  background-color: #dee2e698; /* Cor mais intensa para o hover */
+  transform: scale(1.08); /* Leve aumento no tamanho */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Suaviza a transição */
+}
