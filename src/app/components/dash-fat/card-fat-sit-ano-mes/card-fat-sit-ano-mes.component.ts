@@ -5,6 +5,8 @@ import { ConfigService } from '../../../services/config.service';
 import moment from 'moment';
 import { Chart, registerables } from 'chart.js';
 import { globalData } from '../../../global/global-data';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { isValid } from 'date-fns';
 
 Chart.register(...registerables);
 @Component({
@@ -15,21 +17,39 @@ Chart.register(...registerables);
   styleUrl: './card-fat-sit-ano-mes.component.scss'
 })
 export class CardFatSitAnoMesComponent implements OnInit{
-
+  data_corte? : Date;
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
-              private configService: ConfigService
+              private configService: ConfigService,
+              public filtrodataService: FiltrodataService,
           ){}
   ngOnInit(): void {
     this.configService.getConfig().subscribe(config => {
-      this.getFatSitAnoMes(config.data_corte);
+      this.data_corte = config.data_corte;
+      this.getFatSitAnoMes(this.data_corte,globalData.gbDataHoje.replace(/-/g, '/'),globalData.gbDataHoje.replace(/-/g, '/'));
     }, error => {
       console.error('Erro ao carregar a configuração', error);
     });
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
   }
 
-  async getFatSitAnoMes(data_corte : any){
-    (await this.dashFat.getFatSitAnoMes(data_corte)).subscribe(dados=>{
+  public atualiza(): void {
+    let rota = ['dash', 'dash-fat'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid)
+      this.getFatSitAnoMes(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+  }
+
+  async getFatSitAnoMes(data_corte : any,dataDe : any,dataAte : any){
+    (await this.dashFat.getFatSitAnoMes(data_corte,dataDe,dataAte)).subscribe(dados=>{
       let fat :any[]=[];
       fat = fat.concat(dados.body);
       // console.log(fat)

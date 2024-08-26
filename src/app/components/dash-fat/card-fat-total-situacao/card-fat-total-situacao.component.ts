@@ -5,6 +5,9 @@ import { ConfigService } from '../../../services/config.service';
 import { CommonModule } from '@angular/common';
 import { globalCoresNome } from '../../../global/global-cores';
 import { moneyReduct } from '../../../global/global-money';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { globalData } from '../../../global/global-data';
+import { isValid } from 'date-fns';
 
 @Component({
   selector: 'app-card-fat-total-situacao',
@@ -19,19 +22,38 @@ export class CardFatTotalSituacaoComponent implements OnInit {
   _fechadoComRPS = '';
   _fechadoSemRPS = '';
   _total = '';
+  data_corte? : Date;
 
   screenWidth: number = 0;
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
-              private configService: ConfigService
+              private configService: ConfigService,
+              public filtrodataService: FiltrodataService,
           ){}
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.configService.getConfig().subscribe(config=>{
-      this.getFatTotalSituacao(config.data_corte)
+      this.data_corte = config.data_corte;
+      this.getFatTotalSituacao(this.data_corte,globalData.gbDataHoje.replace(/-/g, '/'),globalData.gbDataHoje.replace(/-/g, '/'))
     },error=>{
       console.error('Erro ao carregar configuração',error)
-    })
+    });
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
+  }
+
+  public atualiza(): void {
+    let rota = ['dash-user', 'dash-fat'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid)
+      this.getFatTotalSituacao(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   headingClass() {
@@ -43,11 +65,14 @@ export class CardFatTotalSituacaoComponent implements OnInit {
     };
   }
 
-  async getFatTotalSituacao(data_corte : any){
-    (await this.dashFat.getFatTotalSituacao(data_corte)).subscribe(dados=>{
+  async getFatTotalSituacao(data_corte : any,dataDe : any,dataAte : any){
+    (await this.dashFat.getFatTotalSituacao(data_corte,dataDe,dataAte)).subscribe(dados=>{
       let fat :any[]=[];
       let total : number=0;
       fat = fat.concat(dados.body);
+      this._pendente = '0';
+      this._fechadoComRPS = '0';
+      this._fechadoSemRPS = '0';
       for(let i=0;i<fat.length;i++){
         switch(fat[i].situacao_conta){
           case  'Pendente' :

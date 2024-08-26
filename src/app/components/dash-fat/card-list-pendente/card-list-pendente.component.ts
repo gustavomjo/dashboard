@@ -7,6 +7,9 @@ import { globalCoresNome } from '../../../global/global-cores';
 import { FormsModule } from '@angular/forms';
 import { fatListPendente } from '../../../models/dash-fat/fatListPendente.model';
 import { searchModule } from '../../search.Module';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { globalData } from '../../../global/global-data';
+import { isValid } from 'date-fns';
 
 @Component({
   selector: 'app-card-list-pendente',
@@ -20,22 +23,44 @@ export class CardListPendenteComponent implements OnInit {
   _list : any[]=[];
   _searchInternacao="";
   _searchConvenio ="";
+  _apresentado : boolean = false;
+  data_corte? : Date;
 
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
-              private configService: ConfigService
+              private configService: ConfigService,
+              public filtrodataService: FiltrodataService,
           ){}
   ngOnInit(): void {
     this.configService.getConfig().subscribe(config=>{
-      this.getFatListPendente(config.data_corte)
+      this.data_corte = config.data_corte;
+      this.getFatListPendente(this.data_corte,globalData.gbDataHoje.replace(/-/g, '/'),globalData.gbDataHoje.replace(/-/g, '/'));
     },error=>{
       console.error('Erro ao carregar configuração',error)
-    })
+    });
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
   }
 
-  async getFatListPendente(data_corte : any){
-    (await this.dashFat.getFatListPendente(data_corte)).subscribe(dados=>{
+  public atualiza(): void {
+    let rota = ['dash', 'dash-fat'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid)
+      this.getFatListPendente(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+  }
+
+  async getFatListPendente(data_corte : any,dataDe : any,dataAte : any){
+    (await this.dashFat.getFatListPendente(data_corte,dataDe,dataAte)).subscribe(dados=>{
+      this._list = [];
       this._list = this._list.concat(dados.body);
+      // console.log(this._list)
 
     })
   }

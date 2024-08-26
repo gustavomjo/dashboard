@@ -7,14 +7,15 @@ import { searchGrupo } from './dash-farm/search/search.Grupo.pipe';
 import { searchVencimento } from './dash-farm/search/search.vencimento.pipe';
 import { searchInternacao } from './dash-fat/search/search.internacao.pipe';
 import { searchConvenio } from './dash-fat/search/search.conv.pipe';
+import { searchApresentado } from './dash-fat/search/search.apresentado.pipe';
 
 @NgModule({
   declarations: [searchCurvaABC,searchMedicamentos, searchGrupo,searchVencimento,
-                 searchInternacao,searchConvenio
+                 searchInternacao,searchConvenio,searchApresentado
   ],
   imports: [CommonModule],
   exports: [searchCurvaABC, searchMedicamentos, searchGrupo,searchVencimento,
-            searchInternacao,searchConvenio
+            searchInternacao,searchConvenio,searchApresentado
   ]
 })
 export class searchModule {}

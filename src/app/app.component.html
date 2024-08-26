@@ -1,5 +1,5 @@
 
-<div class="wrapper">
+<nav class="wrapper">
   <!-- {{isMobile}} -->
   <button class="hamburguer" (click)="ActiveMenu()" [class.active]="active" *ngIf="router.url !== '/' && router.url !== '**'"></button>
 
@@ -51,5 +51,5 @@
   <div class="main">
     <router-outlet />
   </div>
-</div>
+</nav>
 
