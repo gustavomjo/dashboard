@@ -7,12 +7,13 @@ import { isValid } from 'date-fns';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { globalData } from '../../../global/global-data';
 import { globalCores } from '../../../global/global-cores';
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-receita-natureza',
   standalone: true,
-  imports: [SpinnerComponent],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './card-receita-natureza.component.html',
   styleUrl: './card-receita-natureza.component.scss'
 })

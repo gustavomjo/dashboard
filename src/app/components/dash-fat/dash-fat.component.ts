@@ -4,11 +4,12 @@ import { CardFatSitAnoMesComponent } from "./card-fat-sit-ano-mes/card-fat-sit-a
 import { CardFatTotalSituacaoComponent } from "./card-fat-total-situacao/card-fat-total-situacao.component";
 import { FiltrodataComponent } from "../filtrodata/filtrodata.component";
 import { CardListPendenteComponent } from "./card-list-pendente/card-list-pendente.component";
+import { CardGraphConvFaturadosComponent } from "./card-graph-conv-faturados/card-graph-conv-faturados.component";
 
 @Component({
   selector: 'app-dash-fat',
   standalone: true,
-  imports: [CardFatTotalAnoComponent, CardFatSitAnoMesComponent, CardFatTotalSituacaoComponent, FiltrodataComponent, CardListPendenteComponent],
+  imports: [CardFatTotalAnoComponent, CardFatSitAnoMesComponent, CardFatTotalSituacaoComponent, FiltrodataComponent, CardListPendenteComponent, CardGraphConvFaturadosComponent],
   templateUrl: './dash-fat.component.html',
   styleUrl: './dash-fat.component.scss'
 })

@@ -5,11 +5,27 @@
         <i class='h5 bx bx-time mr-1 mt-1'></i> Faturamento Pendente
       </h5>
     </div>
+    <div class="form-floating mb-1">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="searchConvenio" style="text-transform: uppercase;" uppercase placeholder="Buscar convênio..."  [(ngModel)]="_searchConvenio">
+        <label for="searchConvenio">Convênio</label>
+      </div>
+    </div>
+    <div class="form-floating mb-1">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="searchInternacao" placeholder="Buscar internação..."  [(ngModel)]="_searchInternacao">
+        <label for="searchInternacao">Nr. Ordem ou Nome Paciente</label>
+      </div>
+    </div>
+    <input type="checkbox" value="1" class="switch">
   </div>
   <div class="card-body list-group">
-    <div class="lst-group-item d-flex justify-content-between align-items-start" *ngFor="let fat of _list">
+    <div class="lst-group-item d-flex justify-content-between align-items-start" *ngFor="let fat of _list | searchInternacao:_searchInternacao | searchConvenio:_searchConvenio">
       <div class="ms-2 me-auto ">
-        <div class="fw-bold" [style.color]="color.colorBlue">{{fat.nompac}}</div>
+        <div class="fw-bold" [style.color]="color.colorBlue">
+          {{fat.nompac}}
+          <p>{{fat.cod_internacao}}</p>
+        </div>
         <div class="d-flex">
           <div class="text-uppercase ">{{fat.convenio}} - {{fat.ds_tipo}}</div>
           <div class="ms-3"><h5 [style.color]="color.colorGreenDark">R${{fat.valor_total}}</h5></div>

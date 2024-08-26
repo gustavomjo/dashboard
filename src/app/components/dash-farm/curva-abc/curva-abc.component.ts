@@ -97,25 +97,6 @@ export class CurvaABCComponent implements OnInit {
     this.getEntradaSaida(value);
   }
 
-  // public onDateIn(event: any): void {
-  //   this.mesanoDe = event;
-  //   this.mesanoDe=new Date(event);
-  // }
-
-  // public onDateUntil(event: any): void {
-  //   this.mesanoAte = event;
-  //   this.mesanoAte = new Date(event);
-
-  //   const _datade = new Date(this.mesanoDe);
-  //   const dataDe = _datade.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
-
-  //   const _dataate = new Date(event);
-  //   const dataAte = _dataate.toLocaleDateString('pt-BR', {  year: 'numeric', month: 'numeric', day: 'numeric' });
-
-  //   if(event != null){
-  //     this.getCurvaAbcCusto(dataDe,dataAte);
-  //   }
-  // }
   filteredCurvaAbcCusto() {
 
     if (!this.searchTerm) {

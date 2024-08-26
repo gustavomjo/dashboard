@@ -95,7 +95,6 @@ export class CardFatSitAnoMesComponent implements OnInit{
   }
 
   _chart(mes_ano : any,dataset : any){
-    // console.log(mes_ano)
     let chartExist = Chart.getChart("_chart"); // <canvas> id
     if (chartExist != undefined)
       chartExist.destroy();
@@ -114,7 +113,7 @@ export class CardFatSitAnoMesComponent implements OnInit{
           },
           title: {
             display: true,
-            text: 'Entradas - Custo'
+            text: 'Faturamento - Int/Cons'
           }
         }
       }
@@ -142,7 +141,7 @@ export class CardFatSitAnoMesComponent implements OnInit{
           },
           title: {
             display: true,
-            text: 'Entradas - Custo'
+            text: 'Faturamento - SADT'
           }
         }
       }

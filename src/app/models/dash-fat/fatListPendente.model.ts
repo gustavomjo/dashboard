@@ -1,4 +1,6 @@
 export interface fatListPendente{
+  cod_internacao : string,
+  codpac : number,
   nompac : string,
   convenio : string,
   tipo : string,

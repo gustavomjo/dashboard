@@ -27,7 +27,6 @@ export class CardFatTotalAnoComponent implements OnInit{
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.getFatTotal();
-    console.log(this.screenWidth)
   }
 
   headingClass() {
