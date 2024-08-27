@@ -23,7 +23,7 @@ export class CardCirurgiasRealizadasComponent implements OnInit{
   ){}
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getRecCirurgiasReali(globalData.gbDataHoje,globalData.gbDataHoje);
+    this.getRecCirurgiasReali(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
 
   public atualiza(): void {

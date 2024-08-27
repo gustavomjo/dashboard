@@ -22,7 +22,7 @@ export class ReceitasComponent implements OnInit {
               private route: ActivatedRoute){}
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getRecInt(globalData.gbDataHoje,globalData.gbDataHoje);
+    this.getRecInt(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
   public atualiza(): void {
     let rota = ['dash-receitas', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');

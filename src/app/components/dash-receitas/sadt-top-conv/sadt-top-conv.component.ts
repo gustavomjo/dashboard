@@ -21,7 +21,7 @@ export class SadtTopConvComponent implements OnInit{
               private route: ActivatedRoute){}
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'S');
+    this.getIntConv(this.filtrodataService.data_de, this.filtrodataService.data_ate,'S');
   }
 
   public atualiza(): void {

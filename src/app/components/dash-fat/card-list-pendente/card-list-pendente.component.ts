@@ -34,7 +34,7 @@ export class CardListPendenteComponent implements OnInit {
   ngOnInit(): void {
     this.configService.getConfig().subscribe(config=>{
       this.data_corte = config.data_corte;
-      this.getFatListPendente(this.data_corte,globalData.gbDataHoje.replace(/-/g, '/'),globalData.gbDataHoje.replace(/-/g, '/'));
+      this.getFatListPendente(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
     },error=>{
       console.error('Erro ao carregar configuração',error)
     });

@@ -26,7 +26,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
 
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getReceitasAPI(globalData.gbDataHoje, globalData.gbDataHoje);
+    this.getReceitasAPI(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
   public atualiza():void{
     let rota = ['dash', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
@@ -40,7 +40,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
                 dataAte >= dataDe;
 
     if(valid)
-      this.getReceitasAPI(this.filtrodataService.data_de.replaceAll('-','/'),this.filtrodataService.data_ate.replaceAll('-','/'));
+      this.getReceitasAPI(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   async getReceitasAPI(dataDe : string,dataAte : string){

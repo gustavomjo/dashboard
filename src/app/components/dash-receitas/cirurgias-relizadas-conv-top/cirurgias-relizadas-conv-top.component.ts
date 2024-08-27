@@ -23,7 +23,7 @@ export class CirurgiasRelizadasConvTopComponent implements OnInit {
   ){}
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getReceitasConv(globalData.gbDataHoje,globalData.gbDataHoje);
+    this.getReceitasConv(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
   public atualiza(): void {
     let rota = ['dash-receitas', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');

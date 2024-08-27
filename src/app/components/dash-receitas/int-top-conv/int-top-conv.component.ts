@@ -21,7 +21,7 @@ export class IntTopConvComponent implements OnInit {
               private route: ActivatedRoute){}
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getIntConv(globalData.gbDataHoje,globalData.gbDataHoje,'I');
+    this.getIntConv(this.filtrodataService.data_de, this.filtrodataService.data_ate,'I');
   }
   public atualiza(): void {
     let rota = ['dash-receitas', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
