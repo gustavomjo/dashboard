@@ -7,17 +7,20 @@ import { Chart, registerables } from 'chart.js';
 import { globalData } from '../../../global/global-data';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { isValid } from 'date-fns';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-fat-sit-ano-mes',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './card-fat-sit-ano-mes.component.html',
   styleUrl: './card-fat-sit-ano-mes.component.scss'
 })
 export class CardFatSitAnoMesComponent implements OnInit{
   data_corte? : Date;
+  fat : any[]=[];
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
               private configService: ConfigService,
@@ -50,8 +53,8 @@ export class CardFatSitAnoMesComponent implements OnInit{
 
   async getFatSitAnoMes(data_corte : any,dataDe : any,dataAte : any){
     (await this.dashFat.getFatSitAnoMes(data_corte,dataDe,dataAte)).subscribe(dados=>{
-      let fat :any[]=[];
-      fat = fat.concat(dados.body);
+      // let fat :any[]=[];
+      this.fat = this.fat.concat(dados.body);
       // console.log(fat)
       let dataMap :{[key:string]:any} = {};
       let lstIntF : any[]=[];
@@ -60,9 +63,9 @@ export class CardFatSitAnoMesComponent implements OnInit{
       let lstconsA : any[]=[];
       let lstsadtF : any[]=[];
       let lstsadtA : any[]=[];
-      for(let i=0;i<fat.length;i++){
-        let mes = globalData.gbMeses[Number(moment.utc(fat[i].mes_ano).format('MM'))-1];
-        let ano =moment.utc(fat[i].mes_ano).format('YYYY');
+      for(let i=0;i<this.fat.length;i++){
+        let mes = globalData.gbMeses[Number(moment.utc(this.fat[i].mes_ano).format('MM'))-1];
+        let ano =moment.utc(this.fat[i].mes_ano).format('YYYY');
         let dt = mes+'/'+ano
 
         if (!dataMap[dt]) {
@@ -70,26 +73,26 @@ export class CardFatSitAnoMesComponent implements OnInit{
             data: dt
           };
         }
-        switch(fat[i].ds_tipo){
+        switch(this.fat[i].ds_tipo){
           case "Internacao" :
-            if(fat[i].situacao_conta == "Fechada")
-              lstIntF.push(fat[i].valor_total)
+            if(this.fat[i].situacao_conta == "Fechada")
+              lstIntF.push(this.fat[i].valor_total)
             else
-              lstIntA.push(fat[i].valor_total)
+              lstIntA.push(this.fat[i].valor_total)
 
             break;
           case "Consulta" :
-            if(fat[i].situacao_conta == "Fechada")
-              lstconsF.push(fat[i].valor_total)
+            if(this.fat[i].situacao_conta == "Fechada")
+              lstconsF.push(this.fat[i].valor_total)
             else
-              lstconsA.push(fat[i].valor_total)
+              lstconsA.push(this.fat[i].valor_total)
             break;
 
           case "SADT" :
-            if(fat[i].situacao_conta == "Fechada")
-              lstsadtF.push(fat[i].valor_total)
+            if(this.fat[i].situacao_conta == "Fechada")
+              lstsadtF.push(this.fat[i].valor_total)
             else
-              lstsadtA.push(fat[i].valor_total)
+              lstsadtA.push(this.fat[i].valor_total)
             break;
         }
       }

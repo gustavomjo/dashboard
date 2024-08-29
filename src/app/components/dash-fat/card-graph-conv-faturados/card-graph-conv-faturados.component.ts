@@ -7,17 +7,20 @@ import { globalCores } from '../../../global/global-cores';
 import { isValid } from 'date-fns';
 import { globalData } from '../../../global/global-data';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-graph-conv-faturados',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './card-graph-conv-faturados.component.html',
   styleUrl: './card-graph-conv-faturados.component.scss'
 })
 export class CardGraphConvFaturadosComponent implements OnInit {
   data_corte? : Date;
+  fat : any[]=[];
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
               private configService: ConfigService,
@@ -51,14 +54,14 @@ export class CardGraphConvFaturadosComponent implements OnInit {
 
   async getFatConvFaturados(data_corte : any,dataDe : any,dataAte : any) {
     (await this.dashFat.getFatConvFaturados(data_corte,dataDe,dataAte)).subscribe(dados => {
-      const fat = dados.body || []; // Garantir que body esteja definido
+      // const fat = dados.body || []; // Garantir que body esteja definido
       const datasets: any[] = [];
       const cores: string[] = globalCores.gbCoresTransp;
 
-      for (let i = 0; i < fat.length; i++) {
+      for (let i = 0; i < this.fat.length; i++) {
         datasets.push({
-          label: fat[i].convenio,
-          data: [fat[i].valor_total],
+          label: this.fat[i].convenio,
+          data: [this.fat[i].valor_total],
           backgroundColor: cores[i % cores.length], // Usando as cores com segurança
             borderColor: cores[i % cores.length],
           borderWidth: 1

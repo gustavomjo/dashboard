@@ -4,11 +4,12 @@ import { finDREGrupoService } from '../../../services/dash-fin/finDRE.service';
 import { finDRE } from '../../../models/dash-fin/finDRE.model';
 import { globalCoresNome } from '../../../global/global-cores';
 import { moneyReduct } from '../../../global/global-money';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 @Component({
   selector: 'app-card-dre',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SpinnerComponent],
   templateUrl: './card-dre.component.html',
   styleUrl: './card-dre.component.scss'
 })

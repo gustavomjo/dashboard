@@ -2,16 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { PrazoRecDService } from '../../../services/dash/prazorecd.service';
 import { globalCores } from '../../../global/global-cores';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-prazo-med-receb-mes',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './card-prazo-med-receb-mes.component.html',
   styleUrl: './card-prazo-med-receb-mes.component.scss'
 })
 export class CardPrazoMedRecebMesComponent implements OnInit {
+  prazo : any[]=[];
   constructor( private prazoRecDService : PrazoRecDService){}
   ngOnInit(): void {
     this.getPrazoRecDAPI()
@@ -20,16 +23,16 @@ export class CardPrazoMedRecebMesComponent implements OnInit {
   async getPrazoRecDAPI(){
     (await this.prazoRecDService.getPrazoRecD()).subscribe(dados =>{
 
-      let prazo :any[]=[];
-      prazo = prazo.concat(dados.body)
+      // let prazo :any[]=[];
+      this.prazo = this.prazo.concat(dados.body)
 
       let media :any[]=[];
       let mesano :any[]=[];
-      if(prazo != null){
-        for(let i=0;i< prazo.length;i++){
+      if(this.prazo != null){
+        for(let i=0;i< this.prazo.length;i++){
 
-          mesano.push(prazo[i].mesano.substring(5,7)+'/'+prazo[i].mesano.substring(0,4));
-          media.push(prazo[i].media);
+          mesano.push(this.prazo[i].mesano.substring(5,7)+'/'+this.prazo[i].mesano.substring(0,4));
+          media.push(this.prazo[i].media);
         }
         this._rcPrazoRecD(mesano,media);
 

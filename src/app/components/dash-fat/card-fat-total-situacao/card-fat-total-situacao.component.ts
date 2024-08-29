@@ -8,15 +8,17 @@ import { moneyReduct } from '../../../global/global-money';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { globalData } from '../../../global/global-data';
 import { isValid } from 'date-fns';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 @Component({
   selector: 'app-card-fat-total-situacao',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SpinnerComponent],
   templateUrl: './card-fat-total-situacao.component.html',
   styleUrl: './card-fat-total-situacao.component.scss'
 })
 export class CardFatTotalSituacaoComponent implements OnInit {
+  fat : any[]=[];
   color = globalCoresNome;
   _pendente = '';
   _fechadoComRPS = '';
@@ -67,25 +69,25 @@ export class CardFatTotalSituacaoComponent implements OnInit {
 
   async getFatTotalSituacao(data_corte : any,dataDe : any,dataAte : any){
     (await this.dashFat.getFatTotalSituacao(data_corte,dataDe,dataAte)).subscribe(dados=>{
-      let fat :any[]=[];
+      // let fat :any[]=[];
       let total : number=0;
-      fat = fat.concat(dados.body);
+      this.fat = this.fat.concat(dados.body);
       this._pendente = '0';
       this._fechadoComRPS = '0';
       this._fechadoSemRPS = '0';
-      for(let i=0;i<fat.length;i++){
-        switch(fat[i].situacao_conta){
+      for(let i=0;i<this.fat.length;i++){
+        switch(this.fat[i].situacao_conta){
           case  'Pendente' :
-            this._pendente = moneyReduct(fat[i].valor_total)
+            this._pendente = moneyReduct(this.fat[i].valor_total)
             break;
           case 'Fechada' :
-            if(!fat[i].rps)
-              this._fechadoSemRPS = moneyReduct(fat[i].valor_total);
+            if(!this.fat[i].rps)
+              this._fechadoSemRPS = moneyReduct(this.fat[i].valor_total);
             else
-              this._fechadoComRPS = moneyReduct(fat[i].valor_total);
+              this._fechadoComRPS = moneyReduct(this.fat[i].valor_total);
             break;
         }
-        total = total + fat[i].valor_total;
+        total = total + this.fat[i].valor_total;
       }
       this._total = moneyReduct(total);
     })

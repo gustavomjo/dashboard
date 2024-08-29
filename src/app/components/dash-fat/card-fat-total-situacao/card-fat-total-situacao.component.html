@@ -9,18 +9,21 @@
         <h5 class="text-uppercase text-body-secondary mb-2 d-flex align-items-center">
           <i class='h5 bx bx-time mr-1 mt-1'></i> Pend.
         </h5>
+        <app-spinner *ngIf="fat.length == 0"></app-spinner>
         <span class="dynamic-heading" [ngClass]="headingClass()" [style.color]="color.colorOrange">{{ _pendente }}</span>
       </div>
       <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center">
         <h5 class="text-uppercase text-body-secondary mb-2 d-flex align-items-center">
           <i class='h5 bx bx-calculator mr-1 mt-1'></i> RPS <i class='h4 bx bx-check font-weight-bold ml-2' [style.color]="color.colorGreen"></i>
         </h5>
+        <app-spinner *ngIf="fat.length == 0"></app-spinner>
         <span class="dynamic-heading" [ngClass]="headingClass()" [style.color]="color.colorGreen">{{ _fechadoComRPS }}</span>
       </div>
       <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center">
         <h5 class="text-uppercase text-body-secondary mb-2 d-flex align-items-center">
           <i class='h5 bx bx-calculator mr-1 mt-1'></i> RPS <i class='h4 bx bx-x font-weight-bold ml-2' [style.color]="color.colorRed"></i>
         </h5>
+        <app-spinner *ngIf="fat.length == 0"></app-spinner>
         <span class="dynamic-heading" [ngClass]="headingClass()" [style.color]="color.colorYellow">{{ _fechadoSemRPS }}</span>
       </div>
     </div>

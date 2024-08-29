@@ -5,15 +5,17 @@ import { CommonModule } from '@angular/common';
 import { globalData } from '../../../global/global-data';
 import { globalCoresNome } from '../../../global/global-cores';
 import { moneyReduct } from '../../../global/global-money';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 @Component({
   selector: 'app-card-fat-total-ano',
   standalone: true,
-  imports: [CommonModule ],
+  imports: [CommonModule, SpinnerComponent],
   templateUrl: './card-fat-total-ano.component.html',
   styleUrl: './card-fat-total-ano.component.scss'
 })
 export class CardFatTotalAnoComponent implements OnInit{
+  fat :any[]=[];
   _ano = globalData.gbAno;
   color = globalCoresNome;
   _lbInt = '';
@@ -41,23 +43,23 @@ export class CardFatTotalAnoComponent implements OnInit{
 
   async getFatTotal(){
     (await this.dashFat.getFatTotalAno()).subscribe(dados=>{
-      let fat : any[]=[];
-      fat = fat.concat(dados.body);
+      // let fat : any[]=[];
+      this.fat = this.fat.concat(dados.body);
       let total : number=0;
-      for(let i=0;i<fat.length;i++){
-        switch(fat[i].ds_tipo){
+      for(let i=0;i<this.fat.length;i++){
+        switch(this.fat[i].ds_tipo){
           case "Internacao" :
-            this._lbInt = moneyReduct(Number(fat[i].valor_total));
+            this._lbInt = moneyReduct(Number(this.fat[i].valor_total));
             // this.internacao = this.internacao.toFixed(2);
             break;
           case "Consulta" :
-            this._lbCons = moneyReduct(Number(fat[i].valor_total));
+            this._lbCons = moneyReduct(Number(this.fat[i].valor_total));
             break;
           case "SADT" :
-            this._lbSadt = moneyReduct(Number(fat[i].valor_total));
+            this._lbSadt = moneyReduct(Number(this.fat[i].valor_total));
             break;
         }
-        total = total + fat[i].valor_total;
+        total = total + this.fat[i].valor_total;
       }
       this._total = moneyReduct(total);
     })

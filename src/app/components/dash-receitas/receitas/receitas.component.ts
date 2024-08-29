@@ -6,21 +6,25 @@ import { ActivatedRoute } from '@angular/router';
 import { isValid } from 'date-fns';
 import { globalData } from '../../../global/global-data';
 import { globalCores } from '../../../global/global-cores';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-receitas',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './receitas.component.html',
   styleUrl: './receitas.component.scss'
 })
 export class ReceitasComponent implements OnInit {
+  rec : any[]=[];
 
   constructor(private recInt : recIntService,
               public filtrodataService: FiltrodataService,
               private route: ActivatedRoute){}
   ngOnInit(): void {
+
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getRecInt(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
@@ -41,8 +45,8 @@ export class ReceitasComponent implements OnInit {
 
   async getRecInt(dataDe : string,dataAte : string){
     (await this.recInt.getRecInt(dataDe,dataAte)).subscribe(dados =>{
-      let rec : any[]=[];
-      rec = rec.concat(dados.body)
+      // let rec : any[]=[];
+      this.rec = this.rec.concat(dados.body)
 
       let mesano :any[]=[];
       let tipo :any[]=[];
@@ -50,20 +54,20 @@ export class ReceitasComponent implements OnInit {
       let totalP : any[]=[];
       let totalS : any[]=[];
 
-      for(let i=0;i<rec.length;i++){
-        if( (i==0) || (rec[i-1].mes_ano != rec[i].mes_ano) ){
-          mesano.push(globalData.gbMeses[parseInt(rec[i].mes_ano.substring(8,10))-1]+'/'+rec[i].mes_ano.substring(0,4));
+      for(let i=0;i<this.rec.length;i++){
+        if( (i==0) || (this.rec[i-1].mes_ano != this.rec[i].mes_ano) ){
+          mesano.push(globalData.gbMeses[parseInt(this.rec[i].mes_ano.substring(8,10))-1]+'/'+this.rec[i].mes_ano.substring(0,4));
         }
-        tipo.push(rec[i].tipo);
-        switch(rec[i].tipo) {
+        tipo.push(this.rec[i].tipo);
+        switch(this.rec[i].tipo) {
           case 'I':
-            totalI.push(rec[i].total);
+            totalI.push(this.rec[i].total);
             break;
           case 'P':
-            totalP.push(rec[i].total);
+            totalP.push(this.rec[i].total);
             break;
           case 'S':
-            totalS.push(rec[i].total);
+            totalS.push(this.rec[i].total);
             break;
         }
       }

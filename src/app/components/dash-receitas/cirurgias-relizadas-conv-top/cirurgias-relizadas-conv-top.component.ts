@@ -6,17 +6,19 @@ import { ActivatedRoute } from '@angular/router';
 import { isValid } from 'date-fns';
 import { globalData } from '../../../global/global-data';
 import { globalCores } from '../../../global/global-cores';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-cirurgias-relizadas-conv-top',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './cirurgias-relizadas-conv-top.component.html',
   styleUrl: './cirurgias-relizadas-conv-top.component.scss'
 })
 export class CirurgiasRelizadasConvTopComponent implements OnInit {
-
+  rec : any =[];
   constructor(private recCirurgiasConvService : recCirurgiasConvService,
               public filtrodataService: FiltrodataService,
               private route: ActivatedRoute
@@ -42,14 +44,14 @@ export class CirurgiasRelizadasConvTopComponent implements OnInit {
 
   async getReceitasConv(dataDe : string,dataAte : string){
     (await this.recCirurgiasConvService.getrecCirurgiasConv(dataDe,dataAte)).subscribe(dados =>{
-      let rec : any[]=[];
-      rec = rec.concat(dados.body)
+      // let rec : any[]=[];
+      this.rec = this.rec.concat(dados.body)
 
       let conv:any[]=[];
       let total:any[]=[];
-      for(let i=0;i<rec.length;i++){
-        conv.push(rec[i].nomconv);
-        total.push(rec[i].total);
+      for(let i=0;i<this.rec.length;i++){
+        conv.push(this.rec[i].nomconv);
+        total.push(this.rec[i].total);
       }
       this._rcRecCirurgiasConv(conv,total);
     })

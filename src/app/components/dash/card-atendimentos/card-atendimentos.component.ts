@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CardAtendService } from '../../../services/dash/cardatend.service';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-card-atendimentos',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CarouselModule, SpinnerComponent,CommonModule],
   templateUrl: './card-atendimentos.component.html',
   styleUrl: './card-atendimentos.component.scss'
 })
 export class CardAtendimentosComponent implements OnInit{
   carTime = 5000;
+  card : any[]=[];
   constructor(private cardAtend : CardAtendService){}
 
   ngOnInit(): void {
@@ -19,8 +22,8 @@ export class CardAtendimentosComponent implements OnInit{
 
   async getCardAtend(){
     (await this.cardAtend.getCardAtend()).subscribe(dados =>{
-      let card :any[]=[];
-      card = card.concat(dados.body)
+      // let card :any[]=[];
+      this.card = this.card.concat(dados.body)
 
       let cardConsM = document.getElementById('cardConsultaM') as HTMLElement;
       let cardConsA = document.getElementById('cardConsultaA') as HTMLElement;
@@ -36,35 +39,35 @@ export class CardAtendimentosComponent implements OnInit{
       cardSADTM.innerHTML = '0';
       cardSADTA.innerHTML = '0';
 
-      for(let i=0;i<card.length;i++){
-        switch (card[i].tipo) {
+      for(let i=0;i<this.card.length;i++){
+        switch (this.card[i].tipo) {
           case 'P':
-            switch (card[i].periodo) {
+            switch (this.card[i].periodo) {
               case 'Este Mes':
-                cardConsM.innerHTML = card[i].total.toString();
+                cardConsM.innerHTML = this.card[i].total.toString();
                 break;
               case 'Este Ano':
-                cardConsA.innerHTML = card[i].total.toString();
+                cardConsA.innerHTML = this.card[i].total.toString();
                 break;
             }
             break;
           case 'I':
-            switch (card[i].periodo) {
+            switch (this.card[i].periodo) {
               case 'Este Mes':
-                cardIntM.innerHTML = card[i].total.toString();
+                cardIntM.innerHTML = this.card[i].total.toString();
                 break;
               case 'Este Ano':
-                cardIntA.innerHTML = card[i].total.toString();
+                cardIntA.innerHTML = this.card[i].total.toString();
                 break;
             }
             break;
           case 'S':
-            switch (card[i].periodo) {
+            switch (this.card[i].periodo) {
               case 'Este Mes':
-                cardSADTM.innerHTML = card[i].total.toString();
+                cardSADTM.innerHTML = this.card[i].total.toString();
                 break;
               case 'Este Ano':
-                cardSADTA.innerHTML = card[i].total.toString();
+                cardSADTA.innerHTML = this.card[i].total.toString();
                 break;
             }
             break;

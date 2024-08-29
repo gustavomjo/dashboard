@@ -23,6 +23,7 @@
             </div>
           </div>
         </div>
+        <app-spinner *ngIf="conta.length == 0"></app-spinner>
       </div>
       <div class="card-footer text-center">
         <span id="spancontasPagAtual" class="h4 mb-0" [style.color]="_PorcentContasPag < 100 ? color.colorGreen : color.colorBlue"></span>
@@ -56,6 +57,7 @@
             </div>
           </div>
         </div>
+        <app-spinner *ngIf="conta.length == 0"></app-spinner>
       </div>
       <div class="card-footer text-center">
         <span id="spancontasRecAtual" class="h4 mb-0" [style.color]="_PorcentContasRec < 100 ? color.colorBlue : color.colorGreen"></span>

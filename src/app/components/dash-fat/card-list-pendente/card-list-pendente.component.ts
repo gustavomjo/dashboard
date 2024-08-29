@@ -10,11 +10,12 @@ import { searchModule } from '../../search.Module';
 import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { globalData } from '../../../global/global-data';
 import { isValid } from 'date-fns';
+import { SpinnerComponent } from "../../spinner/spinner.component";
 
 @Component({
   selector: 'app-card-list-pendente',
   standalone: true,
-  imports: [CommonModule, FormsModule,searchModule],
+  imports: [CommonModule, FormsModule, searchModule, SpinnerComponent],
   templateUrl: './card-list-pendente.component.html',
   styleUrl: './card-list-pendente.component.scss'
 })
@@ -25,6 +26,7 @@ export class CardListPendenteComponent implements OnInit {
   _searchConvenio ="";
   _apresentado : boolean = false;
   data_corte? : Date;
+
 
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,

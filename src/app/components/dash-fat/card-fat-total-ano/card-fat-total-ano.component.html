@@ -9,18 +9,21 @@
           Inter.
           <i class='h5 bx bxs-ambulance ml-2'></i>
         </h5>
+        <app-spinner *ngIf="fat.length == 0"></app-spinner>
         <span class="dynamic-heading" [ngClass]="headingClass()" [style.color]="color.colorBlue">{{ _lbInt }}</span>
       </div>
       <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center">
         <h5 class="text-uppercase text-body-secondary mb-2 d-flex align-items-center">
           Cons. <i class='h5 bx bx-first-aid ml-2'></i>
         </h5>
+        <app-spinner *ngIf="fat.length == 0"></app-spinner>
         <span class="dynamic-heading" [ngClass]="headingClass()" [style.color]="color.colorBlue">{{ _lbCons }}</span>
       </div>
       <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center">
         <h5 class="text-uppercase text-body-secondary mb-2 d-flex align-items-center">
           SADT <i class='h5 bx bx-test-tube ml-2'></i>
         </h5>
+        <app-spinner *ngIf="fat.length == 0"></app-spinner>
         <span class="dynamic-heading" [ngClass]="headingClass()" [style.color]="color.colorBlue">{{ _lbSadt }}</span>
       </div>
     </div>

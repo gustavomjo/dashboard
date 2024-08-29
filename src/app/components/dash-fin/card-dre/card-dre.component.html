@@ -36,6 +36,7 @@
     </div>
   </div>
   <div class="card-body list-group">
+    <app-spinner *ngIf="_dreGrupo.length == 0"></app-spinner>
     <!-- -------------------------------DRE GRUPO--------------------------------- -->
     <div class="collapse multi-collapse show " id="collDREGrupo">
       <div class="lst-group-item d-flex justify-content-between align-items-start" *ngFor="let dre of _dreGrupo">

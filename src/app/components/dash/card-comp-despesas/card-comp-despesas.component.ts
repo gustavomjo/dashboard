@@ -7,18 +7,20 @@ import { ActivatedRoute } from '@angular/router';
 import { globalData } from '../../../global/global-data';
 import { cleanStringUnicode } from '../../../global/global-string';
 import { globalCores } from '../../../global/global-cores';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-comp-despesas',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './card-comp-despesas.component.html',
   styleUrl: './card-comp-despesas.component.scss'
 })
 
 export class CardCompDespesasComponent implements OnInit{
-
+  despesa : any[]=[];
   constructor(private despesaService : DespesaService,
               public filtrodataService: FiltrodataService,
               private route: ActivatedRoute
@@ -50,14 +52,15 @@ export class CardCompDespesasComponent implements OnInit{
 
   public async getDespesa(dataDe : string,dataAte : string){
     (await this.despesaService.getDespesa(dataDe,dataAte)).subscribe(dados =>{
-      let despesa :any[]=[];
-      despesa = despesa.concat(dados.body);
+      // let despesa :any[]=[];
+      this.despesa = this.despesa.concat(dados.body);
+
       let dsDespesa :any[]=[];
       let vrDespesa :any[]=[];
-      if(despesa != null){
-        for(let i=0;i< despesa.length;i++){
-          dsDespesa.push(cleanStringUnicode(despesa[i].ds_subgrupo));
-          vrDespesa.push(despesa[i].valor);
+      if(this.despesa != null){
+        for(let i=0;i< this.despesa.length;i++){
+          dsDespesa.push(cleanStringUnicode(this.despesa[i].ds_subgrupo));
+          vrDespesa.push(this.despesa[i].valor);
         }
         this._rcDespesa(dsDespesa,vrDespesa);
       }

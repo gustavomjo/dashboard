@@ -6,17 +6,19 @@ import { ActivatedRoute } from '@angular/router';
 import { isValid } from 'date-fns';
 import { globalData } from '../../../global/global-data';
 import { globalCores } from '../../../global/global-cores';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-card-cirurgias-realizadas',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './card-cirurgias-realizadas.component.html',
   styleUrl: './card-cirurgias-realizadas.component.scss'
 })
 export class CardCirurgiasRealizadasComponent implements OnInit{
-
+  rec : any []=[];
   constructor(private recCirurgiasRealiService : recCirurgiasRealiService,
               public filtrodataService: FiltrodataService,
               private route: ActivatedRoute
@@ -43,8 +45,8 @@ export class CardCirurgiasRealizadasComponent implements OnInit{
 
   async getRecCirurgiasReali(dataDe : string,dataAte : string){
     (await this.recCirurgiasRealiService.getrecCirurgiasReali(dataDe,dataAte)).subscribe(dados =>{
-      let rec : any[]=[];
-      rec = rec.concat(dados.body)
+      // let rec : any[]=[];
+      this.rec = this.rec.concat(dados.body)
 
       let mesano :any[]=[];
       let tipo : any[]=[];
@@ -52,12 +54,12 @@ export class CardCirurgiasRealizadasComponent implements OnInit{
       let totalS : any[]=[];
 
       let ano='';
-      for(let i=0;i<rec.length;i++){
-        if(rec[i].tipo != 'Secundaria'){
-          mesano.push(globalData.gbMeses[parseInt(rec[i].mes_ano.substring(8,10))-1]+'/'+rec[i].mes_ano.substring(0,4));
+      for(let i=0;i<this.rec.length;i++){
+        if(this.rec[i].tipo != 'Secundaria'){
+          mesano.push(globalData.gbMeses[parseInt(this.rec[i].mes_ano.substring(8,10))-1]+'/'+this.rec[i].mes_ano.substring(0,4));
         }
-        tipo.push(rec[i].tipo);
-        rec[i].tipo == 'Principal' ? totalP.push(rec[i].total) : totalS.push(rec[i].total);
+        tipo.push(this.rec[i].tipo);
+        this.rec[i].tipo == 'Principal' ? totalP.push(this.rec[i].total) : totalS.push(this.rec[i].total);
       }
       this._rcRecCirurgiasReali(mesano,tipo,totalP,totalS);
     })

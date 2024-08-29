@@ -46,7 +46,7 @@ export class CurvaABCComponent implements OnInit {
 
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getCurvaAbcCusto(globalData.gbDataHoje,globalData.gbDataHoje);
+    this.getCurvaAbcCusto(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
   private atualiza(): void {
@@ -73,6 +73,7 @@ export class CurvaABCComponent implements OnInit {
       let totCusto = 0;
       let pAcum = 0.00;
       dados = dados.concat(curvaBody.body)
+      console.log(dados)
 
       for(let i=0;i<dados.length;i++){
         totCusto = totCusto+ Number(dados[i].total_custo_medio);

@@ -6,16 +6,19 @@ import { ActivatedRoute } from '@angular/router';
 import { isValid } from 'date-fns';
 import { globalData } from '../../../global/global-data';
 import { globalCores } from '../../../global/global-cores';
+import { SpinnerComponent } from "../../spinner/spinner.component";
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-sadt-top-conv',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent,CommonModule],
   templateUrl: './sadt-top-conv.component.html',
   styleUrl: './sadt-top-conv.component.scss'
 })
 export class SadtTopConvComponent implements OnInit{
+  rec : any[]=[];
   constructor(private recIntConv : recIntConvService,
               public filtrodataService: FiltrodataService,
               private route: ActivatedRoute){}
@@ -41,15 +44,15 @@ export class SadtTopConvComponent implements OnInit{
 
   async getIntConv(dataDe : string,dataAte : string,tipo : string){
     (await this.recIntConv.getRecIntConv(dataDe,dataAte,tipo)).subscribe(dados =>{
-      let rec : any[]=[];
-      rec = rec.concat(dados.body)
+      // let rec : any[]=[];
+      this.rec = this.rec.concat(dados.body)
 
       let conv:any[]=[];
       let total:any[]=[];
-      for(let i=0;i<rec.length;i++){
+      for(let i=0;i<this.rec.length;i++){
 
-        conv.push(rec[i].nomconv);
-        total.push(rec[i].total);
+        conv.push(this.rec[i].nomconv);
+        total.push(this.rec[i].total);
       }
       this._rcIntConv(conv,total,tipo);
     })

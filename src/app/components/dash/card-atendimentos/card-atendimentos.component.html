@@ -1,5 +1,7 @@
+
 <div class="card h-100">
   <div class="card-body">
+
     <carousel [interval]="carTime" [isAnimated]="true">
       <slide>
         <h3 class="text-uppercase text-center text-info mb-2 ">
@@ -50,5 +52,6 @@
         </div>
       </slide>
     </carousel>
+    <app-spinner *ngIf="card.length == 0"></app-spinner>
   </div>
 </div>

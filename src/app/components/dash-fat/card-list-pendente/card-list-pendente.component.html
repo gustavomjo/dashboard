@@ -23,12 +23,10 @@
         Apresentado
       </label>
     </div>
-
-
-
   </div>
- 
+
   <div class="card-body list-group">
+    <app-spinner *ngIf="_list.length == 0"></app-spinner>
     <div class="lst-group-item d-flex justify-content-between align-items-start" *ngFor="let fat of _list | searchInternacao:_searchInternacao | searchConvenio:_searchConvenio | searchApresentado:_apresentado">
       <div class="ms-2 me-auto ">
         <div class="fw-bold" [style.color]="color.colorBlue">
