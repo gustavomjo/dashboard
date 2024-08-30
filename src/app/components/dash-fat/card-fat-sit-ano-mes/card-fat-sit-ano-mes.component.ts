@@ -96,6 +96,12 @@ export class CardFatSitAnoMesComponent implements OnInit{
             break;
         }
       }
+      let title = '';
+      if(dataDe != '')
+        title = 'Faturamento - Int/Cons - Período : de '+dataDe+' a '+dataAte
+      else
+         title = 'Faturamento - Int/Cons ('+globalData.gbAno+')';
+
 
       let dtArray = Object.keys(dataMap);
       this._chart(dtArray, [
@@ -105,7 +111,12 @@ export class CardFatSitAnoMesComponent implements OnInit{
         { label: 'Consultas Abertas', data: lstconsA, backgroundColor: 'rgba(255, 206, 86, 0.6)' },
         // { label: 'SADT Fechados', data: lstsadtF, backgroundColor: 'rgba(153, 102, 255, 0.6)' },
         // { label: 'SADT Abertos', data: lstsadtA, backgroundColor: 'rgba(255, 159, 64, 0.6)' }
-      ]);
+      ],title);
+
+      if(dataDe != '')
+        title = 'Faturamento - SADT - Período : de '+dataDe+' a '+dataAte
+      else
+         title = 'Faturamento - SADT ('+globalData.gbAno+')';
       this._chartSadt(dtArray, [
         //{ label: 'Internações Fechadas', data: lstIntF, backgroundColor: 'rgba(75, 192, 192, 0.6)' },
         // { label: 'Internações Abertas', data: lstIntA, backgroundColor: 'rgba(255, 99, 132, 0.6)' },
@@ -113,11 +124,11 @@ export class CardFatSitAnoMesComponent implements OnInit{
         // { label: 'Consultas Abertas', data: lstconsA, backgroundColor: 'rgba(255, 206, 86, 0.6)' },
         { label: 'SADT Fechados', data: lstsadtF, backgroundColor: 'rgba(153, 102, 255, 0.6)' },
         { label: 'SADT Abertos', data: lstsadtA, backgroundColor: 'rgba(255, 159, 64, 0.6)' }
-      ]);
+      ],title);
     })
   }
 
-  _chart(mes_ano : any,dataset : any){
+  _chart(mes_ano : any,dataset : any,title : string){
     let chartExist = Chart.getChart("_chart"); // <canvas> id
     if (chartExist != undefined)
       chartExist.destroy();
@@ -136,7 +147,7 @@ export class CardFatSitAnoMesComponent implements OnInit{
           },
           title: {
             display: true,
-            text: 'Faturamento - Int/Cons'
+            text: title
           }
         }
       }
@@ -144,7 +155,7 @@ export class CardFatSitAnoMesComponent implements OnInit{
 
   }
 
-  _chartSadt(mes_ano : any,dataset : any){
+  _chartSadt(mes_ano : any,dataset : any,title : string){
     // console.log(mes_ano)
     let chartExist = Chart.getChart("_chartSadt"); // <canvas> id
     if (chartExist != undefined)
@@ -164,7 +175,7 @@ export class CardFatSitAnoMesComponent implements OnInit{
           },
           title: {
             display: true,
-            text: 'Faturamento - SADT'
+            text: title
           }
         }
       }

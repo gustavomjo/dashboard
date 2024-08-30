@@ -1,6 +1,6 @@
 export interface fatTotalSituacao{
   situacao_conta : string,
-  rps : boolean,
+  rps : string,
   valor_total : number
 }
 

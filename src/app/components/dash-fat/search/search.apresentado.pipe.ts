@@ -5,12 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class searchApresentado implements PipeTransform{
-  transform(value: any[], args?: boolean): any[] {
-    if ( args === false) {
+  transform(value: any[], args?: string): any[] {
+    if ( args === 'N') {
       return value;
     }
     return value.filter((dados: any) => {
-      return dados.apresentado === !args;
+      return dados.apresentado === args;
     });
   }
 }

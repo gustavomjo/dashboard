@@ -81,7 +81,7 @@ export class CardFatTotalSituacaoComponent implements OnInit {
             this._pendente = moneyReduct(this.fat[i].valor_total)
             break;
           case 'Fechada' :
-            if(!this.fat[i].rps)
+            if(this.fat[i].rps==='N')
               this._fechadoSemRPS = moneyReduct(this.fat[i].valor_total);
             else
               this._fechadoComRPS = moneyReduct(this.fat[i].valor_total);

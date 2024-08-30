@@ -1,0 +1,15 @@
+<div class="dropdown" [class.on]="dropdownOpen">
+  <div class="dropdown-label" (click)="toggleDropdown()">
+    {{ selectedOptionsText }}
+  </div>
+  <div class="dropdown-list" >
+    <label class="dropdown-option" *ngIf="this.combocheck.selectedALL">
+      <input type="checkbox" [checked]="areAllSelected()" (change)="toggleSelectAll($event)">
+      Selecionar Todos / Desmarcar Todos
+    </label>
+    <label class="dropdown-option" *ngFor="let option of options">
+      <input type="checkbox" [value]="option.value" (change)="onOptionChange($event)" [checked]="this.combocheck.ListChecked.includes(option)">
+      {{ option.text }}
+    </label>
+  </div>
+</div>

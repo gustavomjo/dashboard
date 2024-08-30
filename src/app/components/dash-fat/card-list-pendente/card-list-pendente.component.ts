@@ -24,7 +24,7 @@ export class CardListPendenteComponent implements OnInit {
   _list : any[]=[];
   _searchInternacao="";
   _searchConvenio ="";
-  _apresentado : boolean = false;
+  _apresentado : string = 'N';
   data_corte? : Date;
 
 
@@ -63,7 +63,6 @@ export class CardListPendenteComponent implements OnInit {
       this._list = [];
       this._list = this._list.concat(dados.body);
       // console.log(this._list)
-
     })
   }
 

@@ -9,15 +9,16 @@ import { FiltrodataService } from '../filtrodata/filtrodata.service';
 import { FiltrodataComponent } from "../filtrodata/filtrodata.component";
 import { provideNativeDateAdapter } from '@angular/material/core';
 
+
 @Component({
   selector: 'app-dash-fat',
   standalone: true,
   imports: [CardFatTotalAnoComponent,
-            CardFatSitAnoMesComponent,
-            CardFatTotalSituacaoComponent,
-            FiltrodataComponent,
-            CardListPendenteComponent,
-            CardGraphConvFaturadosComponent],
+    CardFatSitAnoMesComponent,
+    CardFatTotalSituacaoComponent,
+    FiltrodataComponent,
+    CardListPendenteComponent,
+    CardGraphConvFaturadosComponent],
 
   templateUrl: './dash-fat.component.html',
   styleUrl: './dash-fat.component.scss',

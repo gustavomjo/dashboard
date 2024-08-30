@@ -7,7 +7,7 @@ export interface fatListPendente{
   ds_tipo : string,
   ds_setor_movto_same :string,
   ds_etapa_conta : string,
-  apresentado : boolean,
+  apresentado : string,
   apresentacao : string,
   nr_remessa : number,
   valor_total : number
