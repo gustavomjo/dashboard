@@ -32,7 +32,7 @@ export class CardGraphConvFaturadosComponent implements OnInit {
               public combocheck : ComboCheckService
           ){
             //neste caso nao precisa do botao selecionar todos
-            combocheck.selectedALL = false;
+            combocheck.selectedALL = true;
           }
 
   ngOnInit(): void {

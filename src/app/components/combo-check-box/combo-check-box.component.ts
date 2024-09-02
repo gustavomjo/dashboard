@@ -76,7 +76,7 @@ export class ComboCheckBoxComponent {
   get selectedOptionsText(): string {
     return this.combocheck.ListChecked.length
       ? this.combocheck.ListChecked.map(opt => opt.text).join(', ')
-      : 'Select options';
+      : this.combocheck.selectedOptionsText;
   }
 
   public updateOptionsList(): void {

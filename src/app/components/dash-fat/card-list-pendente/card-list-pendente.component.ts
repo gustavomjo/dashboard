@@ -26,7 +26,7 @@ export class CardListPendenteComponent implements OnInit {
   _searchConvenio ="";
   _apresentado : string = 'N';
   data_corte? : Date;
-
+  endIndex: number = 50;
 
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
@@ -65,6 +65,28 @@ export class CardListPendenteComponent implements OnInit {
       // console.log(this._list)
     })
   }
+  MudaStatus(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    // const isChecked = inputElement.checked;
+    this._apresentado = inputElement.checked ? 'S':'N';
+    // console.log('Checkbox está', isChecked ? 'marcado' : 'desmarcado');
+  }
+
+  onScroll(event: any): void {
+    const scrollTop = event.target.scrollTop;
+    const scrollHeight = event.target.scrollHeight;
+    const offsetHeight = event.target.offsetHeight;
+
+    if (scrollTop + offsetHeight >= scrollHeight - 10) { // Quando chegar ao final
+      this.loadMore();  // Carrega mais itens
+    }
+  }
+
+  // Função para aumentar o slice
+  loadMore(): void {
+    this.endIndex += 50;  // Aumenta o slice em 1000 itens
+  }
+
 
 
 

@@ -9,6 +9,7 @@ export class ComboCheckService {
   ListChecked : any[]=[];
   UpdateList : boolean = false;
   selectedALL : boolean = true;
+  selectedOptionsText : string = 'Selecionar opções desejada';
 
   private updateSubjectSelected = new Subject<void>();
   private updateCallbacksSelected: (() => void)[] = [];
