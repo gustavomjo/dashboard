@@ -76,6 +76,9 @@
               "buildTarget": "dashboard-app:build:development"
             }
           },
+          "options": {
+            "port": 4204
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

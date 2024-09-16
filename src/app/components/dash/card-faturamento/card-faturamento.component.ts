@@ -22,6 +22,7 @@ export class CardFaturamentoComponent implements OnInit{
     (await this.cardFaturamento.getCardFaturamento()).subscribe(dados =>{
       // let card :any[]=[];
       this.card = this.card.concat(dados.body)
+      // console.log(this.card)
 
       let total = 0.00;
       let cont =0;
@@ -34,9 +35,9 @@ export class CardFaturamentoComponent implements OnInit{
 
       let cardfat_mes = document.getElementById('cardfat_mes') as HTMLElement;
       cardfat_mes.innerHTML =this.card[0].human;
-      let cardfat_mesp = document.getElementById('cardfat_mesp') as HTMLElement;
+      // let cardfat_mesp = document.getElementById('cardfat_mesp') as HTMLElement;
       let cardfat_ano = document.getElementById('cardfat_ano') as HTMLElement;
-      cardfat_ano.innerHTML =this.card[2].human;
+      cardfat_ano.innerHTML =this.card[1].human;
     })
   }
 

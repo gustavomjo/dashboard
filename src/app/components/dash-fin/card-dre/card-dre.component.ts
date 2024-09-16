@@ -5,11 +5,13 @@ import { finDRE } from '../../../models/dash-fin/finDRE.model';
 import { globalCoresNome } from '../../../global/global-cores';
 import { moneyReduct } from '../../../global/global-money';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { ModalDreDatailsComponent } from "../modal-dre-datails/modal-dre-datails.component";
+import { ModalDreDetailsService } from '../modal-dre-datails/modalDreDtails.service';
 
 @Component({
   selector: 'app-card-dre',
   standalone: true,
-  imports: [CommonModule, SpinnerComponent],
+  imports: [CommonModule, SpinnerComponent, ModalDreDatailsComponent],
   templateUrl: './card-dre.component.html',
   styleUrl: './card-dre.component.scss'
 })
@@ -24,7 +26,9 @@ export class CardDreComponent implements OnInit {
   _dreSubgrupo : any[] =[];
   _dreCC: any[] =[];
 
-  constructor(public finDRE : finDREGrupoService){}
+  constructor(public finDRE : finDREGrupoService,
+              private ModalDreDetails: ModalDreDetailsService
+  ){}
   ngOnInit(): void {
     this.getDREGrupo('2024');
     this.getDRESubgrupo('2024');
@@ -35,6 +39,7 @@ export class CardDreComponent implements OnInit {
     (await this.finDRE.getDREGrupo(ano)).subscribe(dreBody=>{
       let dre :any[]=[];
       dre = dre.concat(dreBody.body)
+      // console.log(dre)
 
       let resReceita =0;
       let resDespesa = 0;
@@ -59,9 +64,14 @@ export class CardDreComponent implements OnInit {
         this._resReceita = moneyReduct(resReceita)
         this._resDespesa = moneyReduct(resDespesa)
         this._resDespFin = moneyReduct(resDespFin)
-        let item:finDRE={tipo:dre[i].tipo,
-                         descricao:dre[i].descricao,
-                         total:moneyReduct(Number(dre[i].total))}
+        let item:finDRE={
+          tipo: dre[i].tipo,
+          descricao: dre[i].descricao,
+          total: moneyReduct(Number(dre[i].total)),
+          cod_grupo_receita: dre[i].cod_grupo_receita,
+          cod_subgrupo_receita: '',
+          cod_cc: ''
+        }
         this._dreGrupo.push(item);
       }
       this._resExercicio = moneyReduct(this._resultado);
@@ -73,24 +83,36 @@ export class CardDreComponent implements OnInit {
       let dre :any[]=[];
       dre = dre.concat(dreBody.body)
 
+
       for(let i=0;i<dre.length;i++){
-        let item:finDRE={tipo:dre[i].tipo,
-                         descricao:dre[i].descricao,
-                         total:moneyReduct(Number(dre[i].total))}
+        let item:finDRE={
+          tipo: dre[i].tipo,
+          descricao: dre[i].descricao,
+          total: moneyReduct(Number(dre[i].total)),
+          cod_grupo_receita: dre[i].cod_grupo_receita,
+          cod_subgrupo_receita: dre[i].cod_subgrupo_receita,
+          cod_cc: ''
+        }
         this._dreSubgrupo.push(item);
       }
     })
   }
+  
   async getDRECC(ano:string){
     (await this.finDRE.getDRECC(ano)).subscribe(dreBody=>{
 
       let dre :any[]=[];
-      dre = dre.concat(dreBody.body)
+      dre = dre.concat(dreBody.body);
 
       for(let i=0;i<dre.length;i++){
-        let item:finDRE={tipo:dre[i].tipo,
-                         descricao:dre[i].descricao,
-                         total:moneyReduct(Number(dre[i].total))}
+        let item:finDRE={
+          tipo: dre[i].tipo,
+          descricao: dre[i].descricao,
+          total: moneyReduct(Number(dre[i].total)),
+          cod_grupo_receita: dre[i].cod_grupo_receita,
+          cod_subgrupo_receita: dre[i].cod_subgrupo_receita,
+          cod_cc: dre[i].cod_cc
+        }
         this._dreCC.push(item);
       }
     })
@@ -116,6 +138,10 @@ export class CardDreComponent implements OnInit {
         collDRESubgrupo?.classList.remove('show');
         break;
     }
+  }
+
+  detail(descricao:string,tipo:string,cod_grupo : string,cod_subgrupo : string ='',cod_cc:string=''){
+    this.ModalDreDetails.change(descricao,tipo,cod_grupo,cod_subgrupo,cod_cc);
   }
 
 }

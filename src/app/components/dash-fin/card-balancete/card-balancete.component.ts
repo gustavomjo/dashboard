@@ -21,130 +21,42 @@ export class CardBalanceteComponent implements OnInit {
     this.getFinBalancete('2024');
   }
 
-  async getFinBalancete(ano:string){
-    (await this.finBalancete.getfinBalancete(ano)).subscribe(dados=>{
+  async getFinBalancete(ano: string) {
+    (await this.finBalancete.getfinBalancete(ano)).subscribe(dados => {
+      this.fin = this.fin.concat(dados.body);
+      let cp: number[] = [];
+      let cr: number[] = [];
+      let tot: number[] = [];
+      let mes: string[] = [];
 
-      // let fin :any[]=[];
+      const maxMeses = globalData.gbAno == parseInt(ano) ? globalData.gbAno : 12;
+      const meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'sete', 'out', 'nov', 'dez'];
 
-      this.fin = this.fin.concat(dados.body)
-      let cp : any[]=[];
-      let cr :any[]=[];
-      let tot:any[]=[];
-      let mes : any[]=[];
+      // Função auxiliar para calcular e adicionar os valores dos meses
+      const adicionarValoresMes = (index: number) => {
+        const mesKey = meses[index];
+        const valorCp = parseFloat(this.fin[0][mesKey]) || 0;
+        const valorCr = parseFloat(this.fin[1][mesKey]) || 0;
 
-      let m = 0;
-      globalData.gbAno==parseInt(ano)?m = globalData.gbAno : m=12;
-
-      for(let i=0;i<m;i++){
-
-        switch(i){
-          case 0 :
-            if(this.fin[0].jan>0 || this.fin[1].jan > 0){
-              cp.push(this.fin[0].jan)
-              cr.push(this.fin[1].jan)
-              tot.push((this.fin[1].jan-this.fin[0].jan).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-
-            break;
-          case 1 :
-            if(this.fin[0].fev>0 || this.fin[1].fev > 0){
-              cp.push(this.fin[0].fev)
-              cr.push(this.fin[1].fev)
-              tot.push((this.fin[1].fev-this.fin[0].fev).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 2 :
-            if(this.fin[0].mar>0 || this.fin[1].mar > 0){
-              cp.push(this.fin[0].mar)
-              cr.push(this.fin[1].mar)
-              tot.push((this.fin[1].mar-this.fin[0].mar).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 3 :
-            if(this.fin[0].abr>0 || this.fin[1].abr > 0){
-              cp.push(this.fin[0].abr)
-              cr.push(this.fin[1].abr)
-              tot.push((this.fin[1].abr-this.fin[0].abr).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 4 :
-            if(this.fin[0].mai>0 || this.fin[1].mai > 0){
-              cp.push(this.fin[0].mai)
-              cr.push(this.fin[1].mai)
-              tot.push((this.fin[1].mai-this.fin[0].mai).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 5 :
-            if(this.fin[0].jun>0 || this.fin[1].jun > 0){
-              cp.push(this.fin[0].jun)
-              cr.push(this.fin[1].jun)
-              tot.push((this.fin[1].jun-this.fin[0].jun).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 6 :
-            if(this.fin[0].jul>0 || this.fin[1].jul > 0){
-              cp.push(this.fin[0].jul)
-              cr.push(this.fin[1].jul)
-              tot.push((this.fin[1].jul-this.fin[0].jul).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 7 :
-            if(this.fin[0].ago>0 || this.fin[1].ago > 0){
-              cp.push(this.fin[0].ago)
-              cr.push(this.fin[1].ago)
-              tot.push((this.fin[1].ago-this.fin[0].ago).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 8 :
-            if(this.fin[0].sete>0 || this.fin[1].sete > 0){
-              cp.push(this.fin[0].sete)
-              cr.push(this.fin[1].sete)
-              tot.push((this.fin[1].sete-this.fin[0].sete).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 9 :
-            if(this.fin[0].out>0 || this.fin[1].out > 0){
-              cp.push(this.fin[0].out)
-              cr.push(this.fin[1].out)
-              tot.push((this.fin[1].out-this.fin[0].out).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 10 :
-            if(this.fin[0].nov>0 || this.fin[1].nov > 0){
-              cp.push(this.fin[0].nov)
-              cr.push(this.fin[1].nov)
-              tot.push((this.fin[1].nov-this.fin[0].nov).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
-          case 11 :
-            if(this.fin[0].dez>0 || this.fin[1].dez > 0){
-              cp.push(this.fin[0].dez)
-              cr.push(this.fin[1].dez)
-              tot.push((this.fin[1].dez-this.fin[0].dez).toFixed(2))
-              mes.push(globalData.gbMeses[i]);
-            }
-            break;
+        if (valorCp > 0 || valorCr > 0) {
+          cp.push(valorCp);
+          cr.push(valorCr);
+          tot.push(parseFloat((valorCr - valorCp).toFixed(2))); // Conversão para número após usar toFixed()
+          mes.push(globalData.gbMeses[index]);
         }
+      };
+
+      for (let i = 0; i < maxMeses; i++) {
+        adicionarValoresMes(i);
       }
-      this._finBalancete(ano,mes,cp,cr,tot)
-    })
+
+      this._finBalancete(ano, mes, cp, cr, tot);
+    });
   }
 
-  _finBalancete(ano:any,meses:any,cp:any,cr:any,tot:any){
+  _finBalancete(ano: string, meses: string[], cp: number[], cr: number[], tot: number[]) {
     let myChart = Chart.getChart("_rcBalancete"); // <canvas> id
-    if (myChart != undefined)
-      myChart.destroy();
+    if (myChart) myChart.destroy();
 
     myChart = new Chart("_rcBalancete", {
       type: 'line',
@@ -182,19 +94,17 @@ export class CardBalanceteComponent implements OnInit {
           },
           title: {
             display: true,
-
-            text: 'Balancete de '+ meses[0] + ' a '+ meses[meses.length-1] +' '+ano
+            text: `Balancete de ${meses[0]} a ${meses[meses.length - 1]} ${ano}`
           },
-          subtitle:{
+          subtitle: {
             display: true,
-            text : 'teste'
-
+            text: 'teste'
           }
-
         }
       },
     });
-
   }
+
+
 
 }

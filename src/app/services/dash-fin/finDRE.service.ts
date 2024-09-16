@@ -21,6 +21,15 @@ export class finDREGrupoService{
   async getDRECC(ano:string){
     return await this.Busca.getHtml<finDRE[]>('/drecc?ano='+ano)
   }
+
+  async getDREReceitaDetail(ano:string,params:string){
+    return await this.Busca.getHtml<finDRE[]>('/dredetailsreceita?ano='+ano+params)
+  }
+
+  async getDREDespesaDetail(ano:string,params:string){
+    return await this.Busca.getHtml<finDRE[]>('/dredetailsdespesa?ano='+ano+params)
+  }
 }
+
 
 

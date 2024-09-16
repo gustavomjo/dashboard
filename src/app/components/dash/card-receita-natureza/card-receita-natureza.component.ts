@@ -43,58 +43,88 @@ export class CardReceitaNaturezaComponent implements OnInit {
       this.getReceitasAPI(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
   }
 
-  async getReceitasAPI(dataDe : string,dataAte : string){
-    let labelReceita : any[]=[];
-    // let realReceita :any[]=[];
+  async getReceitasAPI(dataDe: string, dataAte: string) {
+    let labelReceita: any[] = [];
+    let dataset: any = {}; // Objeto para armazenar o dataset do gráfico
 
-    (await this.receitaService.getReceita(dataDe,dataAte)).subscribe(dados =>{
-      let receitas :any[]=[];
-      receitas = receitas.concat(dados.body)
+    console.time('apiRequest');
+    (await this.receitaService.getReceita(dataDe, dataAte)).subscribe(dados => {
+        console.timeEnd('apiRequest');
+        console.time('dataProcessing');
 
-      if (receitas!=null){
-        for(const key of Object.keys(receitas[0]))
-        {
-          switch (key)
-          {
-            case 'valor_diarias': labelReceita.push('Valor Diaria'); break;
-            case 'valor_taxas': labelReceita.push('Valor Taxas'); break;
-            case 'valor_mat_med': labelReceita.push('Valor Mat/Med'); break;
-            case 'valor_honorarios': labelReceita.push('Valor Honorários'); break;
-            case 'valor_serv_compl': labelReceita.push('Valor SADT'); break;
-            case 'valor_pacotes': labelReceita.push('Valor Pacotes'); break;
-            case 'valor_total': labelReceita.push('Valor Total'); break;
-          }
+        let receitas: any[] = [];
+        receitas = receitas.concat(dados.body);
+        console.log(receitas)
+        console.timeEnd('dataProcessing');
+
+        if (receitas != null) {
+            for (const key of Object.keys(receitas[0])) {
+                switch (key) {
+                    case 'valor_diarias': labelReceita.push('Valor Diaria'); break;
+                    case 'valor_taxas': labelReceita.push('Valor Taxas'); break;
+                    case 'valor_mat_med': labelReceita.push('Valor Mat/Med'); break;
+                    case 'valor_honorarios': labelReceita.push('Valor Honorários'); break;
+                    case 'valor_serv_compl': labelReceita.push('Valor SADT'); break;
+                    case 'valor_pacotes': labelReceita.push('Valor Pacotes'); break;
+                    case 'valor_total': labelReceita.push('Valor Total'); break;
+                }
+            }
+
+            this.realReceita = Object.values(receitas[0]);
+
+            // Montar o dataset diretamente aqui
+            dataset = {
+                labels: labelReceita,
+                datasets: [{
+                    label: 'Receita por Natureza',
+                    data: this.realReceita,
+                    backgroundColor: [
+                        globalCores.gbCores[0], globalCores.gbCores[1],
+                        globalCores.gbCores[2], globalCores.gbCores[3],
+                        globalCores.gbCores[4], globalCores.gbCores[5]
+                    ],
+                    // backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+                    borderWidth: 1
+                }]
+            };
+
+            console.time('chart');
+            this._rcNatureza(dataset); // Passar o dataset direto para o método _rcNatureza
+            console.timeEnd('chart');
         }
-        this.realReceita=Object.values(receitas[0]);
-        this._rcNatureza(labelReceita,this.realReceita);
-      }
     });
-  }
+}
+
   //Popular no chart
-  _rcNatureza(_lbReceita:any,_vrReceita:any){
-    let chartExist = Chart.getChart("_rcNatureza"); // <canvas> id
-    if (chartExist != undefined)
-      chartExist.destroy();
+  _rcNatureza(chartData:any){
+    let chartExist = Chart.getChart("_rcNatureza");
+    if (chartExist != undefined) {
+        chartExist.destroy();
+    }
+
+    // let myChart = new Chart("_rcNatureza", {
+    //   type: 'bar',
+    //   data: chartData,
+    //   options: {
+    //     scales: {
+    //       y: {
+    //         beginAtZero: true
+    //       }
+    //     }
+    //   }
+    // });
 
     let myChart = new Chart("_rcNatureza", {
-      type: 'bar',
-      data: {
-        labels: _lbReceita,
-        datasets: [{
-          label: 'Receita por Natureza',
-          data:  _vrReceita,
-          backgroundColor:[globalCores.gbCores[0],globalCores.gbCores[1],globalCores.gbCores[2],globalCores.gbCores[3],globalCores.gbCores[4],globalCores.gbCores[5]],
-          borderWidth: 1
-        }]
-      },
+      type: 'bar', // Mude o tipo do gráfico para testar
+      data: chartData,
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
           }
-        }
       }
-    });
+  });
   }
 
 }
