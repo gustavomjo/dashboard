@@ -25,6 +25,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   providers: [provideNativeDateAdapter()],
 })
 export class DashFatComponent {
-  constructor(private rota: Router, public filtrodataService: FiltrodataService) { }
-
+  constructor(private rota: Router, public filtrodataService: FiltrodataService) {
+    filtrodataService.data_de = "";
+    filtrodataService.data_ate = "";
+   }
 }

@@ -4,6 +4,7 @@ import { CurvaABCComponent } from "./curva-abc/curva-abc.component";
 import { MedValidadeComponent } from "./med-validade/med-validade.component";
 import { MedDetalhadoComponent } from "./med-detalhado/med-detalhado.component";
 import { IonicModule } from '@ionic/angular';
+import { FiltrodataService } from '../filtrodata/filtrodata.service';
 
 
 @Component({
@@ -15,6 +16,11 @@ import { IonicModule } from '@ionic/angular';
 })
 
 export class DashFarmComponent  {
+
+  constructor( public filtrodataService: FiltrodataService) {
+    filtrodataService.data_de = "";
+    filtrodataService.data_ate = "";
+   }
 
 
 

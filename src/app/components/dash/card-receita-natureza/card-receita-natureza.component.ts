@@ -25,6 +25,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    console.log(this.filtrodataService.data_de)
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getReceitasAPI(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
@@ -47,15 +48,9 @@ export class CardReceitaNaturezaComponent implements OnInit {
     let labelReceita: any[] = [];
     let dataset: any = {}; // Objeto para armazenar o dataset do gráfico
 
-    console.time('apiRequest');
     (await this.receitaService.getReceita(dataDe, dataAte)).subscribe(dados => {
-        console.timeEnd('apiRequest');
-        console.time('dataProcessing');
-
         let receitas: any[] = [];
         receitas = receitas.concat(dados.body);
-        console.log(receitas)
-        console.timeEnd('dataProcessing');
 
         if (receitas != null) {
             for (const key of Object.keys(receitas[0])) {
@@ -88,9 +83,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
                 }]
             };
 
-            console.time('chart');
             this._rcNatureza(dataset); // Passar o dataset direto para o método _rcNatureza
-            console.timeEnd('chart');
         }
     });
 }

@@ -16,3 +16,7 @@ export function lpad(str: string, length: number, padChar: string = ' '): string
   return padding.slice(0, padLength) + str;
 }
 
+export function removeSpecialCharacters(str: string): string {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove acentos
+              .replace(/[^\w\s]/gi, ''); // Remove outros caracteres especiais
+}

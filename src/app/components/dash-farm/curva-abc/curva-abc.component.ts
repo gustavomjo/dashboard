@@ -73,7 +73,6 @@ export class CurvaABCComponent implements OnInit {
       let totCusto = 0;
       let pAcum = 0.00;
       dados = dados.concat(curvaBody.body)
-      console.log(dados)
 
       for(let i=0;i<dados.length;i++){
         totCusto = totCusto+ Number(dados[i].total_custo_medio);

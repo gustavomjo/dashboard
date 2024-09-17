@@ -1,25 +1,26 @@
 <div class="card mt-1">
   <div class="card-header">
+
     <div class="d-flex flex-column align-items-center" >
       <h2 class="text-uppercase mb-2 d-flex align-items-center" [style.color]="color.colorBlueDark">
         <i class='h3 bx bx-time mr-1 mt-1'></i> DRE
       </h2>
       <h4 class="text-uppercase text-center " [style.color]="color.colorGray">
-        Resultado do Exercício
-        <span class="h2 mb-0 text-success">
-          <i class="bx"
-              [ngClass]="{'bx-trending-up text-success': _resultado >= 0, 'bx-trending-down text-danger': _resultado < 0}">
-          </i>
-        </span>
+        Resultado
+        <i class="bx" [ngClass]="{'bx-trending-up text-success': _resultado >= 0, 'bx-trending-down text-danger': _resultado < 0}"></i>
+        <h3 class="text-uppercase"
+            [ngClass]="{'text-success': _resultado >= 0, 'text-danger': _resultado < 0}">
+          {{_resExercicio}}
+        </h3>
       </h4>
-      <div class="row align-items-center text-center">
+      <!-- <div class="row align-items-center text-center">
         <div class="col-12">
-          <h3 class="text-uppercase"
-              [ngClass]="{'text-success': _resultado >= 0, 'text-danger': _resultado < 0}">
-            {{_resExercicio}}
-          </h3>
+
         </div>
-      </div>
+      </div> -->
+      <nav id="content" class="px-3 py-1">
+        <app-filtrodata></app-filtrodata>
+      </nav>
       <div class="col-12 d-flex">
         <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
           <input type="radio" class="btn-check btn-col" name="btnradio" id="btnradio1" (click)="onClick(1)" autocomplete="off" data-bs-target=".multi-collapse"  data-toggle="collapse" data-target="#collDREGrupo"  checked>
@@ -68,7 +69,7 @@
         <div class="ms-2 me-auto ">
           <div  [style.color]="color.colorGray">
             <i class="bx"
-                          [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receita',
+                          [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receitas',
                                       'bx-up-arrow-alt text-danger': dre.tipo == 'Despesas' || dre.tipo == 'Despesas - Financeiras' }">
                         </i>
             {{dre.descricao}}
@@ -89,7 +90,7 @@
         <div class="ms-2 me-auto ">
           <div  [style.color]="color.colorGray">
             <i class="bx"
-                          [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receita',
+                          [ngClass]="{'bx-down-arrow-alt text-success': dre.tipo == 'Receitas',
                                       'bx-up-arrow-alt text-danger': dre.tipo == 'Despesas' || dre.tipo == 'Despesas - Financeiras' }">
                         </i>
             {{dre.descricao}}
@@ -108,7 +109,7 @@
 
   <!-- -------------------------------TOTAL--------------------------------- -->
   <div class="card-footer">
-    <div class="lst-group-item d-flex align-items-start">
+    <div class=" d-flex align-items-start">
       <div class="ms-2 me-auto ">
         <div  [style.color]="color.colorGray">
           <h5 class="font-14 my-1 fw-normal">
@@ -119,7 +120,7 @@
       </div>
       <h4 class="font-14 my-1 fw-normal">{{_resReceita}}</h4>
     </div>
-    <div class="lst-group-item d-flex justify-content-between align-items-start">
+    <div class="d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto ">
         <div  [style.color]="color.colorGray">
           <h5 class="font-14 my-1 fw-normal">
@@ -131,7 +132,7 @@
       </div>
       <h4 class="font-14 my-1 fw-normal">{{_resDespesa}}</h4>
     </div>
-    <div class="lst-group-item d-flex justify-content-between align-items-start">
+    <div class="d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto ">
         <div  [style.color]="color.colorGray">
           <h5 class="font-14 my-1 fw-normal">

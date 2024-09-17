@@ -31,7 +31,10 @@ import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
   ]
 })
 export class DashComponent {
-  constructor(private rota: Router, public filtrodataService: FiltrodataService) { }
+  constructor(private rota: Router, public filtrodataService: FiltrodataService) {
+    filtrodataService.data_de = "";
+    filtrodataService.data_ate = "";
+   }
 
 
 }

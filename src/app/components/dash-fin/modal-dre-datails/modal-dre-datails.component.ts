@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDreDetailsService } from './modalDreDtails.service';
 import { finDREGrupoService } from '../../../services/dash-fin/finDRE.service';
-import { globalData } from '../../../global/global-data';
 import { Chart, registerables } from 'chart.js';
 import { globalCores } from '../../../global/global-cores';
 
@@ -49,7 +48,7 @@ export class ModalDreDatailsComponent implements OnInit{
 
   Detail(descricao:string,tipo : string,cod_grupo : string, cod_subgrupo: string, codigo_cc : string){
     //fazer o de despesas financeiras ainda nao feito por causa do iamada.
-    let tp = tipo.split(' ');
+
     let params = '';
     if(cod_grupo !='')
       params += '&cod_grupo='+cod_grupo;
@@ -62,16 +61,31 @@ export class ModalDreDatailsComponent implements OnInit{
 
     if(cod_grupo!='' || cod_subgrupo!='' ||codigo_cc!=''){
       // console.log(params)
-      if(tp[0]==='Receitas')
-        this.DetailReceitas('2024',params);
-      else
-      this.DetailDespesa('2024',params);
+      switch(tipo){
+        case 'Receitas' :
+          this.DetailReceitas('2024',params);
+          break;
+        case 'Despesas - Financeiras' :
+          this.DetailDespesaFinanceiras('2024',params);
+          break;
+        case 'Despesas' :
+          this.DetailDespesa('2024',params);
+          break;
+      }
     }
-
   }
 
   async DetailReceitas(ano:string,params:string){
     (await this.finDRE.getDREReceitaDetail(ano,params)).subscribe(dreBody=>{
+      let dre :any[]=[];
+      dre = dre.concat(dreBody.body);
+      // console.log(dre)
+      this._modaldetails(dre);
+    })
+  }
+
+  async DetailDespesaFinanceiras(ano:string,params:string){
+    (await this.finDRE.getDREDespesaFinanceiraDetail(ano,params)).subscribe(dreBody=>{
       let dre :any[]=[];
       dre = dre.concat(dreBody.body);
       // console.log(dre)

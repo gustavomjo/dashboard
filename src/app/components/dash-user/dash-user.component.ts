@@ -103,8 +103,10 @@ export class DashUserComponent implements OnInit {
               private renderer: Renderer2,
               private dashuser : dashUserService,
               public filtrodataService: FiltrodataService,
-              private jwtDecoder : JwtDecodeService
-            ) {}
+              private jwtDecoder : JwtDecodeService) {
+      filtrodataService.data_de = "";
+      filtrodataService.data_ate = "";
+    }
 
   ngOnInit(): void {
     this.constructorDash();

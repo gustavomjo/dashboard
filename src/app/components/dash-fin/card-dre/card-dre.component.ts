@@ -7,13 +7,21 @@ import { moneyReduct } from '../../../global/global-money';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { ModalDreDatailsComponent } from "../modal-dre-datails/modal-dre-datails.component";
 import { ModalDreDetailsService } from '../modal-dre-datails/modalDreDtails.service';
+import { removeSpecialCharacters } from '../../../global/global-string';
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ActivatedRoute } from '@angular/router';
+import { globalData } from '../../../global/global-data';
+import { isValid } from 'date-fns';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { FiltrodataComponent } from "../../filtrodata/filtrodata.component";
 
 @Component({
   selector: 'app-card-dre',
   standalone: true,
-  imports: [CommonModule, SpinnerComponent, ModalDreDatailsComponent],
+  imports: [CommonModule, SpinnerComponent, ModalDreDatailsComponent, FiltrodataComponent],
   templateUrl: './card-dre.component.html',
-  styleUrl: './card-dre.component.scss'
+  styleUrl: './card-dre.component.scss',
+  providers: [provideNativeDateAdapter()],
 })
 export class CardDreComponent implements OnInit {
   color = globalCoresNome;
@@ -27,23 +35,52 @@ export class CardDreComponent implements OnInit {
   _dreCC: any[] =[];
 
   constructor(public finDRE : finDREGrupoService,
-              private ModalDreDetails: ModalDreDetailsService
+              private ModalDreDetails: ModalDreDetailsService,
+              public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute
   ){}
   ngOnInit(): void {
-    this.getDREGrupo('2024');
-    this.getDRESubgrupo('2024');
-    this.getDRECC('2024');
+    this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
+    // this.getDespesa(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+
+    this.getDREGrupo(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+    this.getDRESubgrupo(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+    this.getDRECC(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
 
-  async getDREGrupo(ano:string){
-    (await this.finDRE.getDREGrupo(ano)).subscribe(dreBody=>{
+  public atualiza(): void {
+    let rota = ['dash-fin', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
+    if (!rota) return;
+
+    let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
+    let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);
+
+    let valid = dataDe < globalData.gbData_atual &&
+                (isValid(dataDe) && isValid(dataAte)) &&
+                dataAte >= dataDe;
+
+    if (valid){
+      this.getDREGrupo(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+      this.getDRESubgrupo(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+      this.getDRECC(this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+    }
+
+  }
+
+  async getDREGrupo(dataDe : string,dataAte : string){
+    (await this.finDRE.getDREGrupo(dataDe,dataAte)).subscribe(dreBody=>{
       let dre :any[]=[];
       dre = dre.concat(dreBody.body)
-      // console.log(dre)
+      this._dreGrupo=[];
 
       let resReceita =0;
       let resDespesa = 0;
       let resDespFin = 0;
+
+      this._resReceita = '0';
+      this._resDespesa = '0';
+      this._resDespFin = '0';
+      this._resultado = 0;
 
       for(let i=0;i<dre.length;i++){
         switch(dre[i].tipo)
@@ -66,7 +103,7 @@ export class CardDreComponent implements OnInit {
         this._resDespFin = moneyReduct(resDespFin)
         let item:finDRE={
           tipo: dre[i].tipo,
-          descricao: dre[i].descricao,
+          descricao: removeSpecialCharacters(dre[i].descricao),
           total: moneyReduct(Number(dre[i].total)),
           cod_grupo_receita: dre[i].cod_grupo_receita,
           cod_subgrupo_receita: '',
@@ -77,17 +114,17 @@ export class CardDreComponent implements OnInit {
       this._resExercicio = moneyReduct(this._resultado);
     })
   }
-  async getDRESubgrupo(ano:string){
-    (await this.finDRE.getDRESubgrupo(ano)).subscribe(dreBody=>{
+  async getDRESubgrupo(dataDe : string,dataAte : string){
+    (await this.finDRE.getDRESubgrupo(dataDe,dataAte)).subscribe(dreBody=>{
 
       let dre :any[]=[];
       dre = dre.concat(dreBody.body)
-
+      this._dreSubgrupo = [];
 
       for(let i=0;i<dre.length;i++){
         let item:finDRE={
           tipo: dre[i].tipo,
-          descricao: dre[i].descricao,
+          descricao: removeSpecialCharacters(dre[i].descricao),
           total: moneyReduct(Number(dre[i].total)),
           cod_grupo_receita: dre[i].cod_grupo_receita,
           cod_subgrupo_receita: dre[i].cod_subgrupo_receita,
@@ -97,17 +134,18 @@ export class CardDreComponent implements OnInit {
       }
     })
   }
-  
-  async getDRECC(ano:string){
-    (await this.finDRE.getDRECC(ano)).subscribe(dreBody=>{
+
+  async getDRECC(dataDe : string,dataAte : string){
+    (await this.finDRE.getDRECC(dataDe,dataAte)).subscribe(dreBody=>{
 
       let dre :any[]=[];
       dre = dre.concat(dreBody.body);
+      this._dreCC = [];
 
       for(let i=0;i<dre.length;i++){
         let item:finDRE={
           tipo: dre[i].tipo,
-          descricao: dre[i].descricao,
+          descricao: removeSpecialCharacters(dre[i].descricao),
           total: moneyReduct(Number(dre[i].total)),
           cod_grupo_receita: dre[i].cod_grupo_receita,
           cod_subgrupo_receita: dre[i].cod_subgrupo_receita,

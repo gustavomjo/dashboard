@@ -10,16 +10,16 @@ export class finDREGrupoService{
   constructor (private Busca : Busca
   ){}
 
-  async getDREGrupo(ano:string){
-    return await this.Busca.getHtml<finDRE[]>('/dregrupo?ano='+ano)
+  async getDREGrupo(dataDe: string,dataate : string){
+    return await this.Busca.getHtml<finDRE[]>('/dregrupo?datade='+dataDe+'&dataate='+dataate)
   }
 
-  async getDRESubgrupo(ano:string){
-    return await this.Busca.getHtml<finDRE[]>('/dresubgrupo?ano='+ano)
+  async getDRESubgrupo(dataDe: string,dataate : string){
+    return await this.Busca.getHtml<finDRE[]>('/dresubgrupo?datade='+dataDe+'&dataate='+dataate)
   }
 
-  async getDRECC(ano:string){
-    return await this.Busca.getHtml<finDRE[]>('/drecc?ano='+ano)
+  async getDRECC(dataDe: string,dataate : string){
+    return await this.Busca.getHtml<finDRE[]>('/drecc?datade='+dataDe+'&dataate='+dataate)
   }
 
   async getDREReceitaDetail(ano:string,params:string){
@@ -28,6 +28,9 @@ export class finDREGrupoService{
 
   async getDREDespesaDetail(ano:string,params:string){
     return await this.Busca.getHtml<finDRE[]>('/dredetailsdespesa?ano='+ano+params)
+  }
+  async getDREDespesaFinanceiraDetail(ano:string,params:string){
+    return await this.Busca.getHtml<finDRE[]>('/dredetailsdespesafinanceira?ano='+ano+params)
   }
 }
 
