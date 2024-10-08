@@ -60,12 +60,12 @@ export class CardLeitosDetalhadoComponent implements OnInit {
 
   getColor(porcent: number): string {
     switch (true) {
-      case porcent > 67:
-        return this.color.colorRed; // Green for > 40
-      case porcent >= 34 && porcent < 67:
+      case porcent <= 33 :
+        return this.color.colorGreen;
+      case porcent > 33 && porcent <= 66 :
         return this.color.colorYellow; // Yellow for 21 to 40
       default:
-        return this.color.colorGreen; // Gray for <= 20
+        return this.color.colorRed; // Green for > 40
     }
   }
 }
