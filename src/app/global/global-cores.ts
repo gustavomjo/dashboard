@@ -3,7 +3,7 @@ export const globalCores = {
              '#f0ee07','#ee5700','#54f410','#107ef4','#8972fa', //9
              '#fa72d1','#a43537','#ebf68c','#4dc9f6','#8549ba', //14
              '#f67019','#f53794','#537bc4','#acc236','#166a8f', //19
-             '#00a950','#58595c'
+             '#00a950','#58595c','#DC143C','#FFD700'
 
           ],
 
@@ -21,9 +21,9 @@ export const globalCoresNome = {
   colorBlue : globalCores.gbCores[2],
   colorBlueDark : globalCores.gbCores[8],
   colorGray : globalCores.gbCores[21],
-  colorRed : globalCores.gbCores[1],
+  colorRed : globalCores.gbCores[22],
   colorGreen : globalCores.gbCores[0],
-  colorYellow : globalCores.gbCores[4],
+  colorYellow : globalCores.gbCores[23],
   colorOrange : globalCores.gbCores[6],
   colorGreenDark : globalCores.gbCores[20]
 }

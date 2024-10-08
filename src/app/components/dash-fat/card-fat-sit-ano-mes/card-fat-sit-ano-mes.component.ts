@@ -9,6 +9,7 @@ import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { isValid } from 'date-fns';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { globalCores } from '../../../global/global-cores';
 
 Chart.register(...registerables);
 @Component({
@@ -105,12 +106,10 @@ export class CardFatSitAnoMesComponent implements OnInit{
 
       let dtArray = Object.keys(dataMap);
       this._chart(dtArray, [
-        { label: 'Internações Fechadas', data: lstIntF, backgroundColor: 'rgba(75, 192, 192, 0.6)' },
-        { label: 'Internações Abertas', data: lstIntA, backgroundColor: 'rgba(255, 99, 132, 0.6)' },
-        { label: 'Consultas Fechadas', data: lstconsF, backgroundColor: 'rgba(54, 162, 235, 0.6)' },
-        { label: 'Consultas Abertas', data: lstconsA, backgroundColor: 'rgba(255, 206, 86, 0.6)' },
-        // { label: 'SADT Fechados', data: lstsadtF, backgroundColor: 'rgba(153, 102, 255, 0.6)' },
-        // { label: 'SADT Abertos', data: lstsadtA, backgroundColor: 'rgba(255, 159, 64, 0.6)' }
+        { label: 'Internações Fechadas', data: lstIntF, backgroundColor: globalCores.gbCoresTransp[20] },
+        { label: 'Internações Abertas', data: lstIntA, backgroundColor: globalCores.gbCoresTransp[1] },
+        { label: 'Consultas Fechadas', data: lstconsF, backgroundColor: globalCores.gbCoresTransp[2] },
+        { label: 'Consultas Abertas', data: lstconsA, backgroundColor: globalCores.gbCoresTransp[4] },
       ],title);
 
       if(dataDe != '')
@@ -118,12 +117,8 @@ export class CardFatSitAnoMesComponent implements OnInit{
       else
          title = 'Faturamento - SADT ('+globalData.gbAno+')';
       this._chartSadt(dtArray, [
-        //{ label: 'Internações Fechadas', data: lstIntF, backgroundColor: 'rgba(75, 192, 192, 0.6)' },
-        // { label: 'Internações Abertas', data: lstIntA, backgroundColor: 'rgba(255, 99, 132, 0.6)' },
-        //{ label: 'Consultas Fechadas', data: lstconsF, backgroundColor: 'rgba(54, 162, 235, 0.6)' },
-        // { label: 'Consultas Abertas', data: lstconsA, backgroundColor: 'rgba(255, 206, 86, 0.6)' },
-        { label: 'SADT Fechados', data: lstsadtF, backgroundColor: 'rgba(153, 102, 255, 0.6)' },
-        { label: 'SADT Abertos', data: lstsadtA, backgroundColor: 'rgba(255, 159, 64, 0.6)' }
+        { label: 'SADT Fechados', data: lstsadtF, backgroundColor: globalCores.gbCoresTransp[9] },
+        { label: 'SADT Abertos', data: lstsadtA, backgroundColor: globalCores.gbCoresTransp[6] }
       ],title);
     })
   }

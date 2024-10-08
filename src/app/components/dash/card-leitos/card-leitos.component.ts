@@ -19,8 +19,6 @@ export class CardLeitosComponent implements OnInit {
 
   async getCardLeitos(){
     (await this.cardLeitos.getCardLeitos()).subscribe(dados=>{
-
-      // let card :any[]=[];
       this.card = this.card.concat(dados.body)
 
       let v = ( (this.card[0].total*100)/this.card[2].total ).toFixed(2);

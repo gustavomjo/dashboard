@@ -95,10 +95,6 @@ export class CardBalanceteComponent implements OnInit {
           title: {
             display: true,
             text: `Balancete de ${meses[0]} a ${meses[meses.length - 1]} ${ano}`
-          },
-          subtitle: {
-            display: true,
-            text: 'teste'
           }
         }
       },

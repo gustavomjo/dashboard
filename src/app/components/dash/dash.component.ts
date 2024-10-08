@@ -10,6 +10,7 @@ import { CardCompDespesasComponent } from './card-comp-despesas/card-comp-despes
 import { CardPrazoMedRecebMesComponent } from './card-prazo-med-receb-mes/card-prazo-med-receb-mes.component';
 import { CardPrazoMedRecebAnoComponent } from './card-prazo-med-receb-ano/card-prazo-med-receb-ano.component';
 import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
+import { CardLeitosDetalhadoComponent } from "./card-leitos-detalhado/card-leitos-detalhado.component";
 
 
 @Component({
@@ -19,7 +20,6 @@ import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
   styleUrls: ['./dash.component.scss'],
   providers: [provideNativeDateAdapter()],
   imports: [
-
     CardLeitosComponent,
     CardFaturamentoComponent,
     CardAtendimentosComponent,
@@ -27,8 +27,9 @@ import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
     CardCompDespesasComponent,
     CardPrazoMedRecebMesComponent,
     CardPrazoMedRecebAnoComponent,
-    FiltrodataComponent
-  ]
+    FiltrodataComponent,
+    CardLeitosDetalhadoComponent
+]
 })
 export class DashComponent {
   constructor(private rota: Router, public filtrodataService: FiltrodataService) {

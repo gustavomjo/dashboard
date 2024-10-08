@@ -25,7 +25,6 @@ export class CardReceitaNaturezaComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    console.log(this.filtrodataService.data_de)
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
     this.getReceitasAPI(this.filtrodataService.data_de, this.filtrodataService.data_ate);
   }
@@ -78,7 +77,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
                         globalCores.gbCores[2], globalCores.gbCores[3],
                         globalCores.gbCores[4], globalCores.gbCores[5]
                     ],
-                    // backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+               
                     borderWidth: 1
                 }]
             };

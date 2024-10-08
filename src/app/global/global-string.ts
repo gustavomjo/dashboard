@@ -17,6 +17,9 @@ export function lpad(str: string, length: number, padChar: string = ' '): string
 }
 
 export function removeSpecialCharacters(str: string): string {
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove acentos
-              .replace(/[^\w\s]/gi, ''); // Remove outros caracteres especiais
+  return str
+    // .replace(/º/g, 'ro')                       // Troca "º" por "ro"
+    .normalize("NFD")                          // Decompor caracteres acentuados
+    .replace(/[\u0300-\u036f]/g, "")           // Remover marcas de acentuação
+    .replace(/[^\w\sº]/gi, '');                 // Remover outros caracteres especiais, mantendo letras, números, espaços e "º"
 }

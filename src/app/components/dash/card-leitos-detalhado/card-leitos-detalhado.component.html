@@ -1,0 +1,22 @@
+
+<div class="row g-0 p-1"> <!-- Use g-0 to remove gutters -->
+  <div class="col-sm-12 col-md-6 col-lg-3" *ngFor="let item of card">
+    <div class="card text-center"> <!-- Added text-center for centering -->
+      <div>
+        <div class="d-flex justify-content-center"> <!-- Flexbox for horizontal alignment -->
+          <h5 class="me-3" [style.color]="color.colorGray">{{item.ds_setor}}</h5>
+          <h4><i [ngClass]="item.ico.icon" [style.color]="item.ico.color"></i></h4>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center"> <!-- Flexbox for horizontal alignment -->
+        <h5 class="me-3" [style.color]="color.colorGray">Total: {{item.totalGeral}}</h5> <!-- Added margin-end for spacing -->
+        <h5 [style.color]="color.colorGray">Ocupado: {{item.Ocupado}}</h5>
+      </div>
+      <div class="percentage ">
+        <span [style.color]="getColor(item.porcent_ocupado)">
+          {{item.porcent_ocupado}}%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
