@@ -18,19 +18,19 @@ export class dashFatService{
     return await this.Busca.getHtml<fatTotalAno[]>('/fattotalano')
   }
 
-  async getFatSitAnoMes(data_corte : any,dataDe : any,dataAte : any){
+  async getFatSitAnoMes(data_corte : any = '',dataDe : any,dataAte : any){
     return await this.Busca.getHtml<FatSitAnoMes[]>('/fatsitanomes?data_corte='+data_corte+'&dataDe='+dataDe+'&dataAte='+dataAte)
   }
 
-  async getFatTotalSituacao(data_corte : any,dataDe : any,dataAte : any){
+  async getFatTotalSituacao(data_corte : any = '',dataDe : any,dataAte : any){
     return await this.Busca.getHtml<fatTotalSituacao[]>('/fattotalsituacao?data_corte='+data_corte+'&dataDe='+dataDe+'&dataAte='+dataAte)
   }
 
-  async getFatListPendente(data_corte : any,dataDe : any,dataAte : any){
+  async getFatListPendente(data_corte : any = '',dataDe : any,dataAte : any){
     return await this.Busca.getHtml<fatListPendente[]>('/fatlistpendente?data_corte='+data_corte+'&dataDe='+dataDe+'&dataAte='+dataAte)
   }
 
-  async getFatConvFaturados(data_corte : any,dataDe : any,dataAte : any){
+  async getFatConvFaturados(data_corte : any = '',dataDe : any,dataAte : any){
     return await this.Busca.getHtml<fatConvFaturado[]>('/fatconvfaturados?data_corte='+data_corte+'&dataDe='+dataDe+'&dataAte='+dataAte)
   }
 

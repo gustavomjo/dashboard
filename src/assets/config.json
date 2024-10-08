@@ -1,6 +1,8 @@
 {
   "servidor": "http://192.168.1.38:8001",
-  "data_corte":"01/12/2023"
+  "comentario":{
+    "data_corte":"01/12/2023"
+  }
 }
 
 
