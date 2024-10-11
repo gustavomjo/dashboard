@@ -3,6 +3,8 @@ import { CardFaturamentoService } from '../../../services/dash/cardfaturamento.s
 import { moneyReduct } from '../../../global/global-money';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-faturamento',
@@ -13,17 +15,30 @@ import { CommonModule } from '@angular/common';
 })
 export class CardFaturamentoComponent implements OnInit{
   card : any[]=[];
-  constructor(private cardFaturamento : CardFaturamentoService){}
+  esteMes = '';
+  esteAno = '';
+  private intervalId : any;
+  constructor(private cardFaturamento : CardFaturamentoService,
+              private configService: ConfigService
+  ){}
   ngOnInit(): void {
-    this.getCardFaturamento();
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.card = [];
+        this.esteMes = '';
+        this.esteAno = '';
+        this.getCardFaturamento();
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
 
   async getCardFaturamento(){
     (await this.cardFaturamento.getCardFaturamento()).subscribe(dados =>{
-      // let card :any[]=[];
       this.card = this.card.concat(dados.body)
-      // console.log(this.card)
-
       let total = 0.00;
       let cont =0;
 
@@ -33,11 +48,8 @@ export class CardFaturamentoComponent implements OnInit{
         this.card[i].human = moneyReduct(total);
       }
 
-      let cardfat_mes = document.getElementById('cardfat_mes') as HTMLElement;
-      cardfat_mes.innerHTML =this.card[0].human;
-      // let cardfat_mesp = document.getElementById('cardfat_mesp') as HTMLElement;
-      let cardfat_ano = document.getElementById('cardfat_ano') as HTMLElement;
-      cardfat_ano.innerHTML =this.card[1].human;
+      this.esteMes = this.card[0].human;
+      this.esteAno = this.card[1].human;
     })
   }
 

@@ -8,9 +8,9 @@ export class JwtDecodeService {
 
   constructor() { }
 
-  public decodePayloadJWT(): any {
+  public decodePayloadJWT(token : any): any {
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       if (token) {
         return jwtDecode(token);
       }

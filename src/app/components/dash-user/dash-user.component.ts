@@ -117,7 +117,7 @@ export class DashUserComponent implements OnInit {
 
 
   async constructorDash(){
-    (await this.dashuser.getDash(this.jwtDecoder.decodePayloadJWT().cod_user)).subscribe(dados =>{
+    (await this.dashuser.getDash(this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token')).cod_user)).subscribe(dados =>{
       let dash :any[]=[];
       dash = dash.concat(dados.body)
       // console.log(dash)

@@ -6,6 +6,9 @@ import { globalData } from '../../../global/global-data';
 import { globalCoresNome } from '../../../global/global-cores';
 import { moneyReduct } from '../../../global/global-money';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { FiltrodataService } from '../../filtrodata/filtrodata.service';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-fat-total-ano',
@@ -23,12 +26,28 @@ export class CardFatTotalAnoComponent implements OnInit{
   _lbSadt = '';
   _total = '';
   screenWidth: number = 0;
+  private intervalId : any;
   constructor(private dashFat : dashFatService,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              public filtrodataService: FiltrodataService,
+              private configService: ConfigService
           ){}
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    this.getFatTotal();
+    this.configService.getConfig().subscribe(config => {
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.fat = [];
+        this._lbInt = '';
+        this._lbCons = '';
+        this._lbSadt = '';
+        this._total = '';
+        this.getFatTotal();
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar a configuração', error);
+    });
+
   }
 
   headingClass() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FiltrodataService } from '../filtrodata/filtrodata.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -11,6 +11,8 @@ import { CardPrazoMedRecebMesComponent } from './card-prazo-med-receb-mes/card-p
 import { CardPrazoMedRecebAnoComponent } from './card-prazo-med-receb-ano/card-prazo-med-receb-ano.component';
 import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
 import { CardLeitosDetalhadoComponent } from "./card-leitos-detalhado/card-leitos-detalhado.component";
+import { ConfigService } from '../../services/config.service';
+import { globalVars } from '../../global/globals';
 
 
 @Component({
@@ -31,11 +33,17 @@ import { CardLeitosDetalhadoComponent } from "./card-leitos-detalhado/card-leito
     CardLeitosDetalhadoComponent
 ]
 })
-export class DashComponent {
-  constructor(private rota: Router, public filtrodataService: FiltrodataService) {
+export class DashComponent implements OnInit {
+  constructor(private rota: Router,
+              public filtrodataService: FiltrodataService,
+              ) {
+
     filtrodataService.data_de = "";
     filtrodataService.data_ate = "";
    }
+  ngOnInit(): void {
+
+  }
 
 
 }

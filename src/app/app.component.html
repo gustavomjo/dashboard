@@ -6,29 +6,30 @@
   <aside class="sidebar" [class.active]="active" *ngIf="router.url !== '/' && router.url !== '**'">
 
     <ul class="sidebar-nav" >
-      <li class="sidebar-item" >
-          <a [routerLink]="['/dash']"  class="sidebar-link" (click)="ActiveMenu()">
-          <i class='bx bxs-dashboard' ><p *ngIf="isMobile" > Dash</p></i>
+      <li class="sidebar-item" *ngIf="dash">
+          <a [routerLink]="['/dash']" class="sidebar-link" (click)="ActiveMenu()">
+          <i class='bx bxs-dashboard'><p *ngIf="isMobile" > Dash</p></i>
         </a>
       </li>
-      <li class="sidebar-item">
+
+      <li class="sidebar-item" *ngIf="dash_receitas">
         <a [routerLink]="['/dash-receitas']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bxs-doughnut-chart'><p *ngIf="isMobile" > Dash Receitas</p></i>
         </a>
       </li>
-      <li class="sidebar-item">
+      <li class="sidebar-item" *ngIf="dash_farm">
         <a [routerLink]="['/dash-farm']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-injection'> <p *ngIf="isMobile" > Farmácia</p></i>
         </a>
       </li>
 
-      <li class="sidebar-item">
+      <li class="sidebar-item" *ngIf="dash_fin">
         <a [routerLink]="['/dash-fin']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-dollar'> <p *ngIf="isMobile" > Financeiro</p></i>
         </a>
       </li>
 
-      <li class="sidebar-item">
+      <li class="sidebar-item" *ngIf="dash_fat">
         <a [routerLink]="['/dash-fat']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-calculator'> <p *ngIf="isMobile" > Faturamento</p></i>
         </a>
@@ -40,6 +41,11 @@
         </a>
       </li>
 
+      <li class="sidebar-item" *ngIf="admin">
+        <a [routerLink]="['/permissoes']"  class="sidebar-link" (click)="ActiveMenu()" >
+          <i class='bx bx-cog'> <p *ngIf="isMobile" > Dash User</p></i>
+        </a>
+      </li>
     </ul>
     <div class="sidebar-footer">
         <a [routerLink]="['/']" routerLinkActive="router-link-active" k="/" class="sidebar-link" (click)="onLogout(); $event.preventDefault()">

@@ -8,6 +8,8 @@ import { SpinnerComponent } from "../../spinner/spinner.component";
 import { globalData } from '../../../global/global-data';
 import { globalCores } from '../../../global/global-cores';
 import { CommonModule } from '@angular/common';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 Chart.register(...registerables);
 @Component({
@@ -19,14 +21,30 @@ Chart.register(...registerables);
 })
 export class CardReceitaNaturezaComponent implements OnInit {
   realReceita : any =[];
+  receitas : any[]=[];
+  private intervalId : any;
   constructor(private receitaService : ReceitaService,
               public filtrodataService: FiltrodataService,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private configService: ConfigService
   ){}
 
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getReceitasAPI(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.receitas = [];
+        let chartExist = Chart.getChart("_rcNatureza");
+        if (chartExist != undefined) {
+            chartExist.destroy();
+        }
+        this.getReceitasAPI(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
   public atualiza():void{
     let rota = ['dash', 'dash-user'].includes(this.route.snapshot.routeConfig?.path || '');
@@ -48,11 +66,10 @@ export class CardReceitaNaturezaComponent implements OnInit {
     let dataset: any = {}; // Objeto para armazenar o dataset do gráfico
 
     (await this.receitaService.getReceita(dataDe, dataAte)).subscribe(dados => {
-        let receitas: any[] = [];
-        receitas = receitas.concat(dados.body);
+        this.receitas = this.receitas.concat(dados.body);
 
-        if (receitas != null) {
-            for (const key of Object.keys(receitas[0])) {
+        if (this.receitas != null) {
+            for (const key of Object.keys(this.receitas[0])) {
                 switch (key) {
                     case 'valor_diarias': labelReceita.push('Valor Diaria'); break;
                     case 'valor_taxas': labelReceita.push('Valor Taxas'); break;
@@ -64,7 +81,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
                 }
             }
 
-            this.realReceita = Object.values(receitas[0]);
+            this.realReceita = Object.values(this.receitas[0]);
 
             // Montar o dataset diretamente aqui
             dataset = {
@@ -77,7 +94,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
                         globalCores.gbCores[2], globalCores.gbCores[3],
                         globalCores.gbCores[4], globalCores.gbCores[5]
                     ],
-               
+
                     borderWidth: 1
                 }]
             };
@@ -110,11 +127,22 @@ export class CardReceitaNaturezaComponent implements OnInit {
       type: 'bar', // Mude o tipo do gráfico para testar
       data: chartData,
       options: {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            display:false
+          },
+          title: {
+            display: true,
+            text: 'Receita por Natureza'
           }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
       }
   });
   }

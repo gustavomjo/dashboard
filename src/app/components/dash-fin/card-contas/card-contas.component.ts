@@ -37,6 +37,7 @@ export class CardContasComponent implements OnInit
       // let conta :any[]=[];
 
       this.conta = this.conta.concat(contas.body)
+
       let CRAtual = 0;
       let CRAnt = 0;
       let CPAtual = 0;
@@ -57,8 +58,13 @@ export class CardContasComponent implements OnInit
 
       lbContasRecebAtual.innerHTML = moneyReduct(CRAtual)
       lbContasRecebPassado.innerHTML = moneyReduct(CRAnt)
-      this._PorcentContasRec = (CRAtual/CRAnt)*100;
-      spancontasRecAtual.innerHTML = this._PorcentContasRec.toFixed(2) + '%';
+      if(CRAtual >0){
+        this._PorcentContasRec = (CRAtual/CRAnt)*100;
+        spancontasRecAtual.innerHTML = this._PorcentContasRec.toFixed(2) + '%';
+      }else{
+        spancontasRecAtual.innerHTML =  '0%';
+
+      }
 
       lbcontasPagAtual.innerHTML = moneyReduct(CPAtual)
       lbcontasPagPassado.innerHTML = moneyReduct(CPAnt)

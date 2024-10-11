@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ConfigService } from './config.service';
+import { JwtDecodeService } from './jwt-decode.service';
 
 @Injectable({
   providedIn:'root'
@@ -10,7 +11,9 @@ import { ConfigService } from './config.service';
 
 export class UserService{
   private url = "";
-  constructor(private HttpClient : HttpClient,private configService: ConfigService  ){
+  constructor(private HttpClient : HttpClient,
+              private configService: ConfigService )
+  {
     this.configService.getConfig().subscribe(config => {
       environment.api = config.servidor;
       this.url = config.servidor;
@@ -35,7 +38,15 @@ export class UserService{
     localStorage.clear();
   }
 
-  _isLogged = () => !! localStorage.getItem('login');
+  // _isLogged = () => !! localStorage.getItem('login');
+
+  _isLogged(): boolean {
+    // ...outras rotinas
+    // console.log(this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token')).dash);
+
+    // Verifica o login
+    return !!localStorage.getItem('login');
+  }
 
 
 

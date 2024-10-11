@@ -7,6 +7,7 @@ import { UserService } from './services/user.service';
 import { DashComponent } from "./components/dash/dash.component";
 import { globalVars } from './global/globals';
 import { ConfigService } from './services/config.service';
+import { JwtDecodeService } from './services/jwt-decode.service';
 
 @Component({
     selector: 'app-root',
@@ -20,21 +21,41 @@ export class AppComponent implements OnInit{
   isMobile = globalVars.gbMobile;
   active = false;
 
+  dash = false;
+  dash_fin = false;
+  dash_fat = false;
+  dash_farm = false;
+  dash_receitas = false;
+  admin = false;
+
+
   constructor(
     public router: Router,
     private userService: UserService,
     private breakpointObserver: BreakpointObserver,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private jwtDecoder : JwtDecodeService
   ) {}
 
   ngOnInit(): void {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 768px)');
     this.configService.getConfig().subscribe(config => {
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
       environment.api = config.servidor;
       // console.log('API URL:', environment.api);
     }, error => {
       console.error('Erro ao carregar a configuração', error);
     });
+
+    const payload = this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token'));
+    this.dash = payload.dash == 'S';
+    this.dash_fin = payload.dash_fin == 'S';
+    this.dash_fat = payload.dash_fat == 'S';
+    this.dash_farm = payload.dash_farm == 'S';
+    this.dash_receitas = payload.dash_receitas == 'S';
+    this.admin = payload.admin == 'S';
+
+    console.log(this.dash_fat)
   }
 
   ActiveMenu() {

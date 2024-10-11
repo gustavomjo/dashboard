@@ -57,6 +57,7 @@ export class ComboCheckBoxComponent {
     } else {
       this.combocheck.ListChecked = [];
     }
+    this.Atualiza = true;
   }
 
   @HostListener('document:click', ['$event'])

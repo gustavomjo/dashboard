@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { ComboCheckService } from '../../combo-check-box/combocheck.service';
 import { moneyReduct } from '../../../global/global-money';
 import { ComboCheckBoxComponent } from "../../combo-check-box/combo-check-box.component";
+import { globalVars } from '../../../global/globals';
 
 Chart.register(...registerables);
 @Component({
@@ -25,6 +26,7 @@ export class CardGraphConvFaturadosComponent implements OnInit {
   data_corte? : Date;
   fat : any[]=[];
   filtroConv : any[]=[];
+  private intervalId : any;
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
               private configService: ConfigService,
@@ -36,15 +38,18 @@ export class CardGraphConvFaturadosComponent implements OnInit {
           }
 
   ngOnInit(): void {
-    this.configService.getConfig().subscribe(config=>{
-      //True para no inicio ja atualizar a lista
-      this.combocheck.UpdateList = true;
-
+    this.configService.getConfig().subscribe(config => {
       this.data_corte = config.data_corte;
-      this.getFatConvFaturados(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'),[]);
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.fat = [];
+        let chartExist = Chart.getChart("_chartFatConvFaturados"); // <canvas> id
+        if (chartExist != undefined) chartExist.destroy();
 
-    },error=>{
-      console.error('Erro ao carregar configuração',error)
+        this.getFatConvFaturados(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'),this.combocheck.ListChecked);
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar a configuração', error);
     });
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
 
@@ -54,6 +59,10 @@ export class CardGraphConvFaturadosComponent implements OnInit {
   public atualiza(): void {
     let rota = ['dash-user', 'dash-fat'].includes(this.route.snapshot.routeConfig?.path || '');
     if (!rota) return;
+
+    this.fat=[];
+    let chartExist = Chart.getChart("_chartFatConvFaturados"); // <canvas> id
+    if (chartExist != undefined) chartExist.destroy();
 
     let dataDe: Date = globalData.convertToDate(this.filtrodataService.data_de);
     let dataAte: Date = globalData.convertToDate(this.filtrodataService.data_ate);

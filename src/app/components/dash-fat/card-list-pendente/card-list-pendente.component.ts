@@ -11,6 +11,7 @@ import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { globalData } from '../../../global/global-data';
 import { isValid } from 'date-fns';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-list-pendente',
@@ -28,17 +29,23 @@ export class CardListPendenteComponent implements OnInit {
   data_corte? : Date;
   endIndex: number = 50;
 
+  private intervalId : any;
+
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
               private configService: ConfigService,
               public filtrodataService: FiltrodataService,
           ){}
   ngOnInit(): void {
-    this.configService.getConfig().subscribe(config=>{
+    this.configService.getConfig().subscribe(config => {
       this.data_corte = config.data_corte;
-      this.getFatListPendente(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
-    },error=>{
-      console.error('Erro ao carregar configuração',error)
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this._list = [];
+        this.getFatListPendente(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar a configuração', error);
     });
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
   }

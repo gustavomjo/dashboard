@@ -4,6 +4,8 @@ import { PrazoRecDService } from '../../../services/dash/prazorecd.service';
 import { globalCores } from '../../../global/global-cores';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 Chart.register(...registerables);
 @Component({
@@ -15,9 +17,24 @@ Chart.register(...registerables);
 })
 export class CardPrazoMedRecebMesComponent implements OnInit {
   prazo : any[]=[];
-  constructor( private prazoRecDService : PrazoRecDService){}
+  private intervalId : any;
+  constructor( private prazoRecDService : PrazoRecDService,
+               private configService: ConfigService
+  ){}
   ngOnInit(): void {
-    this.getPrazoRecDAPI()
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.prazo = [];
+        let chartExist = Chart.getChart("_rcPrazoRecD"); // <canvas> id
+        if (chartExist != undefined)
+          chartExist.destroy();
+        this.getPrazoRecDAPI()
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
 
   async getPrazoRecDAPI(){
@@ -28,7 +45,7 @@ export class CardPrazoMedRecebMesComponent implements OnInit {
 
       let media :any[]=[];
       let mesano :any[]=[];
-      if(this.prazo != null){
+      if(this.prazo.length >0){
         for(let i=0;i< this.prazo.length;i++){
 
           mesano.push(this.prazo[i].mesano.substring(5,7)+'/'+this.prazo[i].mesano.substring(0,4));
@@ -36,6 +53,11 @@ export class CardPrazoMedRecebMesComponent implements OnInit {
         }
         this._rcPrazoRecD(mesano,media);
 
+      }else{
+        this.prazo.push({
+          mesano:null,
+          media:0
+        })
       }
     })
 
@@ -59,6 +81,16 @@ export class CardPrazoMedRecebMesComponent implements OnInit {
       },
       options: {
         responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            display:false
+          },
+          title: {
+            display: true,
+            text: 'Prazo Médio'
+          }
+        },
         scales: {
           y: {
             beginAtZero: true

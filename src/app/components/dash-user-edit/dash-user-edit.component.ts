@@ -122,7 +122,7 @@ export class DashUserEditComponent implements OnInit{
   }
 
   async getdashBD(){
-    (await this.dashuser.getDash(this.jwtDecoder.decodePayloadJWT().cod_user)).subscribe(dados =>{
+    (await this.dashuser.getDash(this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token')).cod_user)).subscribe(dados =>{
       let dash :any[]=[];
       dash = dash.concat(dados.body)
       // console.log(dash)
@@ -148,7 +148,7 @@ export class DashUserEditComponent implements OnInit{
 
       if(!b){
         this.selectedComp.push(this.component);
-        this.dashuser.postComponent(this.jwtDecoder.decodePayloadJWT().cod_user,this.component);
+        this.dashuser.postComponent(this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token')).cod_user,this.component);
       }else{
         this.notificationService.showNotification('Card já existe!');
         return;
@@ -178,7 +178,7 @@ export class DashUserEditComponent implements OnInit{
         // Adicionar um evento de clique ao botão
         this.renderer.listen(deleteButton, 'click', () => {
           //delete no banco
-          this.dashuser.deleteComponent(this.jwtDecoder.decodePayloadJWT().cod_user,componentElement.nodeName);
+          this.dashuser.deleteComponent(this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token')).cod_user,componentElement.nodeName);
           this.selectedComp.splice(index,1);
           // console.log(this.selectedComp);
 

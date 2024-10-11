@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CardLeitosService } from '../../../services/dash/cardleitos.service';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { globalCores } from '../../../global/global-cores';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-leitos',
@@ -12,30 +15,36 @@ import { CommonModule } from '@angular/common';
 })
 export class CardLeitosComponent implements OnInit {
   card : any[]=[];
-  constructor(private cardLeitos : CardLeitosService){}
+  leitosDisp = '';
+  leitosOcup = '';
+  leitosTotal = '';
+  private intervalId : any;
+  constructor(private cardLeitos : CardLeitosService,
+              private configService: ConfigService
+  ){}
   ngOnInit(): void {
-    this.getCardLeitos();
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.card = [];
+        this.leitosDisp = '';
+        this.leitosOcup = '';
+        this.leitosTotal = '';
+        this.getCardLeitos();
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
 
   async getCardLeitos(){
     (await this.cardLeitos.getCardLeitos()).subscribe(dados=>{
       this.card = this.card.concat(dados.body)
 
-      let v = ( (this.card[0].total*100)/this.card[2].total ).toFixed(2);
-      let lbPorcent = document.getElementById('lbporcent') as HTMLElement;
-
-      let lbLeitosD = document.getElementById('lbLeitosD') as HTMLElement;
-      lbLeitosD.innerHTML = this.card[0].total.toString();
-
-
-      let v1 = ( (this.card[1].total*100)/this.card[2].total ).toFixed(2);
-      let lbPorcent1 = document.getElementById('lbporcentO') as HTMLElement;
-
-      let lbLeitosO = document.getElementById('lbLeitosO') as HTMLElement;
-      lbLeitosO.innerHTML = this.card[1].total.toString();
-
-      let lbLeitosT = document.getElementById('lbLeitosT') as HTMLElement;
-      lbLeitosT.innerHTML = this.card[2].total.toString();
+      this.leitosDisp = this.card[0].total.toString();
+      this.leitosOcup = this.card[1].total.toString();
+      this.leitosTotal = this.card[2].total.toString();
     })
   }
 

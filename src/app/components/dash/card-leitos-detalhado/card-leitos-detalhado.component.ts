@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { searchIco } from '../../../global/global-icons';
 import { globalCoresNome } from '../../../global/global-cores';
 import { removeSpecialCharacters } from '../../../global/global-string';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-leitos-detalhado',
@@ -16,11 +18,22 @@ import { removeSpecialCharacters } from '../../../global/global-string';
 export class CardLeitosDetalhadoComponent implements OnInit {
   color = globalCoresNome;
   card: any[] = [];
-
-  constructor(private cardLeitos: CardLeitosService) {}
+  private intervalId : any;
+  constructor(private cardLeitos: CardLeitosService,
+              private configService: ConfigService
+  ) {}
 
   ngOnInit(): void {
-    this.getCardLeitos();
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.card = [];
+        this.getCardLeitos();
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
 
   async getCardLeitos() {
@@ -37,8 +50,6 @@ export class CardLeitosDetalhadoComponent implements OnInit {
           porcent_ocupado: 0,
           ico: searchIco(curr.ds_setor), // Chama a função para obter o ícone e cor
         };
-        // console.log(curr.ds_setor)
-        // console.log(searchIco(curr.ds_setor))
 
         // Adicionar o total ao status correspondente (Livre ou Ocupado)
         setor[curr.status] += curr.total;

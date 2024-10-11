@@ -9,6 +9,7 @@ import { FiltrodataService } from '../../filtrodata/filtrodata.service';
 import { globalData } from '../../../global/global-data';
 import { isValid } from 'date-fns';
 import { SpinnerComponent } from "../../spinner/spinner.component";
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-fat-total-situacao',
@@ -27,6 +28,8 @@ export class CardFatTotalSituacaoComponent implements OnInit {
   data_corte? : Date;
 
   screenWidth: number = 0;
+
+  private intervalId : any;
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
               private configService: ConfigService,
@@ -34,11 +37,19 @@ export class CardFatTotalSituacaoComponent implements OnInit {
           ){}
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    this.configService.getConfig().subscribe(config=>{
+    this.configService.getConfig().subscribe(config => {
       this.data_corte = config.data_corte;
-      this.getFatTotalSituacao(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
-    },error=>{
-      console.error('Erro ao carregar configuração',error)
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.fat = [];
+        this._pendente = '';
+        this._fechadoComRPS = '';
+        this._fechadoSemRPS = '';
+        this._total = '';
+        this.getFatTotalSituacao(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar a configuração', error);
     });
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
   }
@@ -72,9 +83,7 @@ export class CardFatTotalSituacaoComponent implements OnInit {
       // let fat :any[]=[];
       let total : number=0;
       this.fat = this.fat.concat(dados.body);
-      this._pendente = '0';
-      this._fechadoComRPS = '0';
-      this._fechadoSemRPS = '0';
+
       for(let i=0;i<this.fat.length;i++){
         switch(this.fat[i].situacao_conta){
           case  'Pendente' :

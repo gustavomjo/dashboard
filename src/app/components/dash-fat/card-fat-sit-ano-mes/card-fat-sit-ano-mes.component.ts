@@ -10,6 +10,7 @@ import { isValid } from 'date-fns';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 import { globalCores } from '../../../global/global-cores';
+import { globalVars } from '../../../global/globals';
 
 Chart.register(...registerables);
 @Component({
@@ -22,15 +23,29 @@ Chart.register(...registerables);
 export class CardFatSitAnoMesComponent implements OnInit{
   data_corte? : Date;
   fat : any[]=[];
+  private intervalId : any;
   constructor(private dashFat : dashFatService,
               private route: ActivatedRoute,
               private configService: ConfigService,
               public filtrodataService: FiltrodataService,
+
           ){}
   ngOnInit(): void {
     this.configService.getConfig().subscribe(config => {
       this.data_corte = config.data_corte;
-      this.getFatSitAnoMes(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.fat = [];
+        let chartExist = Chart.getChart("_chart"); // <canvas> id
+        if (chartExist != undefined)
+          chartExist.destroy();
+
+        chartExist = Chart.getChart("_chartSadt"); // <canvas> id
+        if (chartExist != undefined)
+          chartExist.destroy();
+
+        this.getFatSitAnoMes(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
+      }, globalVars.intervalTime);
     }, error => {
       console.error('Erro ao carregar a configuração', error);
     });

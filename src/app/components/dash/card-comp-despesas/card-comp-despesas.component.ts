@@ -9,6 +9,8 @@ import { cleanStringUnicode } from '../../../global/global-string';
 import { globalCores } from '../../../global/global-cores';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 Chart.register(...registerables);
 @Component({
@@ -21,14 +23,28 @@ Chart.register(...registerables);
 
 export class CardCompDespesasComponent implements OnInit{
   despesa : any[]=[];
+  private intervalId : any;
   constructor(private despesaService : DespesaService,
               public filtrodataService: FiltrodataService,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private configService: ConfigService
   ){  }
   ngOnInit(): void {
     this.filtrodataService.addOnUpdateCallback(() => this.atualiza());
-    this.getDespesa(this.filtrodataService.data_de, this.filtrodataService.data_ate);
 
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.despesa = [];
+        let chartExist = Chart.getChart("_rcDespesa"); // <canvas> id
+        if (chartExist != undefined)
+          chartExist.destroy();
+        this.getDespesa(this.filtrodataService.data_de, this.filtrodataService.data_ate);
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
   ngAfterViewInit(): void {
 
@@ -84,6 +100,17 @@ export class CardCompDespesasComponent implements OnInit{
         }]
       },
       options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            display:false
+          },
+          title: {
+            display: true,
+            text: 'Composição de despesas'
+          }
+        },
         scales: {
           y: {
             beginAtZero: true

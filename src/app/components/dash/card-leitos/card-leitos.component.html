@@ -9,21 +9,20 @@
         <h6 class="text-uppercase text-body-secondary mb-2">
           Disponíveis
         </h6>
-        <span id="lbLeitosD" class=" h1 mb-0 text-success"> </span>
-        <span id="lbporcent" class=" position-relative badge rounded-pill bg-primary"> </span>
+        <span class=" h1 mb-0 text-success">{{leitosDisp}}</span>
+        <!-- <span id="lbporcent" class=" position-relative badge rounded-pill bg-primary"> </span> -->
       </div>
       <div class="col-4">
         <h6 class="text-uppercase text-body-secondary mb-2">
           Ocupados
         </h6>
-        <span id="lbLeitosO" class=" h1 mb-0 text-warning"> </span>
-        <span id="lbporcentO" class="badge rounded-pill bg-primary"> </span>
+        <span class=" h1 mb-0 text-warning"> {{leitosOcup}} </span>
       </div>
       <div class="col">
         <h6 class="text-uppercase text-body-secondary mb-2">
           Total
         </h6>
-        <span id="lbLeitosT" class=" h1 mb-0"> </span>
+        <span class=" h1 mb-0">{{leitosTotal}} </span>
       </div>
     </div>
     <app-spinner *ngIf="card.length == 0"></app-spinner>

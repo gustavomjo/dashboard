@@ -1,8 +1,9 @@
 {
   "servidor": "http://192.168.1.38:8001",
+  "atualizacao" : 60,
   "comentario":{
     "data_corte":"01/12/2023",
-    "coments":"caso tiver data de corte colocar apos o servidor"
+    "coments":"caso tiver data de corte(daa inicial) colocar apos o servidor"
   }
 }
 

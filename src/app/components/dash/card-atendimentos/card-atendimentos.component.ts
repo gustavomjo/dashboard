@@ -3,6 +3,8 @@ import { CardAtendService } from '../../../services/dash/cardatend.service';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { SpinnerComponent } from "../../spinner/spinner.component";
 import { CommonModule } from '@angular/common';
+import { ConfigService } from '../../../services/config.service';
+import { globalVars } from '../../../global/globals';
 
 @Component({
   selector: 'app-card-atendimentos',
@@ -14,60 +16,69 @@ import { CommonModule } from '@angular/common';
 export class CardAtendimentosComponent implements OnInit{
   carTime = 5000;
   card : any[]=[];
-  constructor(private cardAtend : CardAtendService){}
+  consMes = '';
+  consAno = '';
+  intMes = '';
+  intAno = '';
+  sadtMes = '';
+  sadtAno = '';
+  private intervalId : any;
+  constructor(private cardAtend : CardAtendService,
+              private configService: ConfigService ){}
 
   ngOnInit(): void {
-    this.getCardAtend();
+
+    this.configService.getConfig().subscribe(config => {
+      // Utiliza a função global para converter segundos para milissegundos
+      globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.intervalId = setInterval(() => {
+        this.card = [];
+        this.consMes = '';
+        this.consAno = '';
+        this.intMes = '';
+        this.intAno = '';
+        this.sadtMes = '';
+        this.sadtAno = '';
+        this.getCardAtend();
+      }, globalVars.intervalTime);
+    }, error => {
+      console.error('Erro ao carregar configuração', error);
+    });
   }
 
   async getCardAtend(){
     (await this.cardAtend.getCardAtend()).subscribe(dados =>{
       // let card :any[]=[];
       this.card = this.card.concat(dados.body)
-
-      let cardConsM = document.getElementById('cardConsultaM') as HTMLElement;
-      let cardConsA = document.getElementById('cardConsultaA') as HTMLElement;
-      let cardIntM = document.getElementById('cardIntM') as HTMLElement;
-      let cardIntA = document.getElementById('cardIntA') as HTMLElement;
-      let cardSADTM = document.getElementById('cardSADTM') as HTMLElement;
-      let cardSADTA = document.getElementById('cardSADTA') as HTMLElement;
-
-      cardConsM.innerHTML = '0';
-      cardConsA.innerHTML = '0';
-      cardIntM.innerHTML = '0';
-      cardIntA.innerHTML = '0';
-      cardSADTM.innerHTML = '0';
-      cardSADTA.innerHTML = '0';
-
       for(let i=0;i<this.card.length;i++){
         switch (this.card[i].tipo) {
           case 'P':
             switch (this.card[i].periodo) {
               case 'Este Mes':
-                cardConsM.innerHTML = this.card[i].total.toString();
+                this.consMes = this.card[i].total.toString();
                 break;
               case 'Este Ano':
-                cardConsA.innerHTML = this.card[i].total.toString();
+                this.consAno = this.card[i].total.toString();
                 break;
             }
             break;
           case 'I':
             switch (this.card[i].periodo) {
               case 'Este Mes':
-                cardIntM.innerHTML = this.card[i].total.toString();
+                this.intMes = this.card[i].total.toString();
                 break;
               case 'Este Ano':
-                cardIntA.innerHTML = this.card[i].total.toString();
+                this.intAno = this.card[i].total.toString();
                 break;
             }
             break;
           case 'S':
             switch (this.card[i].periodo) {
               case 'Este Mes':
-                cardSADTM.innerHTML = this.card[i].total.toString();
+                this.sadtMes = this.card[i].total.toString();
                 break;
               case 'Este Ano':
-                cardSADTA.innerHTML = this.card[i].total.toString();
+                this.sadtAno = this.card[i].total.toString();
                 break;
             }
             break;
