@@ -55,7 +55,6 @@ export class AppComponent implements OnInit{
     this.dash_receitas = payload.dash_receitas == 'S';
     this.admin = payload.admin == 'S';
 
-    console.log(this.dash_fat)
   }
 
   ActiveMenu() {

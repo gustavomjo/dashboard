@@ -4,6 +4,8 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ConfigService } from './config.service';
 import { JwtDecodeService } from './jwt-decode.service';
+import {Busca} from './../global/globals.services';
+import { usuarios } from '../models/usuarios.model';
 
 @Injectable({
   providedIn:'root'
@@ -12,7 +14,8 @@ import { JwtDecodeService } from './jwt-decode.service';
 export class UserService{
   private url = "";
   constructor(private HttpClient : HttpClient,
-              private configService: ConfigService )
+              private configService: ConfigService,
+              private Busca : Busca )
   {
     this.configService.getConfig().subscribe(config => {
       environment.api = config.servidor;
@@ -20,6 +23,10 @@ export class UserService{
     }, error => {
       console.error('Erro ao carregar a configuração', error);
     });
+  }
+
+  async getUsuarios(){
+    return await this.Busca.getHtml<usuarios[]>('/usuarios')
   }
 
   getUser(user:string,senha:string){
