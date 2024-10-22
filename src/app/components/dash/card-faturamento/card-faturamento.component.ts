@@ -25,6 +25,7 @@ export class CardFaturamentoComponent implements OnInit{
     this.configService.getConfig().subscribe(config => {
       // Utiliza a função global para converter segundos para milissegundos
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.getCardFaturamento();
       this.intervalId = setInterval(() => {
         this.card = [];
         this.esteMes = '';

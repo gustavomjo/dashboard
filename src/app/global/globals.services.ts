@@ -31,6 +31,7 @@ export class Busca {
     return this.configService.getConfig().pipe(
       switchMap(config => {
         this.url = config.servidor;
+        console.log(this.url)
         return this.httpClient.get<T>(this.url + request, { headers: this.header, observe: 'response' }).pipe(
           tap(response => {
             this.token = localStorage.getItem('token');
@@ -82,14 +83,13 @@ export class Busca {
     ).subscribe();
   }
 
-  postComponent(request: string, params : string): void {
+  postComponent(request: string, params: string): Observable<any> { // Alterado para retornar um Observable
     // Utiliza this.configService.getConfig para garantir que a configuração seja carregada antes de fazer a requisição
-    this.configService.getConfig().pipe(
+    return this.configService.getConfig().pipe(
       switchMap(config => {
         this.url = config.servidor;
-        console.log(this.header.getAll('Authorization'))
 
-        return this.httpClient.post(this.url+request, params,  { headers: this.header }).pipe(
+        return this.httpClient.post(this.url + request, params, { headers: this.header }).pipe(
           tap(() => {
             this.token = localStorage.getItem('token');
           }),
@@ -109,8 +109,9 @@ export class Busca {
           )
         );
       })
-    ).subscribe();
+    );
   }
+
 
   private updateToken() {
     this.token = localStorage.getItem('token');

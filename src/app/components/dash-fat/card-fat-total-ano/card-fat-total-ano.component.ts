@@ -36,6 +36,7 @@ export class CardFatTotalAnoComponent implements OnInit{
     this.screenWidth = window.innerWidth;
     this.configService.getConfig().subscribe(config => {
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.getFatTotal();
       this.intervalId = setInterval(() => {
         this.fat = [];
         this._lbInt = '';

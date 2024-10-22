@@ -34,6 +34,7 @@ export class CardReceitaNaturezaComponent implements OnInit {
     this.configService.getConfig().subscribe(config => {
       // Utiliza a função global para converter segundos para milissegundos
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.getReceitasAPI(this.filtrodataService.data_de, this.filtrodataService.data_ate);
       this.intervalId = setInterval(() => {
         this.receitas = [];
         let chartExist = Chart.getChart("_rcNatureza");

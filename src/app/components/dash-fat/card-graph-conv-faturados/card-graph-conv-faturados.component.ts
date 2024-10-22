@@ -41,6 +41,7 @@ export class CardGraphConvFaturadosComponent implements OnInit {
     this.configService.getConfig().subscribe(config => {
       this.data_corte = config.data_corte;
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.getFatConvFaturados(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'),this.combocheck.ListChecked);
       this.intervalId = setInterval(() => {
         this.fat = [];
         let chartExist = Chart.getChart("_chartFatConvFaturados"); // <canvas> id

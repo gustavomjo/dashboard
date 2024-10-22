@@ -23,3 +23,9 @@ export function removeSpecialCharacters(str: string): string {
     .replace(/[\u0300-\u036f]/g, "")           // Remover marcas de acentuação
     .replace(/[^\w\sº]/gi, '');                 // Remover outros caracteres especiais, mantendo letras, números, espaços e "º"
 }
+
+export function BoolToString(b : boolean){
+  return b==true?'S':'N';
+}
+
+

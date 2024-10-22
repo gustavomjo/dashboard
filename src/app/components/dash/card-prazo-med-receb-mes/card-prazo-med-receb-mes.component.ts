@@ -25,6 +25,7 @@ export class CardPrazoMedRecebMesComponent implements OnInit {
     this.configService.getConfig().subscribe(config => {
       // Utiliza a função global para converter segundos para milissegundos
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
+      this.getPrazoRecDAPI()
       this.intervalId = setInterval(() => {
         this.prazo = [];
         let chartExist = Chart.getChart("_rcPrazoRecD"); // <canvas> id

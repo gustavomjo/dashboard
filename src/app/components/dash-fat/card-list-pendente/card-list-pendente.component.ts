@@ -39,6 +39,7 @@ export class CardListPendenteComponent implements OnInit {
   ngOnInit(): void {
     this.configService.getConfig().subscribe(config => {
       this.data_corte = config.data_corte;
+      this.getFatListPendente(this.data_corte,this.filtrodataService.data_de.replace(/-/g, '/'), this.filtrodataService.data_ate.replace(/-/g, '/'));
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
       this.intervalId = setInterval(() => {
         this._list = [];

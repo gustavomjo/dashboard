@@ -1,49 +1,53 @@
 <div class="container flex-container">
   <div class="card" style="width: 100%; max-width: 400px;">
       <div class="card-body">
-          <h5 class="card-title text-center">Permissões de módulos</h5>
-          <form action="#" method="post">
-            <div class="form-floating mb-3">
-              <input
-                  class="form-control"
-                  list="datalistUsuarios"
-                  [(ngModel)]="selectedUser"
-                  name="usuario"
-                  (input)="onUsuarioChange()"
-                  placeholder="Digite para buscar...">
-              <datalist id="datalistUsuarios">
-                  <option *ngFor="let usr of usuario" [value]="usr.codigo + ' - ' + usr.nome"></option>
-              </datalist>
-              <label for="searchUsuarios">Usuário</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="ckdash" id="ckdash" [(ngModel)]="dash">
-              <label class="form-check-label" for="musica">Dash</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="ckreceita" id="ckreceita" [(ngModel)]="dashreceita">
-              <label class="form-check-label" for="esporte">Dash Receitas</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="ckfinanceiro" id="ckfinanceiro" [(ngModel)]="dashfin">
-              <label class="form-check-label" for="cinema">Dash Financeiro</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="ckfarm" id="ckfarm" [(ngModel)]="dashfarm">
-              <label class="form-check-label" for="viagem">Dash Farmácia</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="ckfat" id="ckfat" [(ngModel)]="dashfat">
-              <label class="form-check-label" for="leitura">Dash Faturamento</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="ckadm" id="ckadm" [(ngModel)]="adm">
-              <label class="form-check-label" for="gastronomia">Admin</label>
-            </div>
-            <div class="mt-3">
-              <button  class="btn btn-primary">Gravar</button>
-            </div>
-          </form>
+        <h5 class="card-title text-center">Permissões de módulos</h5>
+        <form action="#" method="post">
+          <div class="form-floating mb-3">
+            <input
+                class="form-control"
+                list="datalistUsuarios"
+                [(ngModel)]="selectedUser"
+                name="usuario"
+                (input)="onUsuarioChange()"
+                placeholder="Digite para buscar...">
+            <datalist id="datalistUsuarios">
+                <option *ngFor="let usr of usuario" [value]="usr.codigo + ' - ' + usr.nome"></option>
+            </datalist>
+            <label for="searchUsuarios">Usuário</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ckdash" id="ckdash" (click)="onClick('dash')" [(ngModel)]="dash">
+            <label class="form-check-label" for="musica">Dash</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ckreceita" id="ckreceita" (click)="onClick('dashreceita')" [(ngModel)]="dashreceita">
+            <label class="form-check-label" for="esporte">Dash Receitas</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ckfinanceiro" id="ckfinanceiro" (click)="onClick('dashfin')" [(ngModel)]="dashfin">
+            <label class="form-check-label" for="cinema">Dash Financeiro</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ckfarm" id="ckfarm" (click)="onClick('dashfarm')" [(ngModel)]="dashfarm">
+            <label class="form-check-label" for="viagem">Dash Farmácia</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ckfat" id="ckfat" (click)="onClick('dashfat')" [(ngModel)]="dashfat">
+            <label class="form-check-label" for="leitura">Dash Faturamento</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ckadm" id="ckadm" (click)="onClick('adm')" [(ngModel)]="adm">
+            <label class="form-check-label" for="gastronomia">Admin</label>
+          </div>
+
+          <div class="mt-3">
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">Gravar</button>
+          </div>
+        </form>
       </div>
   </div>
 </div>
+
+<app-notification></app-notification>
+

@@ -26,6 +26,7 @@ export class CardLeitosDetalhadoComponent implements OnInit {
   ngOnInit(): void {
     this.configService.getConfig().subscribe(config => {
       // Utiliza a função global para converter segundos para milissegundos
+      this.getCardLeitos();
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
       this.intervalId = setInterval(() => {
         this.card = [];

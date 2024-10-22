@@ -34,6 +34,7 @@ export class CardCompDespesasComponent implements OnInit{
 
     this.configService.getConfig().subscribe(config => {
       // Utiliza a função global para converter segundos para milissegundos
+      this.getDespesa(this.filtrodataService.data_de, this.filtrodataService.data_ate);
       globalVars.intervalTime = (config.atualizacao || 10) * 1000;
       this.intervalId = setInterval(() => {
         this.despesa = [];

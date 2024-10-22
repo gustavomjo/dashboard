@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FiltrodataService } from '../filtrodata/filtrodata.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CardLeitosComponent } from './card-leitos/card-leitos.component';
@@ -36,12 +36,14 @@ import { globalVars } from '../../global/globals';
 export class DashComponent implements OnInit {
   constructor(private rota: Router,
               public filtrodataService: FiltrodataService,
+              private route: ActivatedRoute,
               ) {
 
     filtrodataService.data_de = "";
     filtrodataService.data_ate = "";
    }
   ngOnInit(): void {
+
 
   }
 
