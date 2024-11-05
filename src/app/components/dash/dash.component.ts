@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FiltrodataService } from '../filtrodata/filtrodata.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -13,6 +13,7 @@ import { FiltrodataComponent } from '../filtrodata/filtrodata.component';
 import { CardLeitosDetalhadoComponent } from "./card-leitos-detalhado/card-leitos-detalhado.component";
 import { ConfigService } from '../../services/config.service';
 import { globalVars } from '../../global/globals';
+import { authGuard } from '../../_guard/auth.guard';
 
 
 @Component({
@@ -34,15 +35,18 @@ import { globalVars } from '../../global/globals';
 ]
 })
 export class DashComponent implements OnInit {
+  currentPath: string ='';
   constructor(private rota: Router,
               public filtrodataService: FiltrodataService,
-              private route: ActivatedRoute,
+              private auth : authGuard
+
               ) {
 
     filtrodataService.data_de = "";
     filtrodataService.data_ate = "";
    }
   ngOnInit(): void {
+
 
 
   }

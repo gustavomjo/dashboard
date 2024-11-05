@@ -6,30 +6,30 @@
   <aside class="sidebar" [class.active]="active" *ngIf="router.url !== '/' && router.url !== '**'">
 
     <ul class="sidebar-nav" >
-      <li class="sidebar-item" *ngIf="dash">
+      <li class="sidebar-item" *ngIf="globalVars.dash">
           <a [routerLink]="['/dash']" class="sidebar-link" (click)="ActiveMenu()">
           <i class='bx bxs-dashboard'><p *ngIf="isMobile" > Dash</p></i>
         </a>
       </li>
 
-      <li class="sidebar-item" *ngIf="dash_receitas">
+      <li class="sidebar-item" *ngIf="globalVars.dash_receitas">
         <a [routerLink]="['/dash-receitas']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bxs-doughnut-chart'><p *ngIf="isMobile" > Dash Receitas</p></i>
         </a>
       </li>
-      <li class="sidebar-item" *ngIf="dash_farm">
+      <li class="sidebar-item" *ngIf="globalVars.dash_farm">
         <a [routerLink]="['/dash-farm']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-injection'> <p *ngIf="isMobile" > Farmácia</p></i>
         </a>
       </li>
 
-      <li class="sidebar-item" *ngIf="dash_fin">
+      <li class="sidebar-item" *ngIf="globalVars.dash_fin">
         <a [routerLink]="['/dash-fin']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-dollar'> <p *ngIf="isMobile" > Financeiro</p></i>
         </a>
       </li>
 
-      <li class="sidebar-item" *ngIf="dash_fat">
+      <li class="sidebar-item" *ngIf="globalVars.dash_fat">
         <a [routerLink]="['/dash-fat']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-calculator'> <p *ngIf="isMobile" > Faturamento</p></i>
         </a>
@@ -41,7 +41,7 @@
         </a>
       </li>
 
-      <li class="sidebar-item" *ngIf="admin">
+      <li class="sidebar-item" *ngIf="globalVars.admin">
         <a [routerLink]="['/permissoes']"  class="sidebar-link" (click)="ActiveMenu()" >
           <i class='bx bx-cog'> <p *ngIf="isMobile" > Dash User</p></i>
         </a>

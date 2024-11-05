@@ -11,7 +11,7 @@ export class PermissoesService{
   constructor( private Busca : Busca){}
 
   postPermissoes(
-    usuario: number,
+    usuario: string,
     dash: string,
     dash_fin: string,
     dash_receitas: string,

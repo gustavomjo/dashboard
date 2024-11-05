@@ -58,12 +58,7 @@ export class PermissoesComponent implements OnInit{
 
   public onUsuarioChange() {
     // Limpar os checkboxes antes de configurar os novos valores
-    this.dash = false;
-    this.dashreceita = false;
-    this.dashfin = false;
-    this.dashfat = false;
-    this.dashfarm = false;
-    this.adm = false;
+
 
     //  console.log('dash '+this.dash);
     //   console.log('dashfin '+this.dashfin);
@@ -103,13 +98,11 @@ export class PermissoesComponent implements OnInit{
 
 
   onSubmit() {
-    this.notificationService.showNotification('Usuário ou senha inválido!');
-
     if (this.selectedUser) {
-      const userId = this.jwtDecoder.decodePayloadJWT(localStorage.getItem('token')).cod_user;
+      const userId =  this.selectedUser.split(' - ');
 
       this.permissoes.postPermissoes(
-        userId,
+        String(userId[0]),
         BoolToString(this.dash),
         BoolToString(this.dashfin),
         BoolToString(this.dashreceita),

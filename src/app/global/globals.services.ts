@@ -31,7 +31,6 @@ export class Busca {
     return this.configService.getConfig().pipe(
       switchMap(config => {
         this.url = config.servidor;
-        console.log(this.url)
         return this.httpClient.get<T>(this.url + request, { headers: this.header, observe: 'response' }).pipe(
           tap(response => {
             this.token = localStorage.getItem('token');

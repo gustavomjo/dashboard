@@ -1,3 +1,4 @@
+import { globalVars } from './../../global/globals';
 import { Component, ComponentFactory, ComponentFactoryResolver, ElementRef, Injector, OnInit, Renderer2, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { CardLeitosComponent } from '../dash/card-leitos/card-leitos.component';
 import { CardFaturamentoComponent } from '../dash/card-faturamento/card-faturamento.component';
@@ -26,6 +27,7 @@ import { NotificationService } from '../../services/notification.service';
 import { NotificationComponent } from '../notification/notification.component';
 import { NotificationModule } from '../notification/notification.module';
 import { JwtDecodeService } from '../../services/jwt-decode.service';
+
 
 
 // Importar Toast diretamente do Bootstrap
@@ -65,26 +67,18 @@ export class DashUserEditComponent implements OnInit{
 
   @ViewChild('contentDash', { read: ViewContainerRef, static: true }) contentDash!: ViewContainerRef;
 
+  // globalVars.dash_fin = payload.dash_fin === 'S';
+  // globalVars.dash_fat = payload.dash_fat === 'S';
+  // globalVars.dash_farm = payload.dash_farm === 'S';
+  // globalVars.dash_receitas = payload.dash_receitas === 'S';
+  // globalVars.admin = payload.admin === 'S';
   // cards : string[]=[];
   user_comp: any[] = [
     {value:'app-filtrodata', desc: 'Filtro Data'},
-    {value:'app-card-leitos', desc: 'Card Leitos - Dash'},
-    {value:'app-card-faturamento', desc: 'Card Faturamento - Dash'},
-    {value:'app-card-atendimentos', desc: 'Card Atendimentos - Dash'},
-    {value:'app-card-receita-natureza', desc: 'Receita por Natureza - Dash'},
-    {value:'app-card-comp-despesas', desc: 'Composição de Despesas - Dash'},
-    {value:'app-card-prazo-med-receb-mes', desc: 'Prazo Médio Recebimento(Mês) - Dash'},
-    {value:'app-card-prazo-med-receb-ano', desc: 'Prazo Medio Recebimento(Média) - Dash'},
-    {value:'app-card-contas', desc: 'Card Contas Pagar/Receber - Dash Financeiro'},
-    {value:'app-card-balancete', desc: 'Balancete - Dash Financeiro'},
-    {value:'app-card-dre', desc: 'DRE - Dash Financeiro'},
-    {value:'app-card-cirurgias-realizadas', desc: 'Card Cirurgias Realizadas - Dash Receitas'},
-    {value:'app-receitas', desc: 'Receitas - Dash Receitas'},
-    {value:'app-cirurgias-relizadas-conv-top', desc: 'Top 15 Convênios Cirurgias - Dash Receitas'},
-    {value:'app-int-top-conv', desc: 'Top 15 Convênios Internação - Dash Receitas'},
-    {value:'app-cons-top-conv', desc: 'Top 15 Convênios Consulta - Dash Receitas'},
-    {value:'app-sadt-top-conv', desc: 'Top 15 Convênios SADT - Dash Receitas'},
+
   ];
+
+
   componentMap: { [key: string]: any } = {
     'app-card-leitos':{card : CardLeitosComponent , css : 'col-12 sm-12 md-12 col-lg-4 col-xl-4'} ,
     'app-card-faturamento': {card : CardFaturamentoComponent , css : 'col-12 sm-12 md-12 col-lg-4 col-xl-4'} ,
@@ -118,6 +112,39 @@ export class DashUserEditComponent implements OnInit{
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
+    if(globalVars.dash)
+      this.user_comp.push({value:'app-card-leitos', desc: 'Card Leitos - Dash'});
+    if(globalVars.dash || globalVars.dash_fat)
+      this.user_comp.push({value:'app-card-faturamento', desc: 'Card Faturamento - Dash'});
+    if(globalVars.dash)
+      this.user_comp.push({value:'app-card-atendimentos', desc: 'Card Atendimentos - Dash'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash)
+      this.user_comp.push({value:'app-card-receita-natureza', desc: 'Receita por Natureza - Dash'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash)
+      this.user_comp.push({value:'app-card-comp-despesas', desc: 'Composição de Despesas - Dash'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash)
+      this.user_comp.push({value:'app-card-prazo-med-receb-mes', desc: 'Prazo Médio Recebimento(Mês) - Dash'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash)
+      this.user_comp.push({value:'app-card-prazo-med-receb-ano', desc: 'Prazo Medio Recebimento(Média) - Dash'});
+    if(globalVars.dash_fin)
+      this.user_comp.push({value:'app-card-contas', desc: 'Card Contas Pagar/Receber - Dash Financeiro'});
+    if(globalVars.dash_fin)
+      this.user_comp.push({value:'app-card-balancete', desc: 'Balancete - Dash Financeiro'});
+    if(globalVars.dash_fin)
+      this.user_comp.push({value:'app-card-dre', desc: 'DRE - Dash Financeiro'});
+    if(globalVars.dash_fat)
+      this.user_comp.push({value:'app-card-cirurgias-realizadas', desc: 'Card Cirurgias Realizadas - Dash Receitas'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash_receitas)
+      this.user_comp.push({value:'app-receitas', desc: 'Receitas - Dash Receitas'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash_receitas)
+      this.user_comp.push({value:'app-cirurgias-relizadas-conv-top', desc: 'Top 15 Convênios Cirurgias - Dash Receitas'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash_receitas)
+      this.user_comp.push({value:'app-int-top-conv', desc: 'Top 15 Convênios Internação - Dash Receitas'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash_receitas)
+      this.user_comp.push({value:'app-cons-top-conv', desc: 'Top 15 Convênios Consulta - Dash Receitas'});
+    if(globalVars.dash_fin ||  globalVars.dash_fat || globalVars.dash_receitas)
+      this.user_comp.push({value:'app-sadt-top-conv', desc: 'Top 15 Convênios SADT - Dash Receitas'});
+
     this.getdashBD();
   }
 
@@ -128,7 +155,6 @@ export class DashUserEditComponent implements OnInit{
       // console.log(dash)
       for(let i=0;i<dash.length;i++){
         this.selectedComp.push(dash[i].dash)
-
       }
       this.onShow();
 
