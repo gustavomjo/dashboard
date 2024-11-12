@@ -9,14 +9,18 @@ import { searchInternacao } from './dash-fat/search/search.internacao.pipe';
 import { searchConvenio } from './dash-fat/search/search.conv.pipe';
 import { searchApresentado } from './dash-fat/search/search.apresentado.pipe';
 import { searchUsuario } from './permissoes/search.usuario.pipe';
+import { searchInstrucoes } from './IALuk/debug-ia/search.instrucoes.pipe';
+
 
 @NgModule({
   declarations: [searchCurvaABC,searchMedicamentos, searchGrupo,searchVencimento,
-                 searchInternacao,searchConvenio,searchApresentado,searchUsuario
+                 searchInternacao,searchConvenio,searchApresentado,searchUsuario,
+                 searchInstrucoes
   ],
   imports: [CommonModule],
   exports: [searchCurvaABC, searchMedicamentos, searchGrupo,searchVencimento,
-            searchInternacao,searchConvenio,searchApresentado,searchUsuario
+            searchInternacao,searchConvenio,searchApresentado,searchUsuario,
+            searchInstrucoes
   ]
 })
 export class searchModule {}

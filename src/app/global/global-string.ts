@@ -28,4 +28,48 @@ export function BoolToString(b : boolean){
   return b==true?'S':'N';
 }
 
+export function formatSQL(query: string): string {
+  // Definir os termos que devem ser seguidos de uma quebra de linha
+  const keywords = [
+    "SELECT",
+    "FROM",
+    "INNER JOIN",
+    "LEFT JOIN",
+    "RIGHT JOIN",
+    "WHERE",
+    " AND",
+    "GROUP BY",
+    "CREATE",
+    "ORDER BY",
+    ";",
+    // ",",
+  ];
+
+
+  // Evitar quebra na expressão "YEAR FROM"
+  let formattedQuery = query.replace(/YEAR FROM/gi, "YEAR_PARA");
+  // formattedQuery = query.replace(/JOIN/gi, "INNER JOIN");
+
+  // Adicionar quebras de linha antes das palavras-chave SQL
+  keywords.forEach(keyword => {
+    const regex = new RegExp(`\\s*${keyword}\\s*`, "gi");
+    if ([';', ',',' AND'].includes(keyword)) {
+      formattedQuery = formattedQuery.replace(regex, ` ${keyword}\n`);
+    } else {
+        formattedQuery = formattedQuery.replace(regex, `\n${keyword} `);
+    }
+
+  });
+
+  // Restaurar a expressão "YEAR FROM"
+  formattedQuery = formattedQuery.replace(/YEAR_PARA/gi, "YEAR FROM");
+
+  // Remover quebras de linha extras e espaços em branco em cada linha
+  formattedQuery = formattedQuery
+    .split("\n")
+    .map(line => line.trim())
+    .join("\n");
+
+  return formattedQuery;
+}
 

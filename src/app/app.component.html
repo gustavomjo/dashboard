@@ -42,15 +42,23 @@
       </li>
 
       <li class="sidebar-item" *ngIf="globalVars.admin">
-        <a [routerLink]="['/permissoes']"  class="sidebar-link" (click)="ActiveMenu()" >
-          <i class='bx bx-cog'> <p *ngIf="isMobile" > Dash User</p></i>
+        <a [routerLink]="['/ialuk']"  class="sidebar-link" (click)="ActiveMenu()" >
+          <i class='bx bxs-brain'> <p *ngIf="isMobile" > IA Luc</p></i>
         </a>
       </li>
+
+      <li class="sidebar-item" *ngIf="globalVars.admin">
+        <a [routerLink]="['/permissoes']"  class="sidebar-link" (click)="ActiveMenu()" >
+          <i class='bx bx-cog'> <p *ngIf="isMobile" > Permissões</p></i>
+        </a>
+      </li>
+
+
     </ul>
-    <div class="sidebar-footer">
+    <div class="sidebar-footer ">
         <a [routerLink]="['/']" routerLinkActive="router-link-active" k="/" class="sidebar-link" (click)="onLogout(); $event.preventDefault()">
           <i class='bx bxs-log-out' ></i>
-            <span>Logout</span>
+            <span *ngIf="isMobile">Logout</span>
         </a>
     </div>
   </aside>

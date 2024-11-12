@@ -1,0 +1,60 @@
+<pre><code>{{ASQL}}</code></pre>
+
+<div class="mb-3">
+  <select class="form-select form-select-sm" aria-label="Default select example"  [(ngModel)]="searchTable">
+    <option value="">Tabela</option>
+    <option value="GERAL">Geral</option>
+    <option value="CONVENIO">CONVENIO</option>
+    <option value="INTERNACAO">INTERNACAO</option>
+    <option value="INTERNACAO_CONTA">INTERNACAO_CONTA</option>
+    <option value="PACIENTE">PACIENTE</option>
+    <option value="TIPO_TRATAMENTO">TIPO_TRATAMENTO</option>
+    <option value="RESPOSTA">RESPOSTA</option>
+    <option value="PERGUNTA">PERGUNTA</option>
+  </select>
+</div>
+<div class="mb-3">
+  <select class="form-select form-select-sm" aria-label="Default select example" [(ngModel)]="searchTipo">
+    <option value="">TIPO</option>
+    <option value="CREATE">CREATE</option>
+    <option value="INSTRUCAO">INSTRUCAO</option>
+    <option value="JOIN">JOIN</option>
+    <option value="PERGUNTA">PERGUNTA</option>
+    <option value="RESPOSTA">RESPOSTA</option>
+  </select>
+</div>
+<div class="mb-3">
+  <input type="text" class="form-control form-control-sm text-uppercase" id="exampleFormControlInput1" placeholder="Campo ou null" [(ngModel)]="searchCampo">
+</div>
+<div class="mb-3">
+  <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" placeholder="Instrução" rows="3"></textarea>
+</div>
+<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions">Listar Todas instruções</button>
+<!-- *ngIf="searchTable != '' || searchTipo != ''" -->
+<div class="filterInstrucoes" >
+  <div class="instrucoes" (scroll)="onScroll($event)"
+       *ngFor="let ia of (IAInstrucoes | searchInstrucoes: searchTable : searchTipo : searchCampo)">
+    <h4>Tipo : {{ia.tipo}}</h4>
+    <p>Tabela : {{ia.tabela}}</p>
+    <p *ngIf="ia.campo != null ">Campo : {{ia.campo}}</p>
+    <b class="fw-bold">Instrução : </b>
+    <pre class="text-break"><code>{{ia.instrucao}}</code></pre>
+  </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end text-bg-dark w-50" data-bs-backdrop="static" tabindex="-1" id="offcanvasWithBothOptions" >
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasDarkLabel">Instruções</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body" >
+    <div class="instrucoes" (scroll)="onScroll($event)" *ngFor="let ia of IAInstrucoes" >
+      <h4>Tipo : {{ia.tipo}}</h4>
+      <p>Tabela : {{ia.tabela}}</p>
+      <p *ngIf="ia.campo != null ">Campo : {{ia.campo}}</p>
+      <b class=" fw-bold">Instrução : </b>
+      <pre class="text-break"><code>{{ia.instrucao}}</code></pre>
+    </div>
+  </div>
+</div>

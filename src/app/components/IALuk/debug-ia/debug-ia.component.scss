@@ -1,0 +1,19 @@
+
+pre {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+code {
+  color: #333;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap; /* permite quebra de linha longa */
+}
+
+.filterInstrucoes{
+  height: 300px;
+  overflow: auto;
+}
+

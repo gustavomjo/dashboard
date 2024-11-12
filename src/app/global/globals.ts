@@ -8,5 +8,6 @@ export const globalVars = {
   dash_farm: false,
   dash_receitas: false,
   admin: false,
+  developer : false
 };
 
