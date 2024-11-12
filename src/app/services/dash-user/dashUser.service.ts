@@ -22,5 +22,6 @@ export class dashUserService{
     this.Busca.postComponent('/postcomponent','usuario='+usuario+'&componente='+dash);
   }
 
+
 }
 

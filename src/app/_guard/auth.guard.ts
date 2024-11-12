@@ -12,6 +12,7 @@ interface Payload {
   dash_farm: string;
   dash_receitas: string;
   admin: string;
+  developer : string;
 }
 
 @Injectable({
@@ -63,7 +64,8 @@ export class authGuard implements CanActivate {
 
   private checkPermissions(payload: any, currentUrl: string): boolean {
     // Defina um tipo literal para as chaves do objeto de permissões
-    type PermissionKeys = '/dash' | '/dash-fin' | '/dash-fat' | '/dash-farm' | '/dash-receitas' | '/permissoes'| '/dash-user' |'/dash-user-edit';
+    type PermissionKeys = '/dash' | '/dash-fin' | '/dash-fat' | '/dash-farm' |
+      '/dash-receitas' | '/permissoes'| '/dash-user' |'/dash-user-edit' | '/ialuk';
 
     // Use um objeto com tipos explícitos
     const permissions: Record<PermissionKeys, boolean> = {
@@ -75,6 +77,8 @@ export class authGuard implements CanActivate {
       '/permissoes': payload.admin === 'S',
       '/dash-user': true,
       '/dash-user-edit': true,
+      '/ialuk': true, // colocar no jwt
+
     };
 
     if (!permissions[currentUrl as PermissionKeys]) {
@@ -115,6 +119,7 @@ export class authGuard implements CanActivate {
       globalVars.dash_farm = payload.dash_farm === 'S';
       globalVars.dash_receitas = payload.dash_receitas === 'S';
       globalVars.admin = payload.admin === 'S';
+      globalVars.developer = payload.developer === 'S';
     }
   }
 }

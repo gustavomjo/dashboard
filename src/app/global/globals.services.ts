@@ -26,37 +26,40 @@ export class Busca {
     });
   }
 
-  getHtml<T>(request: string): Observable<HttpResponse<T>>{
-    //utilizado o this.configService.getConfig para garantir que a config seja carregada antes de fazer a requisicao
+  getHtml<T>(request: string): Observable<HttpResponse<T>> {
+    // Garantir que a configuração seja carregada antes da requisição
     return this.configService.getConfig().pipe(
       switchMap(config => {
-        this.url = config.servidor;
+        this.url = config.servidor; // Atualiza a URL com a configuração carregada
         return this.httpClient.get<T>(this.url + request, { headers: this.header, observe: 'response' }).pipe(
           tap(response => {
+            // Armazena o token localmente após a resposta
             this.token = localStorage.getItem('token');
-          }),
-          catchError(error => {
-            console.error('Erro ao subscrever:', error);
-            this.updateToken();
-            return throwError(error);
           }),
           retryWhen(errors =>
             errors.pipe(
               tap(() => {
-                console.log('Tentando novamente com novo token:', this.token);
+                console.log('Tentativa de nova requisição com token:', this.token);
+                this.updateToken(); // Atualiza o token em caso de erro
               }),
-              delay(5000),
-              take(10)
+
+              delay(3000), // Tempo de espera entre as tentativas
+              take(2) // Limita o número de tentativas a 2
             )
-          )
+          ),
+          catchError(error => {
+            console.error('Erro ao realizar a requisição:', error);
+            // Trate o erro final aqui (opcional)
+            return throwError(() => error);
+          })
         );
       })
     );
   }
 
-  deleteRequest(request: string): void {
+  deleteRequest(request: string): Observable<any> {
     // Utiliza this.configService.getConfig para garantir que a configuração seja carregada antes de fazer a requisição
-    this.configService.getConfig().pipe(
+    return this.configService.getConfig().pipe(
       switchMap(config => {
         this.url = config.servidor;
         return this.httpClient.delete(this.url + request, { headers: this.header }).pipe(
@@ -79,16 +82,50 @@ export class Busca {
           )
         );
       })
-    ).subscribe();
+    );
   }
 
-  postComponent(request: string, params: string): Observable<any> { // Alterado para retornar um Observable
-    // Utiliza this.configService.getConfig para garantir que a configuração seja carregada antes de fazer a requisição
+
+  postComponent(request: string, params: any): Observable<any> {
     return this.configService.getConfig().pipe(
       switchMap(config => {
         this.url = config.servidor;
-
+        // console.log(this.url + request, params)
+        // console.log(params)
+        // console.log(params)
         return this.httpClient.post(this.url + request, params, { headers: this.header }).pipe(
+          tap(() => {
+            this.token = localStorage.getItem('token');
+            console.log('Token após requisição:', this.token); // Verifique o token
+          }),
+          catchError(error => {
+            console.error('Erro ao subscrever:', error); // Log de erro
+            this.updateToken();
+            return throwError(error);
+          }),
+          retryWhen(errors =>
+            errors.pipe(
+              tap(() => {
+                console.log('Tentando novamente com novo token:', this.token);
+              }),
+              delay(5000),
+              take(10)
+            )
+          )
+        );
+      })
+    );
+  }
+
+
+  putComponent(request: string, params: string): Observable<any> { // Alterado para retornar um Observable
+    // Utiliza this.configService.getConfig para garantir que a configuração seja carregada antes de fazer a requisição
+    // console.log(params)
+    // console.log(this.url + request, params)
+    return this.configService.getConfig().pipe(
+      switchMap(config => {
+        this.url = config.servidor;
+        return this.httpClient.put(this.url + request, params, { headers: this.header }).pipe(
           tap(() => {
             this.token = localStorage.getItem('token');
           }),

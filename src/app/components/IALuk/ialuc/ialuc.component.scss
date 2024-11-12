@@ -1,0 +1,114 @@
+
+
+
+/* Estilo do rodapé */
+.footer {
+  background-color: #edefef;
+  text-align: center;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.centralizada {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Para centralizar verticalmente */
+  padding: 20px;
+}
+
+.send {
+  height: 120px; /* Altura expandida */
+}
+
+.content {
+  flex-grow: 1; /* Expande para ocupar o espaço acima do rodapé */
+  padding: 10px;
+}
+
+.typewriter {
+  font-family: monospace;
+  white-space: pre-wrap; /* Preserva as quebras de linha */
+  font-size: 1.2em;
+}
+
+.typewriter::after {
+  content: '|';
+  animation: blink 1s infinite step-end;
+  display: inline-block;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Alinha os itens horizontalmente no centro */
+  align-items: center; /* Alinha os itens verticalmente no centro, se necessário */
+  width: 100%; /* Ocupa a largura total do container */
+}
+
+input[type="radio"] {
+  display: none; /* Esconde os botões de rádio */
+}
+
+.labelradio {
+  position: relative;
+  color: #36a2eb90; /* Cor inicial do texto */
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  border: 2px solid #36a2eb90;
+  border-radius: 5px;
+  padding-left: 40px; /* Espaçamento para o círculo dentro do label */
+  padding: 10px 10px 10px 40px; /* Adiciona o padding à esquerda para o círculo */
+  margin-left: 10px;
+  display: inline-flex; /* Permite alinhar os itens no label */
+  align-items: center; /* Alinha os itens verticalmente */
+  transition: background-color 0.3s, color 0.3s; /* Transição suave para fundo e texto */
+}
+
+.labelradio::before {
+  content: "";
+  height: 20px; /* Tamanho do círculo externo */
+  width: 20px;  /* Tamanho do círculo externo */
+  border: 2px solid #36a2eb90; /* Borda verde para o círculo externo */
+  border-radius: 50%; /* Formato circular */
+  position: absolute;
+  left: 10px; /* Coloca o círculo à esquerda do label */
+  top: 50%; /* Alinha verticalmente ao centro do label */
+  transform: translateY(-50%); /* Centraliza o círculo verticalmente */
+  background-color: transparent; /* Círculo transparente inicialmente */
+}
+
+input[type="radio"]:checked + .labelradio {
+  background-color: #36a2eb; /* Cor de fundo do label quando selecionado */
+  color: white; /* Cor do texto quando selecionado */
+  font-weight: bold; /* Torna o texto em negrito quando selecionado */
+}
+
+input[type="radio"]:checked + .labelradio::before {
+  background-color: white; /* Círculo externo branco quando selecionado */
+  border-color: #36a2eb90; /* Borda verde para o círculo externo quando selecionado */
+}
+
+input[type="radio"]:checked + .labelradio::after {
+  content: "";
+  height: 7px; /* Tamanho do círculo interno */
+  width: 7px; /* Tamanho do círculo interno */
+  border: 2px solid #107ef4; /* Borda verde para o círculo interno */
+  border-radius: 50%; /* Círculo interno */
+  position: absolute;
+  top: 50%; /* Coloca o círculo no centro do círculo externo */
+  left: 20px; /* Mantém o deslocamento desejado à esquerda */
+  transform: translate(-50%, -50%); /* Centraliza o círculo interno */
+  background-color: #107ef4; /* Círculo interno verde quando selecionado */
+}
+
+
+
+#tabela{
+  background-color: #107ef420;
+  height: 250px;
+}

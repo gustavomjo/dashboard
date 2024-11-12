@@ -1,0 +1,40 @@
+<div class="container-fluid d-flex flex-column min-vh-100 p-0">
+
+  <div class="content flex-grow-1" *ngIf="isSend">
+    <h1>Conteúdo Principal</h1>
+    <p>{{question}}</p>
+    <div class="row">
+      <div class="col-6">
+        <div id="tabela" class="overflow-auto" ></div>
+      </div>
+      <div class="col-6">
+        <!-- <h4>{{ASQL}}</h4> -->
+         <app-debug-ia></app-debug-ia>
+      </div>
+    </div>
+  </div>
+
+  <!-- Esta div no centro -->
+  <div [class.footer]="isSend" [class.send]="isSend"  [class.centralizada]="!isSend">
+    <div class="typewriter" [innerHTML]="displayedText" *ngIf="!isSend"></div>
+
+    <div class="input-group mb-3 mt-2">
+      <!-- <button class="btn btn-outline-secondary" type="button" id="bFilter" (click)="toggleFooter()"  *ngIf="isSend"><i class='bx bx-filter'></i></button> -->
+      <input type="text" class="form-control" id="question" placeholder="Como posso te ajudar?" >
+      <button class="btn btn-outline-secondary button-circle" type="button" id="bSend" (click)="send()"><i class='bx bxs-send'></i></button>
+    </div>
+
+    <div class="container">
+      <input type="radio" name="setor" id="recepcao" checked="checked">
+      <label for="recepcao" class="labelradio">Recepção</label>
+      <input type="radio" name="setor" id="faturamento" >
+      <label for="faturamento" class="labelradio">Faturamento / Financeiro</label>
+      <input type="radio" name="setor" id="farmacia" >
+      <label for="farmacia" class="labelradio">Farmácia</label>
+    </div>
+  </div>
+
+</div>
+
+
+

@@ -1,0 +1,41 @@
+
+pre {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+code {
+  color: #333;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap; /* permite quebra de linha longa */
+}
+
+.filterInstrucoes{
+  height: 300px;
+  overflow: auto;
+}
+
+.btn-group .btn {
+  margin-right: 10px;  /* Adiciona um espaço entre os botões */
+}
+
+.btn-group .btn i {
+  margin-right: 5px;   /* Adiciona espaço entre o ícone e o texto */
+}
+
+.btn-gravar{
+  background-color: #36a2eb;
+  color: #fff;
+}
+
+.btn-limpar{
+  background-color: #00ce77;
+  color: #fff;
+}
+
+.btn-excluir{
+  background: #ff6384;
+  color: #fff;
+}
