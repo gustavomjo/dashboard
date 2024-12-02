@@ -24,7 +24,7 @@ export const routes: Routes = [
   {path:'dash-user',component:DashUserComponent,canActivate:[authGuard]},
   {path:'dash-user-edit',component:DashUserEditComponent,canActivate:[authGuard]},
   {path:'permissoes',component:PermissoesComponent,canActivate:[authGuard]},
-  {path:'ialuk',component:IALucComponent,canActivate:[authGuard]},
+  // {path:'ialuk',component:IALucComponent,canActivate:[authGuard]},
   { path: '**', component:LoginComponent}
 ];
 
