@@ -21,7 +21,6 @@ export class IALucComponent implements OnInit {
   typingSpeed: number = 20;
   question='';
   iaDados : any[]=[];
-  categories : any[]=['cat1','cat2']
 
   developer = false;
 
@@ -60,14 +59,12 @@ export class IALucComponent implements OnInit {
       this.debugService.notifyUpdate();
       this.ia(this.question)
 
-      this.isSend = true;
-      this.ia(this.question)
     }
   }
 
   async ia(question: string){
     (await this.IAService.ia(question)).subscribe(dados =>{
-      // let rec : any[]=[];
+
       this.iaDados = [];
       this.iaDados = this.iaDados.concat(dados.body);
       this.debugService.ASQL = formatSQL(this.iaDados[0].sql);
