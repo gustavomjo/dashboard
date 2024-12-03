@@ -39,9 +39,9 @@ Este projeto é um **dashboard hospitalar** desenvolvido em Angular e TypeScript
 ├── angular.json
 ├── package.json
 └── README.md
+```
 
-
-🚀 Como Rodar o Projeto
+## 🚀 Como Rodar o Projeto
 Pré-requisitos:
 
 Node.js
@@ -49,45 +49,47 @@ Angular CLI
 Docker (opcional)
 Instalação: Clone o repositório e instale as dependências:
 
-bash
-Copiar código
+```
 git clone https://github.com/seuprojeto/dashboard-hospitalar.git
 cd dashboard-hospitalar
 npm install
-Executar o Frontend:
+```
+## Executar o Frontend:
 
-bash
-Copiar código
+```
 ng serve
 Acesse o aplicativo em http://localhost:4200.
+```
 
-Executar com Docker (opcional):
+## Executar com Docker (opcional):
 
-bash
-Copiar código
+```
 docker build -t dashboard-hospitalar .
 docker run -p 8080:80 dashboard-hospitalar
-🧩 Personalização
-Configurações: Altere as configurações em src/environments/environment.ts.
-Estilos: Personalize os estilos em src/styles.css.
-📝 Contribuição
+```
+## 🧩 Personalização
+
+- **Configurações:** Altere as configurações em src/environments/environment.ts.
+- **Estilos:** Personalize os estilos em src/styles.css.
+##📝 Contribuição
 Sinta-se à vontade para contribuir! Para começar:
 
-Faça um fork do projeto.
+## Faça um fork do projeto.
 Crie uma nova branch:
-bash
-Copiar código
+```
 git checkout -b minha-nova-feature
+```
 Envie suas alterações:
-bash
-Copiar código
+```
 git push origin minha-nova-feature
-Abra um Pull Request.
-📄 Licença
+```
+
+## 📄 Licença
 Este projeto está sob a licença da Lucedata Ltda. Consulte o arquivo LICENSE para mais informações.
 
-💬 Contato
+## 💬 Contato
 Se você tiver dúvidas ou sugestões, entre em contato:
 
-Email: mikizo.jo@gmail.com
-LinkedIn: https://www.linkedin.com/in/gustavojo/
+**Email:** mikizo.jo@gmail.com
+
+**LinkedIn:** https://www.linkedin.com/in/gustavojo/
