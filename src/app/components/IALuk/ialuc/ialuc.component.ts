@@ -64,9 +64,9 @@ export class IALucComponent implements OnInit {
 
   async ia(question: string){
     (await this.IAService.ia(question)).subscribe(dados =>{
-
       this.iaDados = [];
       this.iaDados = this.iaDados.concat(dados.body);
+      console.log(this.iaDados);
       this.debugService.ASQL = formatSQL(this.iaDados[0].sql);
       this.debugService.notifyUpdate();
       this.generateTable(this.iaDados[0].dados);

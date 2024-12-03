@@ -1,0 +1,6 @@
+- ng build 
+- Terminal 
+  cd d:\desenvolvimento\sistemas\saude\hospital_dac\api_dash
+
+  ***Docker precisa estar aberto
+  docker build -t nome_da_imagem .

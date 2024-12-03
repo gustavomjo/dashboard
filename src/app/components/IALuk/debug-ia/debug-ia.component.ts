@@ -17,6 +17,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class DebugIAComponent implements OnInit{
   ASQL = '';
+  aError = '';
   codigoInstrucao = 0;
 
   color = globalCoresNome;
@@ -44,6 +45,7 @@ export class DebugIAComponent implements OnInit{
 
   public atualiza(): void {
     this.ASQL = this.debugService.ASQL;
+    this.aError = this.debugService.aError;
   }
 
   async getIAInstrucoes(){

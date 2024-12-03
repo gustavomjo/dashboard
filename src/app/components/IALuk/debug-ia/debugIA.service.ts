@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 })
 export class DebugIAService {
   public ASQL: string = "";
+  public aError : string = "";
+  
   private updateSubject = new Subject<void>();
   private updateCallbacks: (() => void)[] = [];
 
