@@ -1,81 +1,93 @@
-## Dashboard
+# Dashboard Hospitalar 🏥
 
-Um dashboard interativo e dinâmico desenvolvido com Angular e TypeScript para visualização e gerenciamento de dados.
+Este projeto é um **dashboard hospitalar** desenvolvido em Angular e TypeScript, com backend em Delphi, para auxiliar na gestão e monitoramento de informações críticas de um hospital. O sistema oferece uma visão geral de diversos setores e facilita a tomada de decisões por meio de gráficos, relatórios e métricas detalhadas.
 
-### Índice
+---
 
-1. [Descrição](#descrição)
-2. [Funcionalidades](#funcionalidades)
-3. [Instalação](#instalação)
-4. [Como Usar](#como-usar)
-5. [Contribuição](#contribuição)
-6. [Licença](#licença)
-7. [Contato](#contato)
+## 🛠 Tecnologias Utilizadas
 
-### Descrição
+- **Frontend**: Angular 9, TypeScript, HTML5, CSS3
+- **Backend**: Delphi
+- **Banco de Dados**: Relacional com alto volume de dados
+- **Outras Ferramentas**: Docker, Nginx, FontAwesome
 
-Este projeto é um dashboard desenvolvido em Angular que permite a visualização e gerenciamento de diferentes conjuntos de dados. O dashboard foi construído com foco em performance, escalabilidade e uma interface de usuário intuitiva. Ele faz uso de gráficos interativos, componentes dinâmicos e integração com serviços backend.
+---
 
-### Funcionalidades
+## 🎯 Funcionalidades
 
-- **Visualização de Dados**: Exibe dados em gráficos interativos utilizando Chart.js.
-- **Filtros Dinâmicos**: Filtragem de dados com base em parâmetros definidos pelo usuário.
-- **Atualização em Tempo Real**: Atualização dos gráficos e dados conforme as mudanças ocorrem.
-- **Autenticação JWT**: Sistema de autenticação utilizando JSON Web Tokens para segurança.
-- **Sistema de Rotas**: Navegação eficiente entre diferentes partes do dashboard.
+- **Gestão de Setores**: Visualização e controle de setores como farmácia, faturamento, financeiro e recepção.
+- **Relatórios e Gráficos**: Exibição de dados em gráficos interativos, com possibilidade de exportação em PDF.
+- **Monitoramento em Tempo Real**: Atualizações automáticas para informações críticas.
+- **Filtro Avançado**: Busca eficiente por dados utilizando filtros específicos.
+- **Configuração Dinâmica**: Integração com `configService` para carregar configurações antes de realizar requisições.
 
-### Instalação
+---
 
-Siga os passos abaixo para configurar o projeto localmente:
+## 📦 Estrutura do Projeto
 
-1. Clone o repositório:
+```plaintext
+├── src
+│   ├── app
+│   │   ├── components
+│   │   ├── services
+│   │   ├── pipes
+│   │   ├── models
+│   │   └── modules
+│   ├── assets
+│   └── environments
+├── Dockerfile
+├── angular.json
+├── package.json
+└── README.md
 
-    ```bash
-    git clone https://github.com/gustavomjo/dashboard.git
-    cd dashboard
-    ```
 
-2. Instale as dependências:
+🚀 Como Rodar o Projeto
+Pré-requisitos:
 
-    ```bash
-    npm install
-    ```
+Node.js
+Angular CLI
+Docker (opcional)
+Instalação: Clone o repositório e instale as dependências:
 
-3. Inicie o servidor de desenvolvimento:
+bash
+Copiar código
+git clone https://github.com/seuprojeto/dashboard-hospitalar.git
+cd dashboard-hospitalar
+npm install
+Executar o Frontend:
 
-    ```bash
-    npm start
-    ```
+bash
+Copiar código
+ng serve
+Acesse o aplicativo em http://localhost:4200.
 
-4. Abra o navegador e acesse `http://localhost:4200` para visualizar o dashboard.
+Executar com Docker (opcional):
 
-### Como Usar
+bash
+Copiar código
+docker build -t dashboard-hospitalar .
+docker run -p 8080:80 dashboard-hospitalar
+🧩 Personalização
+Configurações: Altere as configurações em src/environments/environment.ts.
+Estilos: Personalize os estilos em src/styles.css.
+📝 Contribuição
+Sinta-se à vontade para contribuir! Para começar:
 
-Depois de iniciar o servidor de desenvolvimento, você pode explorar o dashboard acessando as diferentes seções. Utilize os filtros disponíveis para visualizar dados específicos e interagir com os gráficos para obter insights detalhados.
+Faça um fork do projeto.
+Crie uma nova branch:
+bash
+Copiar código
+git checkout -b minha-nova-feature
+Envie suas alterações:
+bash
+Copiar código
+git push origin minha-nova-feature
+Abra um Pull Request.
+📄 Licença
+Este projeto está sob a licença da Lucedata Ltda. Consulte o arquivo LICENSE para mais informações.
 
-#### Exemplos de Uso:
+💬 Contato
+Se você tiver dúvidas ou sugestões, entre em contato:
 
-- **Filtros de Data**: Utilize os filtros para selecionar intervalos de datas e visualizar dados correspondentes.
-- **Gráficos Interativos**: Clique nos elementos dos gráficos para obter mais informações ou visualizar detalhes específicos.
-
-### Contribuição
-
-Contribuições são bem-vindas! Se você deseja contribuir, siga os passos abaixo:
-
-1. Faça um fork do projeto.
-2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`).
-3. Commit suas alterações (`git commit -m 'Adiciona NovaFuncionalidade'`).
-4. Faça o push para a branch (`git push origin feature/NovaFuncionalidade`).
-5. Abra um Pull Request.
-
-### Licença
-
-Este projeto está licenciado sob a licença MIT. Para mais detalhes, consulte o arquivo [LICENSE](LICENSE).
-
-### Contato
-
-Se você tiver alguma dúvida ou sugestão, entre em contato:
-
-- **Nome**: Gustavo
-- **Email**: [gustavomjo@gmail.com](mailto:gustavomjo@gmail.com)
-- **GitHub**: [@gustavomjo](https://github.com/gustavomjo)
+Email: mikizo.jo@gmail.com
+LinkedIn: https://www.linkedin.com/in/gustavojo/
